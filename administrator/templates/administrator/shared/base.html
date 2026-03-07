@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Admin Panel{% endblock %}</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        .sidebar {
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            padding: 8px 12px;
+            display: block;
+            border-radius: 4px;
+        }
+        .sidebar a:hover {
+            background-color: #e9ecef;
+        }
+        .sidebar h6 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #6c757d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOP NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+    <a class="navbar-brand" href="#">Hospital Admin</a>
+
+    <div class="ms-auto d-flex align-items-center">
+        {% if request.user.is_authenticated %}
+            <div class="dropdown">
+                <a class="text-white dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    {{ request.user.username }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Account Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        {% else %}
+            <a href="{% url 'accounts:admin-login' %}" class="btn btn-outline-light btn-sm">
+                Login
+            </a>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- MAIN LAYOUT -->
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-2 sidebar p-3">
+
+            <!-- Core Modules -->
+            <h6>Hospital Modules</h6>
+            <a href="{% url 'administrator:branch-list' %}">Branches</a>
+            <a href="#">Departments</a>
+            <a href="#">Doctors</a>
+            <a href="#">Appointments</a>
+
+            <hr>
+
+            <!-- Pages -->
+            <h6>Website Pages</h6>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">FAQ</a>
+            <a href="#">Testimonials</a>
+            <a href="#">Facilities</a>
+            <a href="#">Highlights</a>
+            <a href="#">Health Packages</a>
+            <a href="#">Insurance</a>
+
+            <hr>
+
+            <!-- Posts -->
+            <h6>Content</h6>
+            <a href="#">Blogs</a>
+            <a href="#">Articles</a>
+            <a href="#">News & Events</a>
+
+        </div>
+
+        <!-- PAGE CONTENT -->
+        <div class="col-md-10 p-4">
+            {% if messages %}
+<div class="container-fluid mt-3">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

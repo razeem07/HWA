@@ -1,0 +1,34 @@
+{% extends "administrator/shared/base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h3>Dashboard</h3>
+<p class="text-muted">Welcome to the hospital admin panel.</p>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6>Total Doctors</h6>
+                <h4>24</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6>Total Departments</h6>
+                <h4>12</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6>Appointments Today</h6>
+                <h4>38</h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

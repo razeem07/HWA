@@ -1,0 +1,54 @@
+
+
+{% block content %}
+
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2>Our Specializations</h2>
+        <p>Explore our expert medical departments</p>
+    </div>
+
+    <div class="row">
+
+        {% for spec in specializations %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card h-100 shadow-sm border-0">
+
+                {% if spec.featured_image %}
+                <img src="{{ spec.featured_image.url }}"
+                     class="card-img-top"
+                     alt="{{ spec.name }}">
+                {% endif %}
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        {{ spec.name }}
+                    </h5>
+
+                    <p class="card-text">
+                        {{ spec.short_description|truncatewords:20 }}
+                    </p>
+
+                    <a href="{% url 'userapp:specialization_detail' spec.slug %}"
+                       class="btn btn-primary btn-sm">
+
+                        View Department
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

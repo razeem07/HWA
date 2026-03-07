@@ -1,0 +1,251 @@
+{% extends "administrator/shared/base.html" %}
+{% block title %}Add Specialization{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+
+            <h4 class="mb-4">Manage Specialization</h4>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.media }}
+
+                <!-- BASIC INFO -->
+                <div class="mb-3">
+                   
+                    <label class="form-label">Branch</label>
+                    {{ form.branch }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Specialization Name</label>
+                    {{ form.name }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Short Description</label>
+                    {{ form.short_description }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Icon</label>
+                    {% if object.icon %}
+                    <div class="mb-2">
+                       <img src="{{ object.icon.url }}"
+                         width="120"
+                      class="rounded border">
+                    </div>
+                  {% endif %}
+
+                    {{ form.icon }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Featured Image</label>
+
+                    {% if object.featured_image %}
+                    <div class="mb-2">
+                       <img src="{{ object.featured_image.url }}"
+                         width="120"
+                      class="rounded border">
+                    </div>
+                  {% endif %}
+
+                    {{ form.featured_image }}
+                  
+
+                    
+                </div>
+                <div class="mb-3">
+                 <label class="form-label">Featured Image ALT Text</label>
+                {{ form.featured_image_alt }}
+               </div>
+
+                <hr>
+
+                <!-- HERO SECTION -->
+                <h6 class="mb-3">Hero Section</h6>
+
+                <div class="mb-3">
+                    <label class="form-label">Hero Title</label>
+                    {{ form.hero_title }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Hero Description</label>
+                    {{ form.hero_description }}
+                </div>
+
+            
+                    <label class="form-label">Hero Banner</label>
+
+                      {% if object.hero_banner  %}
+                    <div class="mb-2">
+                       <img src="{{ object.hero_banner.url }}"
+                         width="120"
+                      class="rounded border">
+                    </div>
+                  {% endif %}
+
+                    
+
+                    {{ form.hero_banner }}
+                </div>
+                <div class="mb-3">
+                <label class="form-label">Hero Image ALT Text</label>
+                  {{ form.hero_banner_alt  }}
+                </div>
+
+             
+
+                <hr>
+
+                <!-- MAIN CONTENT -->
+                <h6 class="mb-3">Main Content</h6>
+
+                <div class="mb-3">
+                    <label class="form-label">Main Title</label>
+                    {{ form.main_title }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Main Image</label>
+
+                      {% if object.main_image %}
+                    <div class="mb-2">
+                       <img src="{{ object.main_image.url }}"
+                         width="120"
+                      class="rounded border">
+                    </div>
+                  {% endif %}
+                   
+
+                    {{ form.main_image }}
+                </div>
+
+                <div class="mb-3">
+               <label class="form-label">Main Image ALT Text</label>
+                       {{ form.main_image_alt }}
+               </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Main Description</label>
+                    {{ form.main_description }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Secondary Title</label>
+                    {{ form.secondary_title }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Secondary Image</label>
+
+                    {% if object.secondary_image %}
+                    <div class="mb-2">
+                       <img src="{{ object.secondary_image.url }}"
+                         width="120"
+                      class="rounded border">
+                    </div>
+                  {% endif %}
+                    {{ form.secondary_image }}
+                </div>
+
+                 <label class="form-label">Secondary Image ALT Text</label>
+                  {{ form.secondary_image_alt }}
+                </div>
+
+                <hr>
+
+                <!-- LONG CONTENT -->
+                <h6 class="mb-3">Detailed Content</h6>
+
+                <div class="mb-3">
+                    <label class="form-label">Primary Long Description</label>
+                
+                    {{ form.long_description_primary|safe }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Secondary Long Description</label>
+                    {{ form.long_description_secondary }}
+                </div>
+
+                <hr>
+
+                <!-- SEO SECTION -->
+                <h6 class="mb-3">SEO Settings</h6>
+
+                <div class="mb-3">
+                    <label class="form-label">Meta Title</label>
+                    {{ form.meta_title }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Primary Keywords</label>
+                    {{ form.primary_keywords }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Secondary Keywords</label>
+                    {{ form.secondary_keywords }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Meta Description</label>
+                    {{ form.meta_description }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Slug</label>
+                    {{ form.slug }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Canonical URL</label>
+                    {{ form.canonical_url }}
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">OG Title</label>
+                {{ form.og_title }}
+                </div>
+
+                <div class="mb-3">
+                     <label class="form-label">OG Description</label>
+                    {{ form.og_description }}
+                </div>
+
+
+                <div class="mb-3">
+                  <label class="form-label">OG Image</label>
+
+                 {% if object.og_image %}
+                <div class="mb-2">
+                  <img src="{{ object.og_image.url }}" width="120" class="rounded border">
+               </div>
+               {% endif %}
+
+    {{ form.og_image }}
+</div>
+
+                <div class="form-check mb-4">
+                    {{ form.is_active }}
+                    <label class="form-check-label">Active</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Save Specialization
+                </button>
+                <a href="{% url 'administrator:specialization-list' %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+   <title>{{ seo.meta_title }}</title>
+
+    <meta name="description" content="{{ seo.meta_description }}">
+
+     <link rel="canonical" href="{{ seo.canonical_url }}">
+
+        <meta property="og:title" content="{{ seo.og_title }}">
+     <meta property="og:description" content="{{ seo.og_description }}">
+
+         {% if seo.og_image %}
+       <meta property="og:image" content="{{ seo.og_image.url }}">
+         {% endif %}
+
+         <script type="application/ld+json">
+          {{ schema|safe }}
+         </script>
+  </head>
+
+  <body>
+    <h1>{{ specialization.name }}</h1>
+
+    {% if specialization.featured_image %}
+    <img
+      src="{{ specialization.featured_image.url }}"
+      alt="{{ specialization.featured_image_alt }}"
+    />
+    {% endif %} 
+        specialization.featured_image
+
+    <p>{{ specialization.short_description }}</p>
+
+    <div>{{ specialization.long_description_primary|safe }}</div>
+  </body>
+</html>

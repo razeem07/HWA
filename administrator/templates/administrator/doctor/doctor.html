@@ -1,0 +1,209 @@
+{% extends "administrator/shared/base.html" %} {% block title %}Add Doctor{%
+endblock %} {% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8">
+      <h4 class="mb-4">Manage Doctor</h4>
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.media }}
+
+        <!-- USER INFORMATION -->
+        <h6 class="mb-3">Doctor Account</h6>
+
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">First Name</label>
+          {{ form.first_name }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Last Name</label>
+          {{ form.last_name }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Phone Number</label>
+          {{ form.phone_number }}
+        </div>
+
+        <hr />
+
+        <!-- BASIC DOCTOR INFO -->
+        <h6 class="mb-3">Doctor Information</h6>
+
+        <div class="mb-3">
+          <label class="form-label">Branch</label>
+          {{ form.branch }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Specialization</label>
+          {{ form.specialization }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Designation</label>
+          {{ form.designation }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Years of Experience</label>
+          {{ form.years_of_experience }}
+        </div>
+
+        <hr />
+
+        <!-- PROFILE IMAGE -->
+        <h6 class="mb-3">Profile Image</h6>
+
+        <div class="mb-3">
+          <label class="form-label">Doctor Image</label>
+
+          {% if object.profile_image %}
+          <div class="mb-2">
+            <img
+              src="{{ object.profile_image.url }}"
+              width="120"
+              class="rounded border"
+            />
+          </div>
+          {% endif %} {{ form.profile_image }}
+        </div>
+
+        <hr />
+
+        <!-- PROFESSIONAL DETAILS -->
+
+        <h6 class="mb-3">Professional Details</h6>
+
+        <div class="mb-3">
+          <label class="form-label">Specialized In</label>
+          {{ form.specialized_in }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Languages</label>
+          {{ form.languages }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Procedures</label>
+          {{ form.procedures }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Success Rate (%)</label>
+          {{ form.success_rate }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Patients Treated</label>
+          {{ form.patients_treated }}
+        </div>
+
+        <hr />
+
+        <!-- DOCTOR BIO -->
+
+        <h6 class="mb-3">Doctor Biography</h6>
+
+        <div class="mb-3">
+          <label class="form-label">Short Bio</label>
+          {{ form.short_bio }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Full Bio</label>
+          {{ form.full_bio }}
+        </div>
+
+        <hr />
+
+        <!-- SEO SECTION -->
+
+        <h6 class="mb-3">SEO Settings</h6>
+
+        <div class="mb-3">
+          <label class="form-label">Meta Title</label>
+          {{ form.meta_title }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Meta Description</label>
+          {{ form.meta_description }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Slug</label>
+          {{ form.slug }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Canonical URL</label>
+          {{ form.canonical_url }}
+        </div>
+
+        <hr />
+
+        <!-- OPEN GRAPH -->
+
+        <h6 class="mb-3">Social Media (Open Graph)</h6>
+
+        <div class="mb-3">
+          <label class="form-label">OG Title</label>
+          {{ form.og_title }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">OG Description</label>
+          {{ form.og_description }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">OG Image</label>
+
+          {% if object.og_image %}
+          <div class="mb-2">
+            <img
+              src="{{ object.og_image.url }}"
+              width="120"
+              class="rounded border"
+            />
+          </div>
+          {% endif %} {{ form.og_image }}
+        </div>
+
+        <hr />
+
+        <!-- STATUS -->
+
+        <div class="form-check mb-4">
+          {{ form.is_active }}
+          <label class="form-check-label">Active</label>
+        </div>
+
+        <!-- BUTTONS -->
+
+        <button type="submit" class="btn btn-primary">Save Doctor</button>
+
+        <a
+          href="{% url 'administrator:doctor-list' %}"
+          class="btn btn-secondary"
+        >
+          Cancel
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
