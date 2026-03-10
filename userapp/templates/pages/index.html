@@ -1,0 +1,527 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block title %}Home | Elister Med{% endblock %}
+
+{% block content %}
+
+<!-- SECTION 1 HERO -->
+<section id="heroCarousel" class="carousel slide" data-bs-touch="true" data-bs-interval="4500"
+        data-bs-ride="carousel" data-bs-pause="false">
+
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+    </div>
+
+    <div class="carousel-inner">
+
+        <div class="carousel-item active"
+             style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+             url('{% static "assets/images/siteimages/Background image.jpg" %}');
+             background-size:cover; background-position:center; height:100vh;">
+
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+
+                    <div class="col-lg-6 text-white">
+
+                        <h1 class="fw-bold">
+                            Trusted Care and
+                            Compassionate Treatment
+                        </h1>
+
+                        <p class="lead my-4">
+                            We provide the best medical services for you
+                            and your family.
+                        </p>
+
+                        <a href="#" class="btn btn-custom">Book Now</a>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="carousel-item"
+             style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+             url('{% static "assets/images/siteimages/Background image.jpg" %}');
+             background-size:cover; background-position:center; height:100vh;">
+
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+
+                    <div class="col-lg-6 text-white">
+
+                        <h1 class="fw-bold">
+                            Modern Facilities
+                            Expert Doctors
+                        </h1>
+
+                        <p class="lead my-4">
+                            Experience world-class healthcare with our
+                            state-of-the-art technology.
+                        </p>
+
+                        <a href="#" class="btn btn-custom">Book Now</a>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SECTION 2 SERVICES -->
+  <!-- Section 2 -->
+    <section class="py-5 mobile-hide-bg"
+        style="background-image: url('{% static 'assets/images/siteimages/abt_img.jpg' %}');
+background-size: contain;
+background-position: center;
+background-repeat: no-repeat;">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-2 offset-md-1">
+                    <div class="service-card p-5  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/icon 1.png' %}">
+                        <h5 class="text-blue-dark p-2 ">Speciality Clinics</h5>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="service-card p-5 reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/icon 2.png' %}">
+                        <h5 class="text-blue-dark p-2  ">Home Care Services</h5>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="service-card p-5 reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/icon 3.png' %}">
+                        <h5 class="text-blue-dark p-2  ">Cutting Edge Facility</h5>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="service-card p-5  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/icon 4.png' %}">
+                        <h5 class="text-blue-dark p-2 ">Emergency Help 24/7</h5>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="service-card p-5  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/icon 5.png' %}">
+                        <h5 class="text-blue-dark ">In-House Pharmacy</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+ <!-- Section 3 -->
+    <section class="section-padding" style="background-color: #f7f7f7;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <h6 class="text-blue fw-bold reveal reveal-right">About Us</h6>
+                    <h2 class="display-5 fw-bold mb-4 text-blue-medium  reveal reveal-left">Delivering World Class
+                        Healthcare</h2>
+                    <img src="{% static 'assets/images/siteimages/section 3 Image 1.png' %}"
+                        class=" reveal reveal-right img-fluid rounded-corner mb-4" alt="Doctor Hand">
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-3 img-grid">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <img class="reveal reveal-right" src="{% static 'assets/images/siteimages/section 3 Image 2.png' %}"
+                                alt="Clinic">
+                            <p class="text-muted py-4  reveal reveal-left">
+                                We bring our heritage of excellence in healthcare from India to Dubai. With an
+                                unwavering commitment to quality, our superspeciality clinic offers 360° medical
+                                services, combining expert physicians, cutting-edge diagnostics, and patient-first
+                                care—all under one roof.
+                            </p>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12  reveal reveal-right">
+                            <img src="{% static 'assets/images/siteimages/section 3 Image 3.png' %}" alt="Lab">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Section 4 -->
+    <!-- linear-gradient(rgba(0, 60, 120, 0.6), rgba(0, 60, 120, 0.6)),  -->
+ 
+    <section class="blue-section" style="
+  
+        background-image: url('{% static 'assets/images/siteimages/section-4-hero.jpeg' %}');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 80px 0; 
+        color: white; 
+        position: relative;">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-lg-6 text-start">
+                    <h6 class="text-blue fw-bold  reveal reveal-left">Bringing Elister's Proven Care and Expertise to
+                        Dubai</h6>
+                    <h2 class="mb-3  reveal reveal-right">We Provide Comprehensive Medical <br
+                            class="mobile-hide-element"> Care for Every
+                        Member of Your Family</h2>
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-6 text-start  reveal reveal-left">
+                    <p>
+                        ELISTER MED brings trusted Indian healthcare excellence to Dubai, offering complete,
+                        patient-centered medical care under one roof. Coming Soon at ELISTER MED – Expanding Our
+                        Expertise We’re growing to serve you better. ELISTER MED is proud to announce the upcoming
+                        launch of new superspeciality departments, bringing even more expert care under one roof.
+                    </p>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-3 col-6">
+                    <div class="feature-icon-box  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/Icon 1 section 4.png' %}">
+                        <p>Pulmonology <br>Department</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-icon-box  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/Icon 2 section 4.png' %}">
+                        <p>Educrine <br>Surgery</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-icon-box  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/Icon_3 _section 4.png' %}">
+                        <p>Gastro <br>Surgery</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-icon-box  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/Icon 4 section 4.png' %}">
+                        <p>Neuro <br>Surgery</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-md-3 col-6">
+                    <div class="feature-icon-box  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/Icon 5 section 4.png' %}">
+                        <p>Dentistry</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-icon-box  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/Icon 6 section 4.png' %}">
+                        <p>Orthopedics</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-icon-box  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/Icon 7 section 4.png' %}">
+                        <p>Dermatology</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-icon-box  reveal reveal-left">
+                        <img src="{% static 'assets/images/siteimages/Icon 8 section 4.png' %}">
+                        <p>Pediatrics</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col justify-content-center">
+                    <button class="btn btn-light btn-custom reveal reveal-right">Read More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+       <!-- Section 5 -->
+    <section class="py-5" style="background-color: #f8f9fa;">
+        <div class="container text-center mb-5">
+            <h6 class="text-blue mb-2 fw-bold  reveal reveal-left">Our Staff</h6>
+            <h2 class="text-blue-dark fw-bold  reveal reveal-right">Meet Our Consultants & Medical Specialists</h2>
+        </div>
+
+        <div class="container">
+            <div id="doctorCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active">
+                        <div class="doctor-card mx-auto shadow-sm"
+                            style="background: #fff; border-radius: 40px; overflow: hidden; max-width: 900px;">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-6 p-4 text-center  reveal reveal-left">
+                                    <h4 style="color: #0056b3; font-weight: 700;">Dr. Michael</h4>
+                                    <p class="text-muted small fw-bold mb-2">MBBS/MD</p>
+                                    <h5 class="fw-bold mb-4">Neurology Expert</h5>
+                                    <p class="text-muted px-lg-5">Medical care encompasses a range of services aimed at
+                                        promoting health, preventing disease</p>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <div
+                                        style="border-radius: 100px 0 0 100px; padding-left: 50px; display: inline-block;">
+                                        <img src="./assets/images/elister page 6 image 1.png" alt="Doctor"
+                                            class="img-fluid" style="height: 350px; width: auto; object-fit: cover;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="doctor-card mx-auto shadow-sm"
+                            style="background: #fff; border-radius: 40px; overflow: hidden; max-width: 900px;">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-6 p-4 text-center  reveal reveal-right">
+                                    <h4 style="color: #0056b3; font-weight: 700;">Dr. Sarah Smith</h4>
+                                    <p class="text-muted small fw-bold mb-2">MD, Cardiology</p>
+                                    <h5 class="fw-bold mb-4">Heart Specialist</h5>
+                                    <p class="text-muted px-lg-5">Providing advanced cardiovascular treatments with a
+                                        focus on patient-centered recovery.</p>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <div
+                                        style="border-radius: 100px 0 0 100px; padding-left: 50px; display: inline-block;">
+                                        <img src="./assets/images/elister page 6 image 2.png" alt="Doctor"
+                                            class="img-fluid" style="height: 350px; width: auto; object-fit: cover;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="doctor-card mx-auto shadow-sm"
+                            style="background: #fff; border-radius: 40px; overflow: hidden; max-width: 900px;">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-6 p-4 text-center  reveal reveal-left">
+                                    <h4 style="color: #0056b3; font-weight: 700;">Dr. James Wilson</h4>
+                                    <p class="text-muted small fw-bold mb-2">BDS, MDS</p>
+                                    <h5 class="fw-bold mb-4">Orthodontic Expert</h5>
+                                    <p class="text-muted px-lg-5">Specializing in corrective dental procedures to bring
+                                        back your confident smile.</p>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <div
+                                        style="border-radius: 100px 0 0 100px; padding-left: 50px; display: inline-block;">
+                                        <img src="./assets/images/elister page 6 image 3.png" alt="Doctor"
+                                            class="img-fluid" style="height: 350px; width: auto; object-fit: cover;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="doctor-card mx-auto shadow-sm"
+                            style="background: #fff; border-radius: 40px; overflow: hidden; max-width: 900px;">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-6 p-4 text-center  reveal reveal-left">
+                                    <h4 style="color: #0056b3; font-weight: 700;">Dr. Allen Jellybean</h4>
+                                    <p class="text-muted small fw-bold mb-2">BDS, MDS</p>
+                                    <h5 class="fw-bold mb-4">Orthodontic Expert</h5>
+                                    <p class="text-muted px-lg-5">Specializing in corrective dental procedures to bring
+                                        back your confident smile.</p>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <div
+                                        style="border-radius: 100px 0 0 100px; padding-left: 50px; display: inline-block;">
+                                        <img src="./assets/images/siteimages/doctor 1.png" alt="Doctor"
+                                            class="img-fluid" style="height: 350px; width: auto; object-fit: cover;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#doctorCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-icon"><i class="fas fa-chevron-left"></i></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#doctorCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-icon"><i class="fas fa-chevron-right"></i></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+      <!-- Section 6 -->
+    <section class="why-choose-section py-5"
+        style="background: #00bcd4; color: white; position: relative; overflow: hidden;">
+        <div class="bg-shape-overlay"></div>
+
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-lg-6  reveal reveal-left">
+                            <h6 class="mb-2" style="letter-spacing: 1px; font-size: 0.9rem;">Why Choose
+                                Elister
+                            </h6>
+                            <h2 class="display-6 fw-bold mb-4">The Best Medical And <br> General Practice Care!</h2>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-6  reveal reveal-right">
+                            <p class="mb-5 opacity-90" style="line-height: 1.8;">
+                                At Elister Hospital, we believe that quality healthcare goes beyond treatment it is
+                                about trust,
+                                comfort, and consistent support. Our hospital is designed to provide a safe.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="feature-rows">
+                        <div class="row align-items-center border-bottom border-light py-4">
+                            <div class="col-1">
+                                <img src="./assets/images/siteimages/Icon 1 section 6.png" style="height: 80px;">
+                            </div>
+                            <div class="col-4  reveal reveal-left">
+                                <h5 class="mb-1 fw-bold text-start">EXPERT DOCTORS</h5>
+                            </div>
+                            <div class="col-4">
+                                <p class="small mb-0 opacity-75 text-start  reveal reveal-right">
+                                    Our team of highly qualified specialists brings years of experience across multiple
+                                    medical fields.
+                                </p>
+                                <img class="why-choose-section-img"
+                                    src="./assets/images/siteimages/Section 6 Image 1.png">
+                            </div>
+                            <div class="col-3 text-end  reveal reveal-left">
+                                <a href="#" class="text-white text-decoration-none small">Know More &rarr;</a>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center border-bottom border-light py-4">
+                            <div class="col-1">
+                                <img src="./assets/images/siteimages/Icon 2 section 6.png" style="height: 80px;">
+                            </div>
+                            <div class="col-4">
+                                <h5 class="mb-1 fw-bold text-start  reveal reveal-left">MODERN INFRASTRUCTURE</h5>
+                            </div>
+                            <div class="col-4">
+                                <p class="small mb-0 opacity-75 text-start  reveal reveal-right">
+                                    Our team of highly qualified specialists brings years of experience across multiple
+                                    medical fields.
+                                </p>
+                            </div>
+                            <div class="col-3 text-end">
+                                <a href="#" class="text-white text-decoration-none small  reveal reveal-left">Know More
+                                    &rarr;</a>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center py-4">
+                            <div class="col-1">
+                                <img src="./assets/images/siteimages/Icon 3 section 6.png" style="height: 80px;">
+                            </div>
+                            <div class="col-4">
+                                <h5 class="mb-1 fw-bold text-start  reveal reveal-left">24/7 EMERGENCY SUPPORT</h5>
+                            </div>
+                            <div class="col-4">
+                                <p class="small mb-0 opacity-75 text-start  reveal reveal-right">
+                                    Our team of highly qualified specialists brings years of experience across multiple
+                                    medical fields.
+                                </p>
+                            </div>
+                            <div class="col-3 text-end">
+                                <a href="#" class="text-white text-decoration-none small  reveal reveal-left">Know More
+                                    &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ <!-- Section 7 -->
+     <section class="py-5" style="background-color: #ffffff;">
+        <div class="container">
+            <div class="row align-items-end mb-5">
+                <div class="col-md-6  reveal reveal-left">
+                    <h3 style="color: #008eb3; font-weight: 700; margin-bottom: 5px;">Our Blogs</h3>
+                    <h5 style="color: #333; font-weight: 600;">Articles from Elister</h5>
+                </div>
+                <div class="col-md-6 text-md-end  reveal reveal-right">
+                    <a href="#" class="btn btn-view-more  mobile-hide-element">View More &rsaquo;</a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4  reveal reveal-left">
+                    <div class="blog-card">
+                        <div class="blog-img-wrapper">
+                            <img src="./assets/images/elister page 8 image 1.png" alt="Sleep and Health"
+                                class="img-fluid">
+                        </div>
+                        <div class="blog-content mt-3">
+                            <h5 class="blog-title">Sleep and Health: Why Rest Is a Medical Priority</h5>
+                            <p class="blog-date">2025-02-01</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4  reveal reveal-left">
+                    <div class="blog-card">
+                        <div class="blog-img-wrapper">
+                            <img src="./assets/images/elister page 8 image 2.png" alt="Pediatric Checkups"
+                                class="img-fluid">
+                        </div>
+                        <div class="blog-content mt-3">
+                            <h5 class="blog-title">Why Pediatric Checkups Are Essential for Baby's Growth</h5>
+                            <p class="blog-date">2025-07-11</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4  reveal reveal-left">
+                    <div class="blog-card">
+                        <div class="blog-img-wrapper">
+                            <img src="./assets/images/elister page 8 image 3.png" alt="Vaccination" class="img-fluid">
+                        </div>
+                        <div class="blog-content mt-3">
+                            <h5 class="blog-title">Importance of Vaccination for All Ages</h5>
+                            <p class="blog-date">2025-12-11</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center desktop-hide-element  reveal reveal-left">
+                <a href="#" class="btn btn-view-more ">View More &rsaquo;</a>
+            </div>
+        </div>
+    </section>
+
+ <!-- Section 8 -->
+    <section style="position: relative; width: 100%; overflow: hidden;">
+        <img src="{% static 'assets/images/elister page 9 image Background.png' %}" class="img-pop reveal reveal-right"
+            style="width: 100%; height: auto; display: block;">
+
+        <div class="img-pop-content">
+            <div class="container">
+                <div class="row align-items-center" style="padding-top: 120px;">
+                    <div class="col-4"></div>
+                    <div class="col-md-4 text-center">
+                        <h3 class="text-white reveal reveal-left">Rebuilding Smiles Through Advanced Care</h3>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <button class="btn-custom reveal reveal-left">+ Book an Appointment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

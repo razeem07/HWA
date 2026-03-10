@@ -1,10 +1,10 @@
-{% extends "administrator/shared/base.html" %} {% block title %}Add Doctor{%
-endblock %} {% block content %}
+{% extends "administrator/shared/base.html" %} {% block title %}Add Doctor
+{%endblock %} {% block content %}
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-8">
       <h4 class="mb-4">Manage Doctor</h4>
-
+       {{ form.errors }}
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %} {{ form.media }}
 
@@ -206,4 +206,34 @@ endblock %} {% block content %}
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const branchField = document.getElementById("id_branch");
+    const specializationField = document.getElementById("id_specialization");
+
+    branchField.addEventListener("change", function () {
+      const branchId = this.value;
+
+      if (!branchId) return;
+
+      fetch(`/administrator/ajax/load-specializations/?branch=${branchId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          specializationField.innerHTML =
+            '<option value="">Select Specialization</option>';
+
+          data.forEach(function (item) {
+            const option = document.createElement("option");
+
+            option.value = item.id;
+            option.textContent = item.name;
+
+            specializationField.appendChild(option);
+          });
+        });
+    });
+  });
+</script>
+
 {% endblock %}

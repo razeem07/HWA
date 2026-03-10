@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
 
@@ -231,8 +232,22 @@ class Doctor(SEOModel):
         auto_now=True
     )
 
+
+
+    def clean(self):
+
+       if self.branch and self.specialization:
+
+         if self.specialization.branch_id != self.branch_id:
+
+            raise ValidationError(
+                "Selected specialization does not belong to the chosen branch."
+            )
+
     class Meta:
         ordering = ["user__first_name"]
+
+    
 
     def __str__(self):
         return f"Dr. {self.user.first_name} {self.user.last_name}"

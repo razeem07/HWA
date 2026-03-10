@@ -8,6 +8,7 @@ from .models import Branch,Specialization,Doctor
 from .forms import BranchForm,SpecializationForm,DoctorForm
 from django.contrib.auth import get_user_model
 from django.db import transaction
+from django.http import JsonResponse
 
 User = get_user_model()
 
@@ -189,3 +190,17 @@ class DoctorDeleteView(DeleteView):
     model = Doctor
     template_name = "administrator/doctor/confirm_delete.html"
     success_url = reverse_lazy("administrator:doctor-list")
+
+
+
+
+
+def load_specializations(request):
+
+    branch_id = request.GET.get("branch")
+
+    specializations = Specialization.objects.filter(
+        branch_id=branch_id
+    ).values("id", "name")
+
+    return JsonResponse(list(specializations), safe=False)

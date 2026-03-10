@@ -1,0 +1,259 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block title %}Home | Elister Med{% endblock %}
+
+{% block content %}
+
+ 
+   <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-custom">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
+                </ol>
+            </nav>
+            <h1>About Eleister Med</h1>
+            <p class="lead">Bringing Excellence in Healthcare from India to Dubai</p>
+        </div>
+    </section>
+
+  <!-- Contact Info Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4>Location</h4>
+                        <p>SM Street, Kolalampur Road<br>Kozhikode, 671544<br>India</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h4>Phone</h4>
+                        <p><a href="tel:+918338335244" style="color: var(--text-muted); text-decoration: none;">+91 833
+                                833 5244</a><br>
+                            <a href="tel:+918338335245" style="color: var(--text-muted); text-decoration: none;">+91 833
+                                833 5245</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4>Email</h4>
+                        <p><a href="mailto:elister@gmail.com"
+                                style="color: var(--text-muted); text-decoration: none;">elister@gmail.com</a><br>
+                            <a href="mailto:support@elister.com"
+                                style="color: var(--text-muted); text-decoration: none;">support@elister.com</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4>Emergency</h4>
+                        <p>24/7 Emergency Services<br>
+                            <a href="tel:+918338335244"
+                                style="color: var(--primary-color); text-decoration: none; font-weight: 600;">+91 833
+                                833 5244</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact + Map Combined Section -->
+    <section class="form-map-section section-padding">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <!-- LEFT SIDE - CONTACT FORM -->
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h6 class="section-title">Send us a Message</h6>
+                    <h2 class="section-heading">We'd Love to Hear From You</h2>
+                    <!-- <p class="mb-4">
+                        Have a question or feedback? Fill out the form below and we'll get back to you as
+                        soon as possible.
+                    </p> -->
+
+                    <div class="contact-form-wrapper">
+                        <div class="success-message" id="successMessage">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Thank you! Your message has been sent successfully.
+                        </div>
+
+                        <div class="error-message" id="errorMessage">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            <span id="errorText">An error occurred. Please try again.</span>
+                        </div>
+
+                        <form id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Full Name *</label>
+                                    <input type="text" name="name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email Address *</label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="tel" name="phone" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Subject *</label>
+                                    <input type="text" name="subject" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Message *</label>
+                                <textarea name="message" class="form-control" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-submit">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE - MAP -->
+                <div class="col-lg-6">
+                    <!-- <h6 class="section-title">Visit Us</h6>
+                    <h2 class="section-heading">Our Location</h2> -->
+
+                    <div class="map-section">
+                        <iframe class="map-container"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3909.5519938547987!2d75.78033!3d11.25682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba4594a6f6f6f6f%3A0x6f6f6f6f6f6f6f6f!2sKozhikode%2C%20Kerala!5e0!3m2!1sen!2sin!4v1234567890"
+                            allowfullscreen="" loading="lazy"
+                            style="width:100%; height:100%; min-height:500px; border:0;">
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Hours Section -->
+    <section class="hours-section section-padding">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="hours-card">
+                        <div class="hours-title">
+                            <i class="fas fa-hospital"></i>
+                            Outpatient Hours
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Monday - Friday</span>
+                            <span class="hours-time">9:00 AM - 8:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Saturday</span>
+                            <span class="hours-time">10:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Sunday</span>
+                            <span class="hours-time">10:00 AM - 4:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="hours-card">
+                        <div class="hours-title">
+                            <i class="fas fa-stethoscope"></i>
+                            Consultation Hours
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Monday - Wednesday</span>
+                            <span class="hours-time">9:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Thursday - Friday</span>
+                            <span class="hours-time">9:00 AM - 7:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Saturday</span>
+                            <span class="hours-time">10:00 AM - 3:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="hours-card">
+                        <div class="hours-title">
+                            <i class="fas fa-clock"></i>
+                            Emergency Services
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">24/7</span>
+                            <span class="hours-time">Open 24 Hours</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Including Holidays</span>
+                            <span class="hours-time">Always Available</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Emergency Line</span>
+                            <span class="hours-time">+91 833 833 5244</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section-padding">
+        <div class="cta-section">
+            <h2>Need Immediate Medical Assistance?</h2>
+            <p>Our 24/7 emergency team is ready to help you at any time</p>
+            <a href="tel:+918338335244" class="btn-light-custom">Call Emergency Hotline</a>
+        </div>
+    </section>
+
+
+
+
+
+
+ <!-- Section 8
+    <section style="position: relative; width: 100%; overflow: hidden;">
+        <img src="{% static 'assets/images/elister page 9 image Background.png' %}" class="img-pop reveal reveal-right"
+            style="width: 100%; height: auto; display: block;">
+
+        <div class="img-pop-content">
+            <div class="container">
+                <div class="row align-items-center" style="padding-top: 120px;">
+                    <div class="col-4"></div>
+                    <div class="col-md-4 text-center">
+                        <h3 class="text-white reveal reveal-left">Rebuilding Smiles Through Advanced Care</h3>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <button class="btn-custom reveal reveal-left">+ Book an Appointment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+{% endblock %}

@@ -1,0 +1,459 @@
+{% extends "shared/base.html" %} {% load static %} {% block title %}Home |
+Elister Med{% endblock %} {% block content %}
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-5">
+                    <img src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800"
+                        alt="Dr. Ananya Nair" class="doctor-hero-image">
+                </div>
+                <div class="col-lg-7">
+                    <div class="doctor-hero-content">
+                        <h1>Dr. Ananya Nair</h1>
+                        <div class="doctor-specialty">Interventional Cardiologist</div>
+
+                        <div class="info-badges">
+                            <div class="info-badge">
+                                <i class="bi bi-calendar3"></i>
+                                <span>22 Years Experience</span>
+                            </div>
+                            <div class="info-badge">
+                                <i class="bi bi-globe"></i>
+                                <span>English, Malayalam, Hindi</span>
+                            </div>
+                            <div class="info-badge">
+                                <i class="bi bi-map-pin"></i>
+                                <span>Main Medical Center</span>
+                            </div>
+                        </div>
+
+                        <p class="doctor-bio">
+                            Dr. Ananya Nair is a highly skilled interventional cardiologist with extensive
+                            experience in advanced cardiovascular procedures. She specializes in coronary
+                            angioplasty, stenting, and minimally invasive cardiac treatments. Known for her
+                            patient-focused approach, Dr. Ananya combines modern medical technology with
+                            compassionate care to ensure the best outcomes for her patients.
+                        </p>
+
+                        <div class="action-buttons">
+                            <button class="btn-action btn-primary-action">
+                                <a href="appoinment.html"> <i class="bi bi-calendar-check"
+                                        style="margin-right: 10px;"></i>Book Appointment</a>
+                            </button>
+                            <button class="btn-action btn-secondary-action">
+                                <i class="bi bi-telephone"></i>Call Clinic
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <hr style="border-top: 2px solid #e0f7fa; opacity: 1;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="content-section section-bg-light about-section">
+        <div class="container">
+            <h2 class="section-title">About Dr. Ananya Nair</h2>
+
+            <div class="row g-5 mt-3">
+                <div class="col-lg-8">
+                    <p class="fs-5 mb-4" style="line-height: 1.8; color: var(--text-gray);">
+                        Dr. Ananya Nair completed her MBBS from a reputed medical university and later
+                        specialized in Internal Medicine (MD). She pursued super-specialty training in
+                        Cardiology (DM) with a focus on interventional cardiac procedures.
+                    </p>
+
+                    <p class="fs-5 mb-4" style="line-height: 1.8; color: var(--text-gray);">
+                        With years of clinical experience, Dr. Ananya has successfully handled complex
+                        cardiac interventions including angioplasty and coronary stenting. She is well
+                        known for her precision, modern treatment methods, and patient safety standards.
+                    </p>
+
+                    <p class="fs-5" style="line-height: 1.8; color: var(--text-gray);">
+                        She actively participates in cardiology research programs and international
+                        conferences to stay updated with advanced heart care techniques. She is also
+                        passionate about patient awareness and preventive cardiac care.
+                    </p>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Successful Procedures</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                        <!-- <div class="stat-card">
+                            <div class="stat-number">22</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div> -->
+                        <div class="stat-card">
+                            <div class="stat-number">10k+</div>
+                            <div class="stat-label">Patients Treated</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION & QUALIFICATIONS -->
+    <section class="content-section section-bg-gradient">
+        <div class="container">
+            <h2 class="section-title">Education & Qualifications</h2>
+
+            <div class="row mt-4 g-3">
+                <!-- Compact Education Grid -->
+                <div class="col-lg-7">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+                        <!-- Doctorate -->
+                        <div
+                            style="background: white; padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); transition: all 0.3s;">
+                            <div
+                                style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">
+                                Doctorate</div>
+                            <div
+                                style="font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin-bottom: 0.3rem;">
+                                DM (Cardiology)</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray);">Leading Cardiac Institute</div>
+                        </div>
+
+                        <!-- Master's -->
+                        <div
+                            style="background: white; padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); transition: all 0.3s;">
+                            <div
+                                style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">
+                                Master's</div>
+                            <div
+                                style="font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin-bottom: 0.3rem;">
+                                MD (Internal Medicine)</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray);">Government Medical College</div>
+                        </div>
+
+                        <!-- Bachelor's -->
+                        <div
+                            style="background: white; padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); transition: all 0.3s;">
+                            <div
+                                style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">
+                                Bachelor's</div>
+                            <div
+                                style="font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin-bottom: 0.3rem;">
+                                MBBS</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray);">Medical University, India</div>
+                        </div>
+
+                        <!-- Fellowship -->
+                        <div
+                            style="background: white; padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); transition: all 0.3s;">
+                            <div
+                                style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">
+                                Fellowship</div>
+                            <div
+                                style="font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin-bottom: 0.3rem;">
+                                Int. Cardiology</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray);">USA (2 Years)</div>
+                        </div>
+
+                        <!-- Advanced Training -->
+                        <div
+                            style="background: white; padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); transition: all 0.3s;">
+                            <div
+                                style=" grid-column: span 2; font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">
+                                Advanced</div>
+                            <div
+                                style="font-size: 0.95rem; color: var(--text-dark); font-weight: 700; margin-bottom: 0.3rem;">
+                                PCI Training</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray);">International Centers</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compact Certifications -->
+                <div class="col-lg-5">
+                    <div
+                        style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); height: 100%;">
+                        <h6
+                            style="color: var(--text-dark); font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); margin-bottom: 1rem;">
+                            <i class="bi bi-award-fill me-2"></i>Certifications
+                        </h6>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; font-size: 0.9rem; color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill" style="color: var(--primary); font-size: 1rem;"></i>
+                                <span>Board Certified Cardiologist</span>
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; font-size: 0.9rem; color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill" style="color: var(--primary); font-size: 1rem;"></i>
+                                <span>NMC Registration</span>
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; font-size: 0.9rem; color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill" style="color: var(--primary); font-size: 1rem;"></i>
+                                <span>ACLS Certified</span>
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; font-size: 0.9rem; color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill" style="color: var(--primary); font-size: 1rem;"></i>
+                                <span>BLS Provider</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERTISE & SPECIALIZATIONS -->
+    <section class="content-section section-bg-light">
+        <div class="container">
+            <h2 class="section-title">Areas of Expertise</h2>
+
+            <div class="row mt-4">
+                <div class="col-lg-8">
+                    <div class="subsection-title mb-4">Clinical Expertise</div>
+                    <div class="expertise-container">
+                        <div class="expertise-tag">Coronary Angiography</div>
+                        <div class="expertise-tag">Percutaneous Coronary Intervention</div>
+                        <div class="expertise-tag">Coronary Stenting</div>
+                        <div class="expertise-tag">Balloon Angioplasty</div>
+                        <div class="expertise-tag">Rotational Atherectomy</div>
+                        <div class="expertise-tag">Chronic Total Occlusions</div>
+                        <div class="expertise-tag">Acute MI Management</div>
+                        <div class="expertise-tag">Bifurcation Lesions</div>
+                    </div>
+
+                    <div class="subsection-title mb-4 mt-5">Medical Conditions Treated</div>
+                    <div class="expertise-container">
+                        <div class="expertise-tag">Acute Coronary Syndrome</div>
+                        <div class="expertise-tag">Stable Angina</div>
+                        <div class="expertise-tag">Heart Failure</div>
+                        <div class="expertise-tag">Arrhythmias</div>
+                        <div class="expertise-tag">Myocardial Infarction</div>
+                        <div class="expertise-tag">Valvular Heart Disease</div>
+                        <div class="expertise-tag">Congenital Heart Disease</div>
+                        <div class="expertise-tag">Cardiomyopathy</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div
+                        style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+                        <h5 class="mb-4" style="color: var(--text-dark); font-weight: 700;">Professional Memberships
+                        </h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e5e7eb; color: var(--text-gray);">
+                                <i class="bi bi-award-fill me-2" style="color: var(--primary);"></i>
+                                Indian Heart Association
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e5e7eb; color: var(--text-gray);">
+                                <i class="bi bi-award-fill me-2" style="color: var(--primary);"></i>
+                                American College of Cardiology
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #e5e7eb; color: var(--text-gray);">
+                                <i class="bi bi-award-fill me-2" style="color: var(--primary);"></i>
+                                European Society of Cardiology
+                            </li>
+                            <li style="padding: 0.75rem 0; color: var(--text-gray);">
+                                <i class="bi bi-award-fill me-2" style="color: var(--primary);"></i>
+                                Association of Cardiovascular Surgeons
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CLINIC LOCATION -->
+    <section class="content-section section-bg-light">
+        <div class="container">
+            <h2 class="section-title">Clinic Location & Hours</h2>
+
+            <div class="row g-5 mt-4">
+                <div class="col-lg-6">
+                    <div class="location-card">
+                        <img src="https://images.pexels.com/photos/263402/pexels-photo-263402.jpeg" alt="Clinic"
+                            class="location-image">
+                        <div class="location-details">
+                            <div class="location-name">Main Medical Center</div>
+                            <div class="location-address">
+                                Medical Hub Complex ,
+                                Kozhikode, Kerala 673001 ,
+                                India
+                            </div>
+
+                            <div class="location-info">
+                                <div class="location-info-item">
+                                    <i class="bi bi-clock"></i>
+                                    <div>
+                                        <strong>Monday - Friday:</strong> 9:00 AM - 5:00 PM<br>
+                                        <strong>Saturday:</strong> 9:00 AM - 1:00 PM<br>
+                                        <strong>Sunday:</strong> Closed
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="location-info">
+                                <div class="location-info-item">
+                                    <i class="bi bi-telephone"></i>
+                                    <a href="tel:+918338335244"
+                                        style="color: var(--primary); text-decoration: none;">+91 833 833 5244</a>
+                                </div>
+                                <div class="location-info-item">
+                                    <i class="bi bi-envelope"></i>
+                                    <a href="mailto:ananya.nair@eleistermed.com"
+                                        style="color: var(--primary); text-decoration: none;">ananya.nair@eleistermed.com</a>
+                                </div>
+                            </div>
+
+                            <div class="location-actions">
+                                <button class="location-btn btn-primary-custom" style="flex: 1;">
+                                    <i class="bi bi-calendar-check me-2"></i>Book Appointment
+                                </button>
+                                <button class="location-btn"
+                                    style="background: white; color: var(--primary); border: 2px solid var(--primary);">
+                                    <i class="bi bi-map me-2"></i>Get Directions
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div style="background: #e6f7fb; padding: 2rem; border-radius: 12px; height: 100%;">
+                        <h5 class="mb-4" style="color: var(--text-dark); font-weight: 700;">Clinic Facilities</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li
+                                style="padding: 1rem 0; border-bottom: 1px solid rgba(0, 142, 179, 0.2); color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill me-3"
+                                    style="color: var(--primary); font-size: 1.3rem;"></i>
+                                <span><strong>State-of-the-art catheterization lab</strong> with latest imaging
+                                    technology</span>
+                            </li>
+                            <li
+                                style="padding: 1rem 0; border-bottom: 1px solid rgba(0, 142, 179, 0.2); color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill me-3"
+                                    style="color: var(--primary); font-size: 1.3rem;"></i>
+                                <span><strong>ICU & monitoring</strong> with 24/7 cardiac care</span>
+                            </li>
+                            <li
+                                style="padding: 1rem 0; border-bottom: 1px solid rgba(0, 142, 179, 0.2); color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill me-3"
+                                    style="color: var(--primary); font-size: 1.3rem;"></i>
+                                <span><strong>Echocardiography</strong> and diagnostic imaging</span>
+                            </li>
+                            <li
+                                style="padding: 1rem 0; border-bottom: 1px solid rgba(0, 142, 179, 0.2); color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill me-3"
+                                    style="color: var(--primary); font-size: 1.3rem;"></i>
+                                <span><strong>Rehabilitation services</strong> for cardiac recovery</span>
+                            </li>
+                            <li
+                                style="padding: 1rem 0; border-bottom: 1px solid rgba(0, 142, 179, 0.2); color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill me-3"
+                                    style="color: var(--primary); font-size: 1.3rem;"></i>
+                                <span><strong>Comfortable consultation rooms</strong> with modern amenities</span>
+                            </li>
+                            <li style="padding: 1rem 0; color: var(--text-gray);">
+                                <i class="bi bi-check-circle-fill me-3"
+                                    style="color: var(--primary); font-size: 1.3rem;"></i>
+                                <span><strong>Parking & accessibility</strong> for patient convenience</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="content-section section-bg-gradient ">
+        <div class="container">
+            <h2 class="section-title">Patient Testimonials</h2>
+
+            <div class="row g-4 mt-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">★★★★★</div>
+                        <div class="testimonial-text">
+                            "Dr. Ananya Nair's expertise and compassion made my heart surgery experience stress-free.
+                            She
+                            explained everything clearly and her team provided excellent post-operative care."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">AK</div>
+                            <div class="testimonial-author-info">
+                                <div class="testimonial-author-name">Amit Khanna</div>
+                                <div class="testimonial-author-role">Patient</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">★★★★★</div>
+                        <div class="testimonial-text">
+                            "I was terrified about my angioplasty, but Dr. Ananya Nair and her team made me feel safe.
+                            The
+                            procedure was painless and my recovery was amazing. Highly recommended!"
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">SP</div>
+                            <div class="testimonial-author-info">
+                                <div class="testimonial-author-name">Sunita Patel</div>
+                                <div class="testimonial-author-role">Patient</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">★★★★★</div>
+                        <div class="testimonial-text">
+                            "Dr. Ananya Nair diagnosed my condition early which saved my life. Her dedication to patient
+                            care
+                            is commendable. I trust her completely with my heart health."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">RN</div>
+                            <div class="testimonial-author-info">
+                                <div class="testimonial-author-name">Ramesh Nair</div>
+                                <div class="testimonial-author-role">Patient</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA SECTION -->
+    <!-- <div class="container">
+        <div class="cta-section">
+            <h2 class="cta-title">Ready for Your Cardiac Care?</h2>
+            <p class="cta-text">Schedule a consultation with Dr. Rajesh Kumar today and take the first step towards
+                better heart health.</p>
+            <div class="cta-buttons">
+                <button class="btn-cta btn-cta-light">
+                    <i class="bi bi-calendar-check"></i>Book Appointment
+                </button>
+                <button class="btn-cta btn-cta-outline">
+                    <i class="bi bi-telephone"></i>Call +91 833 833 5244
+                </button>
+            </div>
+        </div>
+    </div> -->
+
+    {% endblock %}

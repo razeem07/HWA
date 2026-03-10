@@ -1,0 +1,363 @@
+{% extends "shared/base.html" %} {% load static %} {% block title %}Home |
+Elister Med{% endblock %} {% block content %}
+
+
+
+
+   <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-custom">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                </ol>
+            </nav>
+            <h1>About Eleister Med</h1>
+            <p class="lead">Bringing Excellence in Healthcare from India to Dubai</p>
+        </div>
+    </section>
+
+
+     <!-- SEARCH & FILTER -->
+    <section class="container mb-5">
+        <div class="search-filter-section">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold small text-uppercase text-muted mb-2">Search Doctor</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-search text-muted"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0"
+                            placeholder="Search by name or specialty...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold small text-uppercase text-muted mb-2">Specialty</label>
+                    <select class="form-select">
+                        <option selected>All Specialties</option>
+                        <option>Cardiology</option>
+                        <option>Orthopedics</option>
+                        <option>Dermatology</option>
+                        <option>Pediatrics</option>
+                        <option>Gynecology</option>
+                        <option>General Medicine</option>
+                        <option>Neurology</option>
+                        <option>ENT</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold small text-uppercase text-muted mb-2">Experience</label>
+                    <select class="form-select">
+                        <option selected>All Experience</option>
+                        <option>10+ Years</option>
+                        <option>15+ Years</option>
+                        <option>20+ Years</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary-custom w-100">
+                        <i class="bi bi-funnel me-2"></i>Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOCTORS GRID -->
+    <section id="doctors" class="container pb-5">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Our Doctors</h2>
+            <p class="section-subtitle">Highly skilled specialists dedicated to your complete healthcare</p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Doctor Card 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="doctor-card">
+                    <div class="doctor-image-wrapper">
+                        <img src="../assets/images/doctors/doctor-1.jpg" alt="Dr. Ananya Nair" class="doctor-image">
+                        <div class="doctor-badge">
+                            <i class="bi bi-star-fill"></i> Senior Consultant
+                        </div>
+                    </div>
+                    <div class="doctor-info">
+                        <a href="personal-details.html">
+                            <h3 class="doctor-name">Dr. Ananya Nair</h3>
+                        </a>
+                        <div class="doctor-specialty">Interventional Cardiologist</div>
+                        <p class="doctor-credentials">
+                            MBBS, MD (Medicine), DM (Cardiology)<br>
+                            Fellowship in Interventional Cardiology - USA
+                        </p>
+
+                        <div class="doctor-stats">
+                            <div class="stat-item">
+                                <i class="bi bi-clock-history"></i>
+                                <span>22 Years</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="bi bi-heart-pulse"></i>
+                                <span>5,000+ Cases</span>
+                            </div>
+                        </div>
+
+                        <div class="expertise-tags">
+                            <span class="tag">Angioplasty</span>
+                            <span class="tag">Coronary Stenting</span>
+                            <span class="tag">Heart Attack Care</span>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary-custom flex-grow-1">
+                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Card 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="doctor-card">
+                    <div class="doctor-image-wrapper">
+                        <img src="../assets/images/doctors/doctor-2.jpg" alt="Dr. Priya Sharma" class="doctor-image">
+                        <div class="doctor-badge">
+                            <i class="bi bi-star-fill"></i> Senior Consultant
+                        </div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Priya Sharma</h3>
+                        <div class="doctor-specialty">Orthopedic Surgeon</div>
+                        <p class="doctor-credentials">
+                            MBBS, MS (Orthopedics)<br>
+                            Fellowship in Joint Replacement - UK
+                        </p>
+
+                        <div class="doctor-stats">
+                            <div class="stat-item">
+                                <i class="bi bi-clock-history"></i>
+                                <span>18 Years</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="bi bi-bandaid"></i>
+                                <span>3,800+ Surgeries</span>
+                            </div>
+                        </div>
+
+                        <div class="expertise-tags">
+                            <span class="tag">Joint Replacement</span>
+                            <span class="tag">Arthroscopy</span>
+                            <span class="tag">Sports Injury</span>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary-custom flex-grow-1">
+                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Card 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="doctor-card">
+                    <div class="doctor-image-wrapper">
+                        <img src="../assets/images/doctors/doctor-3.jpg" alt="Dr. Mohammed Ali" class="doctor-image">
+                        <div class="doctor-badge">
+                            <i class="bi bi-award-fill"></i> Head of Department
+                        </div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Mohammed Ali</h3>
+                        <div class="doctor-specialty">Neurologist</div>
+                        <p class="doctor-credentials">
+                            MBBS, MD (Neurology)<br>
+                            Fellowship in Stroke Medicine - Germany
+                        </p>
+
+                        <div class="doctor-stats">
+                            <div class="stat-item">
+                                <i class="bi bi-clock-history"></i>
+                                <span>25 Years</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="bi bi-heart-pulse"></i>
+                                <span>6,500+ Cases</span>
+                            </div>
+                        </div>
+
+                        <div class="expertise-tags">
+                            <span class="tag">Stroke Care</span>
+                            <span class="tag">Epilepsy</span>
+                            <span class="tag">Migraine Treatment</span>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary-custom flex-grow-1">
+                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Card 4 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="doctor-card">
+                    <div class="doctor-image-wrapper">
+                        <img src="../assets/images/doctors/doctor-4.jpg" alt="Dr. Aisha Patel" class="doctor-image">
+                        <div class="doctor-badge">
+                            <i class="bi bi-star-fill"></i> Consultant
+                        </div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Aisha Patel</h3>
+                        <div class="doctor-specialty">Pediatrician</div>
+                        <p class="doctor-credentials">
+                            MBBS, MD (Pediatrics)<br>
+                            Fellowship in Neonatal Care - Canada
+                        </p>
+
+                        <div class="doctor-stats">
+                            <div class="stat-item">
+                                <i class="bi bi-clock-history"></i>
+                                <span>15 Years</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="bi bi-heart-pulse"></i>
+                                <span>3,800+ Cases</span>
+                            </div>
+                        </div>
+
+                        <div class="expertise-tags">
+                            <span class="tag">Child Development</span>
+                            <span class="tag">Vaccination</span>
+                            <span class="tag">Newborn Care</span>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary-custom flex-grow-1">
+                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Card 5 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="doctor-card">
+                    <div class="doctor-image-wrapper">
+                        <img src="../assets/images/doctors/doctor-5.jpg" alt="Dr. Vikram Singh" class="doctor-image">
+                        <div class="doctor-badge">
+                            <i class="bi bi-star-fill"></i> Senior Consultant
+                        </div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Vikram Singh</h3>
+                        <div class="doctor-specialty">General Surgeon</div>
+                        <p class="doctor-credentials">
+                            MBBS, MS (General Surgery)<br>
+                            Advanced Laparoscopic Surgery Training
+                        </p>
+
+                        <div class="doctor-stats">
+                            <div class="stat-item">
+                                <i class="bi bi-clock-history"></i>
+                                <span>20 Years</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="bi bi-heart-pulse"></i>
+                                <span>2,500+ Surgeries</span>
+                            </div>
+                        </div>
+
+                        <div class="expertise-tags">
+                            <span class="tag">Laparoscopic Surgery</span>
+                            <span class="tag">Hernia Repair</span>
+                            <span class="tag">Gallbladder Surgery</span>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary-custom flex-grow-1">
+                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Card 6 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="doctor-card">
+                    <div class="doctor-image-wrapper">
+                        <img src="../assets/images/doctors/doctor-6.jpg" alt="Dr. Sneha Menon" class="doctor-image">
+                        <div class="doctor-badge">
+                            <i class="bi bi-star-fill"></i> Consultant
+                        </div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Sneha Menon</h3>
+                        <div class="doctor-specialty">Dermatologist</div>
+                        <p class="doctor-credentials">
+                            MBBS, MD (Dermatology)<br>
+                            Certified in Cosmetic Dermatology
+                        </p>
+
+                        <div class="doctor-stats">
+                            <div class="stat-item">
+                                <i class="bi bi-clock-history"></i>
+                                <span>12 Years</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="bi bi-heart-pulse"></i>
+                                <span>3,200+ Cases</span>
+                            </div>
+                        </div>
+
+                        <div class="expertise-tags">
+                            <span class="tag">Skin Treatment</span>
+                            <span class="tag">Hair Loss Therapy</span>
+                            <span class="tag">Laser Treatment</span>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary-custom flex-grow-1">
+                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="bg-primary-custom text-white py-5 mt-5">
+        <div class="container text-center py-4">
+            <h2 class="fw-bold mb-3">Need Expert Medical Consultation?</h2>
+            <p class="lead mb-4 opacity-90">Schedule a consultation with our experienced doctors today</p>
+
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="#" class="btn btn-light btn-lg text-primary-custom rounded-pill px-5">
+                    <i class="bi bi-telephone-fill me-2"></i>Call +91 833 833 5244
+                </a>
+                <a href="#" class="btn btn-outline-light btn-lg rounded-pill px-5">
+                    <i class="bi bi-calendar-check me-2"></i>Book Online Appointment
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+{% endblock %}

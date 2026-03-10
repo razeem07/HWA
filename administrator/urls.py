@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import dashboard,BranchCreateView,BranchListView,BranchUpdateView,BranchDeleteView,SpecializationListView,SpecializationCreateView,SpecializationUpdateView,SpecializationDeleteView,DoctorCreateView,DoctorListView,DoctorUpdateView,DoctorDeleteView
+from .views import dashboard,BranchCreateView,BranchListView,BranchUpdateView,BranchDeleteView,SpecializationListView,SpecializationCreateView,SpecializationUpdateView,SpecializationDeleteView,DoctorCreateView,DoctorListView,DoctorUpdateView,DoctorDeleteView,load_specializations
+
 
 
 
@@ -19,5 +20,6 @@ urlpatterns = [
     path('doctors/create/',DoctorCreateView.as_view(),name="doctor_create"),
     path('doctors/<int:pk>/update/',DoctorUpdateView.as_view(),name="doctor-update"),
     path('doctors/<int:pk>/delete/',DoctorDeleteView.as_view(),name="doctor-delete"),
+    path('ajax/load-specializations/',load_specializations,name="load_specializations"),
 
 ]

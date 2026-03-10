@@ -10,7 +10,29 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return HttpResponse("Hospital Website – Home Page (Test)")
+  
+    return render(request, "pages/index.html")
+
+def about(request):
+  
+    return render(request, "pages/about.html")
+
+
+
+def contact(request):
+  
+    return render(request, "pages/contact.html")
+
+
+def blog_list(request):
+  
+    return render(request, "blog/list.html")
+
+def blog_detail(request):
+  
+    return render(request, "blog/detail.html")
+
+
 
 
 
@@ -60,3 +82,46 @@ def specialization_detail(request, slug):
         "seo": specialization,
         "schema": schema
     })
+
+
+
+def doctor_detail(request):
+
+      return render(request, "doctors/detail.html")
+
+
+def doctor_list(request):
+
+      return render(request, "doctors/list.html")
+
+
+def package_detail(request):
+
+      return render(request, "packages/detail.html")
+
+
+def package_list(request):
+
+      return render(request, "packages/list.html")
+
+
+
+def insurance_detail(request):
+
+      return render(request, "insurance/detail.html")
+
+
+def insurance_list(request):
+
+      return render(request, "insurance/list.html")
+
+
+
+def articles_detail(request):
+
+      return render(request, "articles/detail.html")
+
+
+def articles_list(request):
+
+      return render(request, "articles/list.html")

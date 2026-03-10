@@ -72,17 +72,19 @@ class SpecializationForm(forms.ModelForm):
         widgets = {
             'branch': forms.Select(attrs={'class': 'form-select'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'featured_image_alt':forms.TextInput(attrs={'class':'form-control'}),
             'short_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'hero_banner_alt':forms.TextInput(attrs={'class':'form-control'}),
 
             'hero_title': forms.TextInput(attrs={'class': 'form-control'}),
             'hero_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
 
             'main_title': forms.TextInput(attrs={'class': 'form-control'}),
             'main_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'main_image_alt':forms.TextInput(attrs={'class':'form-control'}),
 
             'secondary_title': forms.TextInput(attrs={'class': 'form-control'}),
-
-            
+            'secondary_image_alt':forms.TextInput(attrs={'class':'form-control'}),
 
             'meta_title': forms.TextInput(attrs={'class': 'form-control'}),
             'primary_keywords': forms.TextInput(attrs={'class': 'form-control'}),
@@ -119,6 +121,43 @@ class DoctorForm(forms.ModelForm):
     phone_number = forms.CharField(
         widget=forms.TextInput(attrs={"class": "form-control"})
     )
+
+    
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+
+
+          # Apply bootstrap styling to all fields automatically
+        for field_name, field in self.fields.items():
+
+           if field.widget.__class__.__name__ == "CheckboxInput":
+              field.widget.attrs["class"] = "form-check-input"
+           else:
+             field.widget.attrs["class"] = "form-control"
+
+        # Default: no specialization
+        self.fields["specialization"].queryset = Specialization.objects.none()
+
+        # Case 1: Editing existing doctor
+        if self.instance and self.instance.pk:
+
+            self.fields["specialization"].queryset = Specialization.objects.filter(
+                branch=self.instance.branch
+            )
+
+        # Case 2: POST request (user changed branch)
+        if "branch" in self.data:
+
+            try:
+                branch_id = int(self.data.get("branch"))
+
+                self.fields["specialization"].queryset = Specialization.objects.filter(
+                    branch_id=branch_id
+                )
+
+            except (ValueError, TypeError):
+                pass
 
     class Meta:
         model = Doctor
