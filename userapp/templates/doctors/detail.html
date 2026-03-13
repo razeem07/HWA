@@ -1,18 +1,33 @@
 {% extends "shared/base.html" %} {% load static %} {% block title %}Home |
 Elister Med{% endblock %} {% block content %}
 
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-custom">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                </ol>
+            </nav>
+            <h1>About Eleister Med</h1>
+            <p class="lead">Bringing Excellence in Healthcare from India to Dubai</p>
+        </div>
+    </section>
+
     <!-- HERO SECTION -->
-    <section class="hero-section">
+    <section class="hero-section-doctor">
         <div class="container">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-5">
-                    <img src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800"
-                        alt="Dr. Ananya Nair" class="doctor-hero-image">
-                </div>
+                    <img src="{{ doctor.profile_image.url }}"
+                        alt="{{ doctor.profile_image_alt }}" class="doctor-hero-image">
+                </div> 
                 <div class="col-lg-7">
                     <div class="doctor-hero-content">
-                        <h1>Dr. Ananya Nair</h1>
-                        <div class="doctor-specialty">Interventional Cardiologist</div>
+                        <h1>{{ doctor.user.first_name }}
+{{ doctor.user.last_name }}</h1>
+                        <div class="doctor-specialty">{{ doctor.designation}}</div>
 
                         <div class="info-badges">
                             <div class="info-badge">

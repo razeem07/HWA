@@ -1,251 +1,566 @@
 {% extends "administrator/shared/base.html" %}
-{% block title %}Add Specialization{% endblock %}
+{% block title %}Manage Specialization{% endblock %}
 
 {% block content %}
+
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-8">
 
-            <h4 class="mb-4">Manage Specialization</h4>
+<h4 class="mb-4">Manage Specialization</h4>
 
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.media }}
+<form method="post" enctype="multipart/form-data">
 
-                <!-- BASIC INFO -->
-                <div class="mb-3">
-                   
-                    <label class="form-label">Branch</label>
-                    {{ form.branch }}
-                </div>
+{% csrf_token %}
+{{ form.media }}
 
-                <div class="mb-3">
-                    <label class="form-label">Specialization Name</label>
-                    {{ form.name }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Short Description</label>
-                    {{ form.short_description }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Icon</label>
-                    {% if object.icon %}
-                    <div class="mb-2">
-                       <img src="{{ object.icon.url }}"
-                         width="120"
-                      class="rounded border">
-                    </div>
-                  {% endif %}
-
-                    {{ form.icon }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Featured Image</label>
-
-                    {% if object.featured_image %}
-                    <div class="mb-2">
-                       <img src="{{ object.featured_image.url }}"
-                         width="120"
-                      class="rounded border">
-                    </div>
-                  {% endif %}
-
-                    {{ form.featured_image }}
-                  
-
-                    
-                </div>
-                <div class="mb-3">
-                 <label class="form-label">Featured Image ALT Text</label>
-                {{ form.featured_image_alt }}
-               </div>
-
-                <hr>
-
-                <!-- HERO SECTION -->
-                <h6 class="mb-3">Hero Section</h6>
-
-                <div class="mb-3">
-                    <label class="form-label">Hero Title</label>
-                    {{ form.hero_title }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Hero Description</label>
-                    {{ form.hero_description }}
-                </div>
-
-            
-                    <label class="form-label">Hero Banner</label>
-
-                      {% if object.hero_banner  %}
-                    <div class="mb-2">
-                       <img src="{{ object.hero_banner.url }}"
-                         width="120"
-                      class="rounded border">
-                    </div>
-                  {% endif %}
-
-                    
-
-                    {{ form.hero_banner }}
-                </div>
-                <div class="mb-3">
-                <label class="form-label">Hero Image ALT Text</label>
-                  {{ form.hero_banner_alt  }}
-                </div>
-
-             
-
-                <hr>
-
-                <!-- MAIN CONTENT -->
-                <h6 class="mb-3">Main Content</h6>
-
-                <div class="mb-3">
-                    <label class="form-label">Main Title</label>
-                    {{ form.main_title }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Main Image</label>
-
-                      {% if object.main_image %}
-                    <div class="mb-2">
-                       <img src="{{ object.main_image.url }}"
-                         width="120"
-                      class="rounded border">
-                    </div>
-                  {% endif %}
-                   
-
-                    {{ form.main_image }}
-                </div>
-
-                <div class="mb-3">
-               <label class="form-label">Main Image ALT Text</label>
-                       {{ form.main_image_alt }}
-               </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Main Description</label>
-                    {{ form.main_description }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Secondary Title</label>
-                    {{ form.secondary_title }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Secondary Image</label>
-
-                    {% if object.secondary_image %}
-                    <div class="mb-2">
-                       <img src="{{ object.secondary_image.url }}"
-                         width="120"
-                      class="rounded border">
-                    </div>
-                  {% endif %}
-                    {{ form.secondary_image }}
-                </div>
-                <div class="mb-3">      
-                 <label class="form-label">Secondary Image ALT Text</label>
-                  {{ form.secondary_image_alt }}
-                </div>
-
-                <hr>
-
-                <!-- LONG CONTENT -->
-                <h6 class="mb-3">Detailed Content</h6>
-
-                <div class="mb-3">
-                    <label class="form-label">Primary Long Description</label>
-                
-                    {{ form.long_description_primary|safe }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Secondary Long Description</label>
-                    {{ form.long_description_secondary }}
-                </div>
-
-                <hr>
-
-                <!-- SEO SECTION -->
-                <h6 class="mb-3">SEO Settings</h6>
-
-                <div class="mb-3">
-                    <label class="form-label">Meta Title</label>
-                    {{ form.meta_title }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Primary Keywords</label>
-                    {{ form.primary_keywords }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Secondary Keywords</label>
-                    {{ form.secondary_keywords }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Meta Description</label>
-                    {{ form.meta_description }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Slug</label>
-                    {{ form.slug }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Canonical URL</label>
-                    {{ form.canonical_url }}
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">OG Title</label>
-                {{ form.og_title }}
-                </div>
-
-                <div class="mb-3">
-                     <label class="form-label">OG Description</label>
-                    {{ form.og_description }}
-                </div>
+<div class="accordion" id="specAccordion">
 
 
-                <div class="mb-3">
-                  <label class="form-label">OG Image</label>
+<!-- BASIC INFO -->
 
-                 {% if object.og_image %}
-                <div class="mb-2">
-                  <img src="{{ object.og_image.url }}" width="120" class="rounded border">
-               </div>
-               {% endif %}
+<div class="accordion-item">
 
-                  {{ form.og_image }}
-             </div>
+<h2 class="accordion-header">
 
-                <div class="form-check mb-4">
-                    {{ form.is_active }}
-                    <label class="form-check-label">Active</label>
-                </div>
+<button
+type="button"
+class="accordion-button"
+data-bs-toggle="collapse"
+data-bs-target="#basicInfo">
 
-                <button type="submit" class="btn btn-primary">
-                    Save Specialization
-                </button>
-                <a href="{% url 'administrator:specialization-list' %}" class="btn btn-secondary">
-                    Cancel
-                </a>
+Basic Information
 
-            </form>
+</button>
 
-        </div>
-    </div>
+</h2>
+
+<div id="basicInfo" class="accordion-collapse collapse show">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+<div class="col-md-6">
+
+<label class="form-label">Branch</label>
+{{ form.branch }}
+
 </div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">Specialization Name</label>
+{{ form.name }}
+
+</div>
+{% if form.name.errors %}
+<div class="text-danger small">
+{{ form.name.errors }}
+</div>
+{% endif %}
+
+
+<div class="col-md-12">
+
+<label class="form-label">Short Description</label>
+{{ form.short_description }}
+
+</div>
+{% if form.short_description.errors %}
+<div class="text-danger small">
+{{ form.short_description.errors }}
+</div>
+{% endif %}
+
+
+<div class="col-md-6">
+
+<label class="form-label">Icon</label>
+
+{% if object and object.icon %}
+
+<div class="mb-2">
+<img src="{{ object.icon.url }}" width="100" class="rounded border">
+</div>
+
+{% endif %}
+
+{{ form.icon }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">Featured Image</label>
+
+{% if object and object.featured_image %}
+
+<div class="mb-2">
+<img src="{{ object.featured_image.url }}" width="120" class="rounded border">
+</div>
+
+{% endif %}
+
+{{ form.featured_image }}
+
+</div>
+
+
+
+<div class="col-md-12">
+
+<label class="form-label">Featured Image ALT</label>
+{{ form.featured_image_alt }}
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+<!-- HERO SECTION -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+
+<button
+type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#heroSection">
+
+Hero Section
+
+</button>
+
+</h2>
+
+<div id="heroSection" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+<div class="col-md-6">
+
+<label class="form-label">Hero Title</label>
+{{ form.hero_title }}
+
+</div>
+
+{% if form.hero_title.errors %}
+<div class="text-danger small">
+{{ form.hero_title.errors }}
+</div>
+{% endif %}
+
+
+
+<div class="col-md-6">
+
+<label class="form-label">Hero Description</label>
+{{ form.hero_description }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">Hero Banner</label>
+
+{% if object and object.hero_banner %}
+
+<div class="mb-2">
+<img src="{{ object.hero_banner.url }}" width="120" class="rounded border">
+</div>
+
+{% endif %}
+
+{{ form.hero_banner }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">Hero Banner ALT</label>
+{{ form.hero_banner_alt }}
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+<!-- MAIN CONTENT -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+
+<button
+type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#mainContent">
+
+Main Content
+
+</button>
+
+</h2>
+
+<div id="mainContent" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+
+<div class="col-md-6">
+
+<label class="form-label">Main Title</label>
+{{ form.main_title }}
+
+</div>
+
+{% if form.main_title.errors %}
+<div class="text-danger small">
+{{ form.main_title.errors }}
+</div>
+{% endif %}
+
+
+
+<div class="col-md-6">
+
+<label class="form-label">Main Image</label>
+
+{% if object and object.main_image %}
+
+<div class="mb-2">
+<img src="{{ object.main_image.url }}" width="120" class="rounded border">
+</div>
+
+{% endif %}
+
+{{ form.main_image }}
+
+</div>
+
+
+<div class="col-md-12">
+
+<label class="form-label">Main Image ALT</label>
+{{ form.main_image_alt }}
+
+</div>
+
+
+<div class="col-md-12">
+
+<label class="form-label">Main Description</label>
+{{ form.main_description }}
+
+</div>
+
+{% if form.main_description.errors %}
+<div class="text-danger small">
+{{ form.main_description.errors }}
+</div>
+{% endif %}
+
+
+
+<div class="col-md-6">
+
+<label class="form-label">Secondary Title</label>
+{{ form.secondary_title }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">Secondary Image</label>
+
+{% if object and object.secondary_image %}
+
+<div class="mb-2">
+<img src="{{ object.secondary_image.url }}" width="120" class="rounded border">
+</div>
+
+{% endif %}
+
+{{ form.secondary_image }}
+
+</div>
+
+
+<div class="col-md-12">
+
+<label class="form-label">Secondary Image ALT</label>
+{{ form.secondary_image_alt }}
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+<!-- LONG CONTENT -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+
+<button
+type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#longContent">
+
+Detailed Content
+
+</button>
+
+</h2>
+
+<div id="longContent" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+<div class="col-md-12">
+
+<label class="form-label">Primary Long Description</label>
+{{ form.long_description_primary|safe }}
+
+</div>
+
+
+<div class="col-md-12">
+
+<label class="form-label">Secondary Long Description</label>
+{{ form.long_description_secondary }}
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+<!-- SEO -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+
+<button
+type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#seoSection">
+
+SEO Settings
+
+</button>
+
+</h2>
+
+<div id="seoSection" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+<div class="col-md-6">
+
+<label class="form-label">Meta Title</label>
+{{ form.meta_title }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">Slug</label>
+{{ form.slug }}
+
+</div>
+
+
+{% if form.slug.errors %}
+<div class="text-danger small">
+{{ form.slug.errors }}
+</div>
+{% endif %}
+
+
+
+
+<div class="col-md-12">
+
+<label class="form-label">Meta Description</label>
+{{ form.meta_description }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">Primary Keywords</label>
+{{ form.primary_keywords }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">Secondary Keywords</label>
+{{ form.secondary_keywords }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">Canonical URL</label>
+{{ form.canonical_url }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">OG Title</label>
+{{ form.og_title }}
+
+</div>
+
+
+<div class="col-md-12">
+
+<label class="form-label">OG Description</label>
+{{ form.og_description }}
+
+</div>
+
+
+<div class="col-md-6">
+
+<label class="form-label">OG Image</label>
+
+{% if object and object.og_image %}
+
+<div class="mb-2">
+<img src="{{ object.og_image.url }}" width="120" class="rounded border">
+</div>
+
+{% endif %}
+
+{{ form.og_image }}
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+</div>
+
+
+<!-- STATUS + BUTTONS -->
+
+<div class="mt-4">
+
+<div class="form-check mb-3">
+
+{{ form.is_active }}
+<label class="form-check-label">Active</label>
+
+</div>
+
+
+<button type="submit" class="btn btn-success px-4">
+
+<i class="bi bi-check-circle"></i> Save Specialization
+
+</button>
+
+
+<a href="{% url 'administrator:specialization-list' %}"
+class="btn btn-outline-secondary px-4">
+
+Cancel
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const nameField = document.getElementById("id_name");
+    const slugField = document.getElementById("id_slug");
+
+    let slugEdited = false;
+
+    slugField.addEventListener("input", function(){
+        slugEdited = true;
+    });
+
+    nameField.addEventListener("keyup", function(){
+
+        if(slugEdited) return;
+
+        let slug = nameField.value
+            .toLowerCase()
+            .replace(/[^\w ]+/g,'')
+            .replace(/ +/g,'-');
+
+        slugField.value = slug;
+
+    });
+
+});
+
+</script>
+
+
+
+
+
+
 {% endblock %}

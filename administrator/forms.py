@@ -72,15 +72,16 @@ class SpecializationForm(forms.ModelForm):
         widgets = {
             'branch': forms.Select(attrs={'class': 'form-select'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
+             'name': forms.TextInput(attrs={"class": "form-control", "required": True}),
             'featured_image_alt':forms.TextInput(attrs={'class':'form-control'}),
             'short_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'hero_banner_alt':forms.TextInput(attrs={'class':'form-control'}),
 
-            'hero_title': forms.TextInput(attrs={'class': 'form-control'}),
+            'hero_title': forms.TextInput(attrs={"class": "form-control", "required": True}),
             'hero_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
 
-            'main_title': forms.TextInput(attrs={'class': 'form-control'}),
-            'main_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'main_title': forms.TextInput(attrs={"class": "form-control", "required": True}),
+            'main_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, "required": True}),
             'main_image_alt':forms.TextInput(attrs={'class':'form-control'}),
 
             'secondary_title': forms.TextInput(attrs={'class': 'form-control'}),
@@ -93,11 +94,42 @@ class SpecializationForm(forms.ModelForm):
             'og_title': forms.TextInput(attrs={'class': 'form-control'}),
             'og_description': forms.TextInput(attrs={'class': 'form-control'}),
 
-            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control',"required": True}),
             'canonical_url': forms.URLInput(attrs={'class': 'form-control'}),
 
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+    def clean(self):
+
+        cleaned_data = super().clean()
+
+        required_fields = [
+            "name",
+            "short_description",
+            "featured_image",
+            "hero_title",
+            "hero_banner",
+            "main_title",
+            "main_description",
+            "slug"
+        ]
+
+        for field in required_fields:
+            if not cleaned_data.get(field):
+                self.add_error(field, "This field is required.")
+
+        return cleaned_data
+
+    def clean_slug(self):
+
+       slug = self.cleaned_data.get("slug")
+       if Specialization.objects.filter(slug=slug).exclude(pk=self.instance.pk).exists():
+        raise forms.ValidationError("Slug already exists.")
+       return slug
+       
+
+   
+        
 
 
 class DoctorForm(forms.ModelForm):

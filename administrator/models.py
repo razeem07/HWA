@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -25,10 +26,41 @@ class SEOModel(models.Model):
 
     class Meta:
         abstract = True
+    
+    def generate_slug(self):
+        """
+        Override this method in child models
+        """
+        return self.slug
+
+    def generate_slug(self):
+        """
+        Override this method in child models
+        """
+        return self.slug
+
+    def save(self, *args, **kwargs):
+
+        if not self.slug:
+            self.slug = slugify(self.generate_slug())
+
+        if self.pk:
+            old = self.__class__.objects.get(pk=self.pk)
+
+            if old.slug != self.slug:
+                Redirect.objects.create(
+                    model_name=self.__class__.__name__.lower(),
+                    old_slug=old.slug,
+                    new_slug=self.slug
+                )
+
+        super().save(*args, **kwargs)
 
 
 
 class Redirect(models.Model):
+
+    model_name = models.CharField(max_length=50, blank=True)
 
     old_slug = models.SlugField()
     new_slug = models.SlugField()
@@ -109,19 +141,9 @@ class Specialization(SEOModel):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-    def save(self, *args, **kwargs):
-
-        if self.pk:
-            old = Specialization.objects.get(pk=self.pk)
-
-            if old.slug != self.slug:
-                Redirect.objects.create(
-                    old_slug=old.slug,
-                    new_slug=self.slug
-                )
-
-        super().save(*args, **kwargs)
+    def generate_slug(self):
+        return self.name
+  
 
     # -------------------------
     # META
@@ -232,8 +254,10 @@ class Doctor(SEOModel):
         auto_now=True
     )
 
+    def generate_slug(self):
+        return self.designation
 
-
+    
     def clean(self):
 
        if self.branch and self.specialization:

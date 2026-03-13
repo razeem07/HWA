@@ -257,93 +257,72 @@ background-repeat: no-repeat;">
             <div id="doctorCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
 
-                    <div class="carousel-item active">
-                        <div class="doctor-card mx-auto shadow-sm"
-                            style="background: #fff; border-radius: 40px; overflow: hidden; max-width: 900px;">
-                            <div class="row g-0 align-items-center">
-                                <div class="col-md-6 p-4 text-center  reveal reveal-left">
-                                    <h4 style="color: #0056b3; font-weight: 700;">Dr. Michael</h4>
-                                    <p class="text-muted small fw-bold mb-2">MBBS/MD</p>
-                                    <h5 class="fw-bold mb-4">Neurology Expert</h5>
-                                    <p class="text-muted px-lg-5">Medical care encompasses a range of services aimed at
-                                        promoting health, preventing disease</p>
-                                </div>
-                                <div class="col-md-6 text-end">
-                                    <div
-                                        style="border-radius: 100px 0 0 100px; padding-left: 50px; display: inline-block;">
-                                        <img src="./assets/images/elister page 6 image 1.png" alt="Doctor"
-                                            class="img-fluid" style="height: 350px; width: auto; object-fit: cover;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="carousel-item">
-                        <div class="doctor-card mx-auto shadow-sm"
-                            style="background: #fff; border-radius: 40px; overflow: hidden; max-width: 900px;">
-                            <div class="row g-0 align-items-center">
-                                <div class="col-md-6 p-4 text-center  reveal reveal-right">
-                                    <h4 style="color: #0056b3; font-weight: 700;">Dr. Sarah Smith</h4>
-                                    <p class="text-muted small fw-bold mb-2">MD, Cardiology</p>
-                                    <h5 class="fw-bold mb-4">Heart Specialist</h5>
-                                    <p class="text-muted px-lg-5">Providing advanced cardiovascular treatments with a
-                                        focus on patient-centered recovery.</p>
-                                </div>
-                                <div class="col-md-6 text-end">
-                                    <div
-                                        style="border-radius: 100px 0 0 100px; padding-left: 50px; display: inline-block;">
-                                        <img src="./assets/images/elister page 6 image 2.png" alt="Doctor"
-                                            class="img-fluid" style="height: 350px; width: auto; object-fit: cover;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% for doctor in doctors %}
+<div class="carousel-item {% if forloop.first %}active{% endif %}">
 
-                    <div class="carousel-item">
-                        <div class="doctor-card mx-auto shadow-sm"
-                            style="background: #fff; border-radius: 40px; overflow: hidden; max-width: 900px;">
-                            <div class="row g-0 align-items-center">
-                                <div class="col-md-6 p-4 text-center  reveal reveal-left">
-                                    <h4 style="color: #0056b3; font-weight: 700;">Dr. James Wilson</h4>
-                                    <p class="text-muted small fw-bold mb-2">BDS, MDS</p>
-                                    <h5 class="fw-bold mb-4">Orthodontic Expert</h5>
-                                    <p class="text-muted px-lg-5">Specializing in corrective dental procedures to bring
-                                        back your confident smile.</p>
-                                </div>
-                                <div class="col-md-6 text-end">
-                                    <div
-                                        style="border-radius: 100px 0 0 100px; padding-left: 50px; display: inline-block;">
-                                        <img src="./assets/images/elister page 6 image 3.png" alt="Doctor"
-                                            class="img-fluid" style="height: 350px; width: auto; object-fit: cover;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="doctor-card mx-auto shadow-sm"
+        style="background:#fff; border-radius:40px; overflow:hidden; max-width:900px;">
 
-                    <div class="carousel-item">
-                        <div class="doctor-card mx-auto shadow-sm"
-                            style="background: #fff; border-radius: 40px; overflow: hidden; max-width: 900px;">
-                            <div class="row g-0 align-items-center">
-                                <div class="col-md-6 p-4 text-center  reveal reveal-left">
-                                    <h4 style="color: #0056b3; font-weight: 700;">Dr. Allen Jellybean</h4>
-                                    <p class="text-muted small fw-bold mb-2">BDS, MDS</p>
-                                    <h5 class="fw-bold mb-4">Orthodontic Expert</h5>
-                                    <p class="text-muted px-lg-5">Specializing in corrective dental procedures to bring
-                                        back your confident smile.</p>
-                                </div>
-                                <div class="col-md-6 text-end">
-                                    <div
-                                        style="border-radius: 100px 0 0 100px; padding-left: 50px; display: inline-block;">
-                                        <img src="./assets/images/siteimages/doctor 1.png" alt="Doctor"
-                                            class="img-fluid" style="height: 350px; width: auto; object-fit: cover;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="row g-0 align-items-center">
+
+            <!-- Doctor Details -->
+            <div class="col-md-6 p-4 text-center reveal reveal-left">
+
+                <h4 style="color:#0056b3; font-weight:700;">
+                    Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}
+                </h4>
+
+                <p class="text-muted small fw-bold mb-2">
+                    {{ doctor.designation }}
+                </p>
+
+                <h5 class="fw-bold mb-4">
+                    {{ doctor.specialization.name }}
+                </h5>
+
+                <p class="text-muted px-lg-5">
+                    {{ doctor.short_bio|truncatewords:20 }}
+                </p>
+
+                <a href="#"
+                   class="btn btn-outline-primary btn-sm mt-2">
+                    View Profile
+                </a>
+
+            </div>
+
+
+            <!-- Doctor Image -->
+            <div class="col-md-6 text-end">
+
+                <div
+                    style="border-radius:100px 0 0 100px;
+                           padding-left:50px;
+                           display:inline-block;">
+
+                    {% if doctor.profile_image %}
+                    <img src="{{ doctor.profile_image.url }}"
+                         alt="Dr {{ doctor.user.first_name }}"
+                         class="img-fluid"
+                         style="height:350px; width:auto; object-fit:cover;">
+                    {% else %}
+                    <img src="{% static 'assets/images/default-doctor.png' %}"
+                         class="img-fluid"
+                         style="height:350px; width:auto;">
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endfor %}
+
 
                 </div>
 

@@ -1,34 +1,105 @@
 {% extends "administrator/shared/base.html" %}
+
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h3>Dashboard</h3>
-<p class="text-muted">Welcome to the hospital admin panel.</p>
 
-<div class="row mt-4">
-    <div class="col-md-3">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h6>Total Doctors</h6>
-                <h4>24</h4>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h6>Total Departments</h6>
-                <h4>12</h4>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h6>Appointments Today</h6>
-                <h4>38</h4>
-            </div>
-        </div>
-    </div>
+<h4 class="mb-4">Dashboard Overview</h4>
+
+<div class="row g-4">
+
+<div class="col-md-3">
+<div class="dashboard-card card-doctor">
+
+<h6>Total Doctors</h6>
+<h2>24</h2>
+
 </div>
+</div>
+
+
+<div class="col-md-3">
+<div class="dashboard-card card-department">
+
+<h6>Total Departments</h6>
+<h2>12</h2>
+
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="dashboard-card card-appointment">
+
+<h6>Appointments Today</h6>
+<h2>38</h2>
+
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="dashboard-card card-patient">
+
+<h6>Total Patients</h6>
+<h2>542</h2>
+
+</div>
+</div>
+
+</div>
+
+
+<div class="row mt-5">
+
+<div class="col-md-6">
+
+<div class="card shadow-sm">
+<div class="card-body">
+
+<h6>Recent Appointments</h6>
+
+<table class="table mt-3">
+
+<tr>
+<th>Patient</th>
+<th>Doctor</th>
+<th>Time</th>
+</tr>
+
+<tr>
+<td>John</td>
+<td>Dr Smith</td>
+<td>10:30 AM</td>
+</tr>
+
+</table>
+
+</div>
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="card shadow-sm">
+<div class="card-body">
+
+<h6>Recent Doctors Added</h6>
+
+<ul class="list-group mt-3">
+
+<li class="list-group-item">Dr John</li>
+<li class="list-group-item">Dr Smith</li>
+<li class="list-group-item">Dr Michael</li>
+
+</ul>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
 {% endblock %}

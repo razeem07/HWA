@@ -74,34 +74,34 @@ Elister Med{% endblock %} {% block content %}
         </div>
 
         <div class="row g-4">
-
+                {% for doctor in doctors %}
             <!-- Doctor Card 1 -->
             <div class="col-lg-4 col-md-6">
                 <div class="doctor-card">
                     <div class="doctor-image-wrapper">
-                        <img src="../assets/images/doctors/doctor-1.jpg" alt="Dr. Ananya Nair" class="doctor-image">
+                        <img src="{{ doctor.profile_image.url }}" alt="{{ doctor.profile_image_alt }}" class="doctor-image">
                         <div class="doctor-badge">
-                            <i class="bi bi-star-fill"></i> Senior Consultant
+                            <i class="bi bi-star-fill"></i> {{ doctor.designation}}
                         </div>
                     </div>
                     <div class="doctor-info">
                         <a href="personal-details.html">
-                            <h3 class="doctor-name">Dr. Ananya Nair</h3>
+                            <h3 class="doctor-name">{{doctor.first_name}} {{doctor.last_name}}</h3>
                         </a>
-                        <div class="doctor-specialty">Interventional Cardiologist</div>
+                        <div class="doctor-specialty">{{ doctor.designation}}</div>
                         <p class="doctor-credentials">
-                            MBBS, MD (Medicine), DM (Cardiology)<br>
-                            Fellowship in Interventional Cardiology - USA
+                            {{ doctor.designation}}<br>
+                        
                         </p>
 
                         <div class="doctor-stats">
                             <div class="stat-item">
                                 <i class="bi bi-clock-history"></i>
-                                <span>22 Years</span>
+                                <span>{{ doctor.experience}}</span>
                             </div>
                             <div class="stat-item">
                                 <i class="bi bi-heart-pulse"></i>
-                                <span>5,000+ Cases</span>
+                                <span>{{doctor.patients_treated}}</span>
                             </div>
                         </div>
 
@@ -120,221 +120,7 @@ Elister Med{% endblock %} {% block content %}
                 </div>
             </div>
 
-            <!-- Doctor Card 2 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="doctor-card">
-                    <div class="doctor-image-wrapper">
-                        <img src="../assets/images/doctors/doctor-2.jpg" alt="Dr. Priya Sharma" class="doctor-image">
-                        <div class="doctor-badge">
-                            <i class="bi bi-star-fill"></i> Senior Consultant
-                        </div>
-                    </div>
-                    <div class="doctor-info">
-                        <h3 class="doctor-name">Dr. Priya Sharma</h3>
-                        <div class="doctor-specialty">Orthopedic Surgeon</div>
-                        <p class="doctor-credentials">
-                            MBBS, MS (Orthopedics)<br>
-                            Fellowship in Joint Replacement - UK
-                        </p>
-
-                        <div class="doctor-stats">
-                            <div class="stat-item">
-                                <i class="bi bi-clock-history"></i>
-                                <span>18 Years</span>
-                            </div>
-                            <div class="stat-item">
-                                <i class="bi bi-bandaid"></i>
-                                <span>3,800+ Surgeries</span>
-                            </div>
-                        </div>
-
-                        <div class="expertise-tags">
-                            <span class="tag">Joint Replacement</span>
-                            <span class="tag">Arthroscopy</span>
-                            <span class="tag">Sports Injury</span>
-                        </div>
-
-                        <div class="action-buttons">
-                            <button class="btn btn-primary-custom flex-grow-1">
-                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Doctor Card 3 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="doctor-card">
-                    <div class="doctor-image-wrapper">
-                        <img src="../assets/images/doctors/doctor-3.jpg" alt="Dr. Mohammed Ali" class="doctor-image">
-                        <div class="doctor-badge">
-                            <i class="bi bi-award-fill"></i> Head of Department
-                        </div>
-                    </div>
-                    <div class="doctor-info">
-                        <h3 class="doctor-name">Dr. Mohammed Ali</h3>
-                        <div class="doctor-specialty">Neurologist</div>
-                        <p class="doctor-credentials">
-                            MBBS, MD (Neurology)<br>
-                            Fellowship in Stroke Medicine - Germany
-                        </p>
-
-                        <div class="doctor-stats">
-                            <div class="stat-item">
-                                <i class="bi bi-clock-history"></i>
-                                <span>25 Years</span>
-                            </div>
-                            <div class="stat-item">
-                                <i class="bi bi-heart-pulse"></i>
-                                <span>6,500+ Cases</span>
-                            </div>
-                        </div>
-
-                        <div class="expertise-tags">
-                            <span class="tag">Stroke Care</span>
-                            <span class="tag">Epilepsy</span>
-                            <span class="tag">Migraine Treatment</span>
-                        </div>
-
-                        <div class="action-buttons">
-                            <button class="btn btn-primary-custom flex-grow-1">
-                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Doctor Card 4 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="doctor-card">
-                    <div class="doctor-image-wrapper">
-                        <img src="../assets/images/doctors/doctor-4.jpg" alt="Dr. Aisha Patel" class="doctor-image">
-                        <div class="doctor-badge">
-                            <i class="bi bi-star-fill"></i> Consultant
-                        </div>
-                    </div>
-                    <div class="doctor-info">
-                        <h3 class="doctor-name">Dr. Aisha Patel</h3>
-                        <div class="doctor-specialty">Pediatrician</div>
-                        <p class="doctor-credentials">
-                            MBBS, MD (Pediatrics)<br>
-                            Fellowship in Neonatal Care - Canada
-                        </p>
-
-                        <div class="doctor-stats">
-                            <div class="stat-item">
-                                <i class="bi bi-clock-history"></i>
-                                <span>15 Years</span>
-                            </div>
-                            <div class="stat-item">
-                                <i class="bi bi-heart-pulse"></i>
-                                <span>3,800+ Cases</span>
-                            </div>
-                        </div>
-
-                        <div class="expertise-tags">
-                            <span class="tag">Child Development</span>
-                            <span class="tag">Vaccination</span>
-                            <span class="tag">Newborn Care</span>
-                        </div>
-
-                        <div class="action-buttons">
-                            <button class="btn btn-primary-custom flex-grow-1">
-                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Doctor Card 5 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="doctor-card">
-                    <div class="doctor-image-wrapper">
-                        <img src="../assets/images/doctors/doctor-5.jpg" alt="Dr. Vikram Singh" class="doctor-image">
-                        <div class="doctor-badge">
-                            <i class="bi bi-star-fill"></i> Senior Consultant
-                        </div>
-                    </div>
-                    <div class="doctor-info">
-                        <h3 class="doctor-name">Dr. Vikram Singh</h3>
-                        <div class="doctor-specialty">General Surgeon</div>
-                        <p class="doctor-credentials">
-                            MBBS, MS (General Surgery)<br>
-                            Advanced Laparoscopic Surgery Training
-                        </p>
-
-                        <div class="doctor-stats">
-                            <div class="stat-item">
-                                <i class="bi bi-clock-history"></i>
-                                <span>20 Years</span>
-                            </div>
-                            <div class="stat-item">
-                                <i class="bi bi-heart-pulse"></i>
-                                <span>2,500+ Surgeries</span>
-                            </div>
-                        </div>
-
-                        <div class="expertise-tags">
-                            <span class="tag">Laparoscopic Surgery</span>
-                            <span class="tag">Hernia Repair</span>
-                            <span class="tag">Gallbladder Surgery</span>
-                        </div>
-
-                        <div class="action-buttons">
-                            <button class="btn btn-primary-custom flex-grow-1">
-                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Doctor Card 6 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="doctor-card">
-                    <div class="doctor-image-wrapper">
-                        <img src="../assets/images/doctors/doctor-6.jpg" alt="Dr. Sneha Menon" class="doctor-image">
-                        <div class="doctor-badge">
-                            <i class="bi bi-star-fill"></i> Consultant
-                        </div>
-                    </div>
-                    <div class="doctor-info">
-                        <h3 class="doctor-name">Dr. Sneha Menon</h3>
-                        <div class="doctor-specialty">Dermatologist</div>
-                        <p class="doctor-credentials">
-                            MBBS, MD (Dermatology)<br>
-                            Certified in Cosmetic Dermatology
-                        </p>
-
-                        <div class="doctor-stats">
-                            <div class="stat-item">
-                                <i class="bi bi-clock-history"></i>
-                                <span>12 Years</span>
-                            </div>
-                            <div class="stat-item">
-                                <i class="bi bi-heart-pulse"></i>
-                                <span>3,200+ Cases</span>
-                            </div>
-                        </div>
-
-                        <div class="expertise-tags">
-                            <span class="tag">Skin Treatment</span>
-                            <span class="tag">Hair Loss Therapy</span>
-                            <span class="tag">Laser Treatment</span>
-                        </div>
-
-                        <div class="action-buttons">
-                            <button class="btn btn-primary-custom flex-grow-1">
-                                <i class="bi bi-calendar-check me-2"></i>Book Appointment
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+              {% endfor %}
 
         </div>
     </section>

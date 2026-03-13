@@ -1,123 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Admin Panel{% endblock %}</title>
+<meta charset="UTF-8">
+<title>{% block title %}Admin Panel{% endblock %}</title>
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <style>
-        body {
-            overflow-x: hidden;
-        }
-        .sidebar {
-            min-height: 100vh;
-            background-color: #f8f9fa;
-            border-right: 1px solid #dee2e6;
-        }
-        .sidebar a {
-            text-decoration: none;
-            color: #333;
-            padding: 8px 12px;
-            display: block;
-            border-radius: 4px;
-        }
-        .sidebar a:hover {
-            background-color: #e9ecef;
-        }
-        .sidebar h6 {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #6c757d;
-            margin-top: 20px;
-        }
-    </style>
+<style>
+
+body{
+background:#f4f6f9;
+overflow-x:hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:56px;
+left:0;
+height:100%;
+width:240px;
+background:#1f2937;
+padding-top:20px;
+overflow-y:auto;
+}
+
+.sidebar a{
+color:#d1d5db;
+padding:10px 20px;
+display:block;
+text-decoration:none;
+font-size:14px;
+}
+
+.sidebar a:hover{
+background:#374151;
+color:white;
+}
+
+.sidebar .menu-title{
+color:#9ca3af;
+font-size:11px;
+padding:15px 20px 5px;
+text-transform:uppercase;
+}
+
+.sidebar i{
+margin-right:8px;
+}
+
+/* PAGE CONTENT */
+
+.main-content{
+margin-left:240px;
+padding:30px;
+}
+
+/* DASHBOARD CARDS */
+
+.dashboard-card{
+border:none;
+border-radius:12px;
+color:white;
+padding:20px;
+}
+
+.card-doctor{
+background:linear-gradient(135deg,#4f46e5,#6366f1);
+}
+
+.card-department{
+background:linear-gradient(135deg,#10b981,#34d399);
+}
+
+.card-appointment{
+background:linear-gradient(135deg,#f59e0b,#fbbf24);
+}
+
+.card-patient{
+background:linear-gradient(135deg,#ef4444,#f87171);
+}
+
+</style>
+
 </head>
+
 <body>
 
-<!-- TOP NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-    <a class="navbar-brand" href="#">Hospital Admin</a>
+<!-- NAVBAR -->
 
-    <div class="ms-auto d-flex align-items-center">
-        {% if request.user.is_authenticated %}
-            <div class="dropdown">
-                <a class="text-white dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                    {{ request.user.username }}
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Account Settings</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
-                </ul>
-            </div>
-        {% else %}
-            <a href="{% url 'accounts:admin-login' %}" class="btn btn-outline-light btn-sm">
-                Login
-            </a>
-        {% endif %}
-    </div>
-</nav>
+<nav class="navbar navbar-dark bg-dark px-4 navbar-fixed">
+<span class="navbar-brand">Hospital Admin</span>
 
-<!-- MAIN LAYOUT -->
-<div class="container-fluid">
-    <div class="row">
+<div class="ms-auto">
 
-        <!-- SIDEBAR -->
-        <div class="col-md-2 sidebar p-3">
+{% if request.user.is_authenticated %}
 
-            <!-- Core Modules -->
-            <h6>Hospital Modules</h6>
-            <a href="{% url 'administrator:branch-list' %}">Branches</a>
-            <a href="#">Departments</a>
-            <a href="#">Doctors</a>
-            <a href="#">Appointments</a>
+<div class="dropdown">
+<a class="text-white dropdown-toggle text-decoration-none"
+href="#"
+data-bs-toggle="dropdown">
 
-            <hr>
+<i class="bi bi-person-circle"></i>
+{{ request.user.username }}
 
-            <!-- Pages -->
-            <h6>Website Pages</h6>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="#">FAQ</a>
-            <a href="#">Testimonials</a>
-            <a href="#">Facilities</a>
-            <a href="#">Highlights</a>
-            <a href="#">Health Packages</a>
-            <a href="#">Insurance</a>
+</a>
 
-            <hr>
+<ul class="dropdown-menu dropdown-menu-end">
 
-            <!-- Posts -->
-            <h6>Content</h6>
-            <a href="#">Blogs</a>
-            <a href="#">Articles</a>
-            <a href="#">News & Events</a>
+<li>
+<a class="dropdown-item" href="#">
+Account Settings
+</a>
+</li>
 
-        </div>
+<li><hr class="dropdown-divider"></li>
 
-        <!-- PAGE CONTENT -->
-        <div class="col-md-10 p-4">
-            {% if messages %}
-<div class="container-fluid mt-3">
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    {% endfor %}
+<li>
+<a class="dropdown-item" href="{% url 'accounts:logout' %}">
+Logout
+</a>
+</li>
+
+</ul>
 </div>
+
 {% endif %}
 
-            {% block content %}{% endblock %}
-        </div>
+</div>
+</nav>
 
-    </div>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="menu-title">Hospital Modules</div>
+
+<a href="{% url 'administrator:dashboard' %}">
+<i class="bi bi-speedometer2"></i> Dashboard
+</a>
+
+<a href="{% url 'administrator:branch-list' %}">
+<i class="bi bi-building"></i> Branches
+</a>
+
+
+<!-- DROPDOWN MENU -->
+
+<a data-bs-toggle="collapse" href="#departmentMenu">
+<i class="bi bi-diagram-3"></i> Departments
+</a>
+
+<div class="collapse" id="departmentMenu">
+
+<a href="#" class="ps-4">All Departments</a>
+<a href="#" class="ps-4">Add Department</a>
+
+</div>
+
+
+<a data-bs-toggle="collapse" href="#doctorMenu">
+<i class="bi bi-person-badge"></i> Doctors
+</a>
+
+<div class="collapse" id="doctorMenu">
+
+<a href="#" class="ps-4">All Doctors</a>
+<a href="#" class="ps-4">Add Doctor</a>
+
+</div>
+
+
+<a href="#">
+<i class="bi bi-calendar-check"></i> Appointments
+</a>
+
+
+<div class="menu-title">Website</div>
+
+<a href="#">
+<i class="bi bi-house"></i> Home Page
+</a>
+
+<a href="#">
+<i class="bi bi-file-earmark-text"></i> Pages
+</a>
+
+
+<div class="menu-title">Content</div>
+
+<a href="#">
+<i class="bi bi-journal-text"></i> Blogs
+</a>
+
+<a href="#">
+<i class="bi bi-newspaper"></i> News & Events
+</a>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main-content">
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+{{ message }}
+<button class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+{% block content %}{% endblock %}
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

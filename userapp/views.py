@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404,redirect,redirect
-from administrator.models import Specialization,Redirect
-from utils.schema import specialization_schema
+from administrator.models import Specialization,Redirect,Doctor
+from utils.schema import specialization_schema,doctor_schema
 from django.http import Http404
 from django.urls import reverse
 from django.http import HttpResponse
@@ -10,8 +10,18 @@ from django.http import HttpResponse
 
 
 def home(request):
-  
-    return render(request, "pages/index.html")
+
+   
+    doctors = Doctor.objects.filter(
+        is_active=True
+    ).order_by("-created_at")[:4]
+
+    return render(
+        request,
+        "pages/index.html",
+        {"doctors": doctors}
+    )
+    
 
 def about(request):
   
@@ -57,23 +67,19 @@ def specialization_detail(request, slug):
 
     except Specialization.DoesNotExist:
 
-        redirect_obj = Redirect.objects.filter(old_slug=slug).first()
+        redirect_obj = Redirect.objects.filter(
+            model_name="specialization",
+            old_slug=slug
+        ).first()
 
         if redirect_obj:
             return redirect(
-                f"/specializations/{redirect_obj.new_slug}/",
+                "userapp:specialization_detail",
+                slug=redirect_obj.new_slug,
                 permanent=True
             )
 
-        raise Http404()
-
-
-    specialization = get_object_or_404(
-        Specialization,
-        slug=slug,
-        is_active=True,
-        is_deleted=False
-    )
+        raise
 
     schema = specialization_schema(specialization)
 
@@ -85,14 +91,51 @@ def specialization_detail(request, slug):
 
 
 
-def doctor_detail(request):
+def doctor_detail(request, slug):
 
-      return render(request, "doctors/detail.html")
+    try:
+        doctor = Doctor.objects.select_related(
+            "user",
+            "specialization"
+        ).get(slug=slug)
 
+    except Doctor.DoesNotExist:
+
+        redirect_obj = Redirect.objects.filter(
+            model_name="doctor",
+            old_slug=slug
+        ).first()
+
+        if redirect_obj:
+            return redirect(
+                "userapp:doctor_detail",
+                slug=redirect_obj.new_slug,
+                permanent=True
+            )
+
+        raise
+    schema = doctor_schema(doctor)
+    return render(
+        request,
+        "doctors/detail.html",
+        {"doctor": doctor,
+          "seo" :doctor,
+          "schema": schema}
+    )
 
 def doctor_list(request):
 
-      return render(request, "doctors/list.html")
+    doctors = Doctor.objects.filter(
+        is_active=True
+    ).select_related("user","specialization","branch")
+
+    return render(
+        request,
+        "doctors/list.html",
+        {"doctors": doctors}
+    )
+
+   
 
 
 def package_detail(request):
