@@ -4,6 +4,7 @@ from utils.schema import specialization_schema,doctor_schema
 from django.http import Http404
 from django.urls import reverse
 from django.http import HttpResponse
+from utils.pages import get_listing_page
 
 
 # Create your views here.
@@ -48,6 +49,8 @@ def blog_detail(request):
 
 def specialization_list(request):
 
+    page = get_listing_page("specializations")
+
     specializations = Specialization.objects.filter(
         is_active=True,
         is_deleted=False
@@ -56,7 +59,10 @@ def specialization_list(request):
     return render(
         request,
         "specialization/list.html",
-        {"specializations": specializations}
+        {"specializations": specializations,
+          "page": page,
+          "seo":page
+         }
     )
 
 

@@ -1,0 +1,162 @@
+{% extends "administrator/shared/base.html" %}
+{% block title %}Add Branch{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+
+            <h4 class="mb-4">Create Archive Pages</h4>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label"> Slug</label>
+                    {{ form.slug }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Hero banner Title</label>
+                    {{ form.banner_title }}
+                </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">Hero Banner Description</label>
+                    {{ form.banner_description }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Page Title</label>
+                    {{ form.page_title }}
+                </div>
+
+                 <div class="mb-3">
+                    <label class="form-label">Page Description</label>
+                    {{ form.page_description }}
+                </div>
+
+                   <div class="mb-3">
+                    <label class="form-label">Page CTA Text</label>
+                    {{ form.page_cta }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Footer Title</label>
+                    {{ form.footer_title }}
+                </div>
+
+                 <div class="mb-3">
+                    <label class="form-label">Footer Description</label>
+                    {{ form.footer_description }}
+                </div>
+
+                <div class="mb-3">
+                    
+                <label class="form-label">Banner Image</label>
+
+                    {% if object and object.banner_image %}
+
+                      <div class="mb-2">
+                            <img src="{{ object.banner_image.url }}" width="120" class="rounded border">
+                       </div>
+
+                    {% endif %}
+
+                   {{ form.banner_image }}
+
+                </div>
+
+                <div class="col-mb-3">
+
+               <label class="form-label">Meta Title</label>
+              {{ form.meta_title }}
+
+                 </div>
+
+         <div class="col-mb-3">
+
+                <label class="form-label">Meta Description</label>
+               {{ form.meta_description }}
+
+        </div>
+
+
+<div class="col-mb-3">
+
+<label class="form-label">Primary Keywords</label>
+{{ form.primary_keywords }}
+
+</div>
+
+
+<div class="col-mb-3">
+
+<label class="form-label">Secondary Keywords</label>
+{{ form.secondary_keywords }}
+
+</div>
+
+
+<div class="col-mb-3">
+
+<label class="form-label">Canonical URL</label>
+{{ form.canonical_url }}
+
+</div>
+
+
+<div class="col-mb-3">
+
+<label class="form-label">OG Title</label>
+{{ form.og_title }}
+
+</div>
+
+
+<div class="col-mb-3">
+
+<label class="form-label">OG Description</label>
+{{ form.og_description }}
+
+</div>
+
+
+<div class="col-mb-3">
+
+<label class="form-label">OG Image</label>
+
+{% if object and object.og_image %}
+
+<div class="mb-2">
+<img src="{{ object.og_image.url }}" width="120" class="rounded border">
+</div>
+
+{% endif %}
+
+{{ form.og_image }}
+
+</div>
+
+
+
+
+
+                <div class="form-check mb-3">
+                    {{ form.is_active }}
+                    <label class="form-check-label">Active</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Save 
+                </button>
+                <a href="{% url 'administrator:dashboard' %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

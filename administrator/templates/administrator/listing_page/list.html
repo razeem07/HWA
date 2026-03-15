@@ -1,0 +1,76 @@
+{% extends "administrator/shared/base.html" %} {% block title %}Branches
+{%endblock %} {% block content %}
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Branches</h4>
+    <a
+      href="{% url 'administrator:listing-page-create' %}"
+      class="btn btn-primary btn-sm"
+    >
+      + Add Pages
+    </a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <table class="table table-striped table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Page Slug</th>
+            <th>Page Title</th>
+            <th>Page Description</th>
+            <th>Status</th>
+           
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ object.slug }}</td>
+            <td>{{ object.banner_title }}</td>
+             <td>{{ object.banner_description }}</td>
+            <td>
+              {% if object.is_active %}
+              <span class="badge bg-success">Active</span>
+              {% else %}
+              <span class="badge bg-secondary">Inactive</span>
+              {% endif %}
+            </td>
+            <td>{{ object.created_at|date:"d M Y" }}</td>
+            <!-- Edit -->
+            <td>
+              <a href="{% url 'administrator:listing-page-update' object.id %}" class="text-primary">
+            <i class="bi bi-pencil-square"></i>
+             </a>
+            </td>
+
+            <!-- Delete -->
+            <td>
+              <a
+                href="{% url 'administrator:listing-page-delete' object.id %}"
+                class="text-danger"
+                onclick="
+                  return confirm(
+                    'Are you sure you want to delete this branch?',
+                  );
+                "
+              >
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-center py-4">No branches found</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

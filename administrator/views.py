@@ -4,8 +4,8 @@ from django.views.generic import CreateView,ListView,UpdateView,DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from .decorators import admin_required
-from .models import Branch,Specialization,Doctor
-from .forms import BranchForm,SpecializationForm,DoctorForm
+from .models import Branch,Specialization,Doctor,ListingPage
+from .forms import BranchForm,SpecializationForm,DoctorForm,ListingPageForm
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.http import JsonResponse
@@ -106,6 +106,7 @@ class SpecializationDeleteView(DeleteView):
 
 
 
+@method_decorator(admin_required, name='dispatch')
 class DoctorCreateView(CreateView):
 
     model = Doctor
@@ -193,8 +194,6 @@ class DoctorDeleteView(DeleteView):
 
 
 
-
-
 def load_specializations(request):
 
     branch_id = request.GET.get("branch")
@@ -204,3 +203,45 @@ def load_specializations(request):
     ).values("id", "name")
 
     return JsonResponse(list(specializations), safe=False)
+
+
+
+class ListingPageCreateView(CreateView):
+
+    model = ListingPage
+
+    form_class = ListingPageForm
+
+    template_name = "administrator/listing_page/form.html"
+
+    success_url = reverse_lazy("administrator:listing-page-list")
+
+
+class ListingPageListView(ListView):
+
+    model = ListingPage
+
+    template_name = "administrator/listing_page/list.html"
+
+    ordering = ["slug"]
+
+
+
+class ListingPageUpdateView(UpdateView):
+
+    model = ListingPage
+
+    form_class = ListingPageForm
+
+    template_name = "administrator/listing_page/form.html"
+
+    success_url = reverse_lazy("administrator:listing-page-list")
+    
+
+class ListingPageDeleteView(DeleteView):
+
+    model = ListingPage
+
+    template_name = "administrator/shared/delete.html"
+
+    success_url = reverse_lazy("administrator:listing-page-list")

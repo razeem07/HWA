@@ -1,5 +1,5 @@
 from django import forms
-from .models import Branch,Specialization,Doctor
+from .models import Branch,Specialization,Doctor,ListingPage
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -26,6 +26,62 @@ class BranchForm(forms.ModelForm):
             }),
         }
 
+
+class ListingPageForm(forms.ModelForm):
+
+    class Meta:
+        model = ListingPage
+        exclude = ["created_at"]
+
+        widgets = {
+
+            "slug": forms.TextInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "banner_title": forms.TextInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "banner_description": forms.Textarea(
+                attrs={"class": "form-control", "rows": 3}
+            ),
+
+            "page_title": forms.TextInput(
+                attrs={"class": "form-control"}
+            ),
+
+             "page_description": forms.Textarea(
+                attrs={"class": "form-control", "rows": 3}
+            ),
+
+            
+             "page_cta": forms.Textarea(
+                attrs={"class": "form-control"}
+            ),
+
+
+
+            "meta_title": forms.TextInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "meta_description": forms.Textarea(
+                attrs={"class": "form-control", "rows": 3}
+            ),
+
+            "canonical_url": forms.URLInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "og_title": forms.TextInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "og_description": forms.Textarea(
+                attrs={"class": "form-control", "rows": 3}
+            ),
+        }
 
 
 class SpecializationForm(forms.ModelForm):

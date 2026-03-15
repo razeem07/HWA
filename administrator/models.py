@@ -57,6 +57,34 @@ class SEOModel(models.Model):
         super().save(*args, **kwargs)
 
 
+class ListingPage(SEOModel):
+
+    banner_title = models.CharField(max_length=255)
+
+    banner_description = models.TextField(blank=True)
+
+    banner_image = models.ImageField(
+        upload_to="listing/banner/",
+        blank=True,
+        null=True
+    )
+
+    footer_title = models.CharField(max_length=255)
+
+    footer_description = models.TextField(blank=True)
+
+    page_title = models.CharField(max_length=255)
+
+    page_description = models.TextField(blank=True)
+
+    page_cta = models.TextField(blank=True)
+
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.slug
 
 class Redirect(models.Model):
 
@@ -69,8 +97,6 @@ class Redirect(models.Model):
 
     def __str__(self):
         return f"{self.old_slug} → {self.new_slug}"
-
-
 
 
 class Branch(models.Model):
@@ -275,3 +301,106 @@ class Doctor(SEOModel):
 
     def __str__(self):
         return f"Dr. {self.user.first_name} {self.user.last_name}"
+
+class ContentCategory(models.Model):
+    name = models.CharField(max_length=150, unique=True)
+    description = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+class ContentType(models.TextChoices):
+
+    BLOG = "blog", "Blog"
+    ARTICLE = "article", "Article"
+    NEWS = "news", "News"
+    HEALTH_PACKAGE = "health_package", "Health Package"
+    INSURANCE = "insurance", "Insurance"
+
+
+class Content(SEOModel):
+
+    content_type = models.CharField(
+        max_length=50,
+        choices=ContentType.choices,
+        default=ContentType.BLOG
+    )
+
+    title = models.CharField(
+        max_length=255
+    )
+
+    short_description = models.TextField(
+        blank=True
+    )
+
+    featured_image = models.ImageField(
+        upload_to="content/featured/",
+        blank=True,
+        null=True
+    )
+
+    content = models.TextField(
+        blank=True
+    )
+
+    category = models.ForeignKey(
+        "ContentCategory",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="contents"
+    )
+
+    tags = models.ManyToManyField(
+        "Tag",
+        blank=True,
+        related_name="contents"
+    )
+
+    published_by = models.ForeignKey(
+        "Doctor",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="published_contents"
+    )
+
+    published_at = models.DateTimeField(
+        blank=True,
+        null=True
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    is_featured = models.BooleanField(
+        default=False
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    def generate_slug(self):
+      return self.title
+
+    class Meta:
+        ordering = ["-published_at"]
+
+    def __str__(self):
+        return self.title
