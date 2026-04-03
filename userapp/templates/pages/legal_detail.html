@@ -1,0 +1,25 @@
+{% extends "shared/base.html" %} {% load static %} {% block title %}Home |
+Elister Med{% endblock %} {% block content %}
+
+<!-- Hero Section -->
+<section class="about-hero">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-custom">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">
+          {{page.title}}
+        </li>
+      </ol>
+    </nav>
+    <h1>   {{page.title}}</h1>
+    <p class="lead"></p>
+  </div>
+</section>
+<div class="container py-5">
+  <h1>{{ page.title }}</h1>
+
+  <div class="mt-4">{{ page.content|safe }}</div>
+</div>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect,redirect
-from administrator.models import Specialization,Redirect,Doctor,Content,AboutPage,TeamMember,Testimonial,ContactPage,Tag,Service
+from administrator.models import Specialization,Redirect,Doctor,Content,AboutPage,TeamMember,Testimonial,ContactPage,Tag,Service,HomePage,LegalPage
 from .models import ContactSubmission
 from django.http import JsonResponse
 from utils.schema import specialization_schema,doctor_schema
@@ -15,7 +15,16 @@ from django.db.models import Count
 
 def home(request):
 
-   
+    homepage = HomePage.objects.first()  # or use slug if you have one
+
+    banners = homepage.banners.all().order_by('order') if homepage else []
+
+    features = homepage.features.all().order_by('order') if homepage else []
+
+    why_specialization = homepage.why_items.all().order_by('order') if homepage else []
+
+    highlights =homepage.highlight_items.all().order_by('order') if homepage else[]
+
     doctors = Doctor.objects.filter(
         is_active=True
     ).order_by("-created_at")[:4]
@@ -28,7 +37,12 @@ def home(request):
     return render(
         request,
         "pages/index.html",
-        {"doctors": doctors,
+        {  "homepage": homepage,
+         "banners": banners, 
+         "features": features,
+         "why_specialization": why_specialization,
+         "highlights" :highlights,
+         "doctors": doctors,
          "blogs": blogs }
     )
     
@@ -728,3 +742,12 @@ def articles_list(request):
              "tags": tags,
               "recent_posts": recent_posts}
     )
+
+
+
+def legal_page_detail(request, slug):
+    page = get_object_or_404(LegalPage, slug=slug, is_active=True)
+
+    return render(request, "pages/legal_detail.html", {
+        "page": page
+    })

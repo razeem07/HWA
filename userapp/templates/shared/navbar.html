@@ -4,8 +4,16 @@
     <div class="container">
 
         <a class="navbar-brand" href="#">
-            <img src="{% static 'assets/images/siteimages/Header Logo.png' %}" alt="Logo" style="height:60px;">
+           <!----<img src="{% static 'assets/images/siteimages/Header Logo.png' %}" alt="Logo" style="height:60px;">-->
+             {% if global_settings.site_logo %}
+                    <img src="{{ global_settings.site_logo.url }}"
+                         alt="Elister Med Logo"
+                         class="mb-4"
+                         style="height:70px;">
+                      {% endif %}
         </a>
+
+           
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -15,6 +23,21 @@
 
             <ul class="navbar-nav ms-auto align-items-center">
 
+
+                    {% if main_menu %}
+                     {% for item in main_menu.items.all %}
+                      {% if item.is_active and not item.parent %}
+                        <li class="nav-item">
+                           <a href="{{ item.url }}" class="nav-link">
+                              {{ item.title }}
+                         </a>
+                      </li>
+                        {% endif %}
+                     {% endfor %}
+                    {% endif %}
+
+                
+<!-- 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'userapp:home' %}">Home</a>
                 </li>
@@ -35,10 +58,10 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'userapp:contact-us' %}">Contact Us</a>
-                </li>
+                </li> -->
 
                 <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                    <a class="btn btn-custom" href="#">Make Appointment</a>
+                    <a class="btn btn-custom" href="{% url 'booking:book_appointment'%}">Make Appointment</a>
                 </li>
 
             </ul>

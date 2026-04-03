@@ -968,6 +968,8 @@ class LegalPage(models.Model):
 
     title = models.CharField(max_length=255)
 
+    slug = models.SlugField(unique=True, blank=True)
+
     content = RichTextUploadingField(
         blank=True,
         help_text="Add full legal content"
@@ -991,6 +993,11 @@ class LegalPage(models.Model):
         ordering = ['content_type']
         verbose_name = "Legal Page"
         verbose_name_plural = "Legal Pages"
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.get_content_type_display()

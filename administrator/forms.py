@@ -593,6 +593,7 @@ class LegalPageForm(forms.ModelForm):
         widgets = {
             "content_type": forms.Select(attrs={"class": "form-control"}),
             "title": forms.TextInput(attrs={"class": "form-control"}),
+             "slug" : forms.TextInput(attrs={"class": "form-control"}),
         }
 
 class GlobalSettingsForm(forms.ModelForm):
@@ -691,6 +692,11 @@ class HomePageForm(forms.ModelForm):
             'why_choose_title': forms.TextInput(attrs={'class': 'form-control'}),
             'why_choose_subtitle': forms.TextInput(attrs={'class': 'form-control'}),
             'why_choose_description': forms.Textarea(attrs={'class': 'form-control'}),
+
+                 # highlights
+            'highlights_title': forms.TextInput(attrs={'class': 'form-control'}),
+            'highlights_subtitle': forms.TextInput(attrs={'class': 'form-control'}),
+            'highlights_description': forms.Textarea(attrs={'class': 'form-control'}),
 
             # BLOG
             'blog_subtitle': forms.TextInput(attrs={'class': 'form-control'}),

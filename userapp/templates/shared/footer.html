@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <footer class="footer-section pt-5 pb-4 bg-white">
     <div class="container">
 
@@ -7,12 +8,12 @@
 
             <div class="col-lg-4 col-md-6">
                 <div class="footer-col-content">
-
-                    <img src="{% static 'assets/images/elister Last page logo.png' %}"
+                       {% if global_settings.footer_logo %}
+                    <img src="{{ global_settings.footer_logo.url }}"
                          alt="Elister Med Logo"
                          class="mb-4"
                          style="height:70px;">
-
+                      {% endif %}
                     <div class="contact-info">
 
                         <p class="mb-3 d-flex align-items-start">
@@ -20,8 +21,7 @@
                                style="color:#00bcd4;"></i>
 
                             <span class="text-muted">
-                                SM Street, Kolalampur Road<br>
-                                Kozhikode, 671544
+                               {{ global_settings.address }}
                             </span>
                         </p>
 
@@ -33,7 +33,7 @@
                             <a href="mailto:elister@gmail.com"
                                class="text-decoration-none text-muted">
 
-                               elister@gmail.com
+                                  {{ global_settings.email_primary }}
 
                             </a>
 
@@ -47,7 +47,7 @@
                             <a href="tel:+918338335244"
                                class="text-decoration-none text-muted">
 
-                               +91 833 833 5244
+                               {{ global_settings.phone_primary }}
 
                             </a>
 
@@ -63,12 +63,18 @@
 
                 <ul class="list-unstyled footer-links">
 
-                    <li><a href="#">Gynecology Clinic</a></li>
-                    <li><a href="#">Pediatrics Clinic</a></li>
-                    <li><a href="#">Orthopedics Clinic</a></li>
-                    <li><a href="#">Dentistry</a></li>
-                    <li><a href="#">Dermatology</a></li>
-                    <li><a href="#">Homecare Services</a></li>
+
+                    {% if specialization_menu %}
+                         {% for item in specialization_menu.items.all %}
+                          {% if item.is_active %}
+                          <li>
+                            <a href="{{ item.url }}">
+                               {{ item.title }}
+                           </a>
+                           </li>
+                         {% endif %}
+                     {% endfor %}
+                  {% endif %}
 
                 </ul>
 
@@ -80,13 +86,17 @@
 
                 <ul class="list-unstyled footer-links">
 
-                    <li><a href="#">Our Story</a></li>
-                    <li><a href="#">Leadership Team</a></li>
-                    <li><a href="#">Board of Directors & Advisory Council</a></li>
-                    <li><a href="#">Clinical Board & Patient Advisors</a></li>
-                    <li><a href="#">News + Events</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Employee Blog</a></li>
+                     {% if quick_links_menu %}
+                         {% for item in quick_links_menu.items.all %}
+                            {% if item.is_active %}
+                        <li>
+                           <a href="{{ item.url }}">
+                              {{ item.title }}
+                         </a>
+                       </li>
+                       {% endif %}
+                   {% endfor %}
+                {% endif %}
 
                 </ul>
 
@@ -107,15 +117,15 @@
             <div class="col-md-7 text-center text-md-start">
 
                 <div class="d-flex flex-wrap justify-content-center justify-content-md-start bottom-legal-links mb-2">
-
-                    <a href="#" class="me-4">Privacy Policy</a>
-                    <a href="#" class="me-4">Disclaimer</a>
-                    <a href="#">Terms & Conditions</a>
-
+                    {% for page in legal_pages %}
+                       <a href="{% url 'userapp:legal-page' page.slug %}" class="me-4">
+                          {{ page.title }}
+                       </a>
+                     {% endfor %}
                 </div>
 
                 <p class="text-muted small mb-0">
-                    Copyright © 2026. All Rights Reserved.
+                    {{ global_settings.copyright_text }}
                 </p>
 
             </div>
@@ -125,18 +135,20 @@
                 <span class="me-3 fw-bold small text-secondary">
                     Connect with us
                 </span>
-
-                <a href="#" class="social-icon rock-item">
-                    <i class="fa-brands fa-facebook-f"></i>
+                {% for social in social_links %}
+                <a href="{{social.url}}" class="social-icon rock-item" target="_blank">
+                    <i class="{{social.icon_class}}"></i>
                 </a>
 
-                <a href="#" class="social-icon rock-item">
+                {% endfor %}
+
+                <!-- <a href="#" class="social-icon rock-item">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
 
                 <a href="#" class="social-icon rock-item">
                     <i class="fa-brands fa-youtube"></i>
-                </a>
+                </a> -->
 
             </div>
 

@@ -14,142 +14,105 @@
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
     </div>
 
+
     <div class="carousel-inner">
 
-        <div class="carousel-item active"
-             style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
-             url('{% static "assets/images/siteimages/Background image.jpg" %}');
-             background-size:cover; background-position:center; height:100vh;">
+    {% for banner in banners %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %} position-relative" style="height:100vh;">
 
-            <div class="container h-100">
-                <div class="row h-100 align-items-center">
+        {% if banner.image %}
+            <img src="{{ banner.image.url }}"
+                 alt="{{ banner.image_alt }}"
+                 class="w-100 h-100 position-absolute top-0 start-0"
+                 style="object-fit: cover;">
+        {% endif %}
 
-                    <div class="col-lg-6 text-white">
+        <!-- Overlay -->
+        <div class="position-absolute top-0 start-0 w-100 h-100"
+             style="background: rgba(0,0,0,0.2);"></div>
 
-                        <h1 class="fw-bold">
-                            Trusted Care and
-                            Compassionate Treatment
-                        </h1>
+        <div class="container h-100 position-relative">
+            <div class="row h-100 align-items-center">
 
-                        <p class="lead my-4">
-                            We provide the best medical services for you
-                            and your family.
-                        </p>
+                <div class="col-lg-6 text-white">
 
-                        <a href="#" class="btn btn-custom">Book Now</a>
+                    {% if banner.title %}
+                        <h1 class="fw-bold">{{ banner.title }}</h1>
+                    {% endif %}
 
-                    </div>
+                    {% if banner.description %}
+                        <p class="lead my-4">{{ banner.description }}</p>
+                    {% endif %}
 
-                </div>
-            </div>
-
-        </div>
-
-        <div class="carousel-item"
-            style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
-            url('{% static "assets/images/elister_page_2 _image.jpeg" %}');
-            
-             background-size:cover; background-position:center; height:100vh;">
-
-            <div class="container h-100">
-                <div class="row h-100 align-items-center">
-
-                    <div class="col-lg-6 text-white">
-
-                        <h1 class="fw-bold">
-                            Modern Facilities
-                            Expert Doctors
-                        </h1>
-
-                        <p class="lead my-4">
-                            Experience world-class healthcare with our
-                            state-of-the-art technology.
-                        </p>
-
-                        <a href="#" class="btn btn-custom">Book Now</a>
-
-                    </div>
+                    <a href="#" class="btn btn-custom">Book Now</a>
 
                 </div>
-            </div>
 
+            </div>
         </div>
 
     </div>
+    {% endfor %}
+
+</div>
+
+    
 
 </section>
 
 
 <!-- SECTION 2 SERVICES -->
-  <!-- Section 2 -->
-    <section class="py-5 mobile-hide-bg"
-        style="background-image: url('{% static 'assets/images/siteimages/abt_img.jpg' %}');
-background-size: contain;
-background-position: center;
-background-repeat: no-repeat;">
-        <div class="container">
+
+
+<section class="py-5 mobile-hide-bg position-relative" >
+
+    <!-- LEFT SIDE BACKGROUND IMAGE -->
+    <img src="{% static 'assets/images/siteimages/abt_img.jpg' %}"
+         alt="About Background"
+         class="position-absolute top-0 start-0 h-80"
+         style="width: 100%; object-fit: cover; object-position: left; z-index: 0; ">
+         
+          <div class="container">
             <div class="row g-4">
-                <div class="col-md-2 offset-md-1">
-                    <div class="service-card p-5  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/icon 1.png' %}">
-                        <h5 class="text-blue-dark p-2 ">Speciality Clinics</h5>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="service-card p-5 reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/icon 2.png' %}">
-                        <h5 class="text-blue-dark p-2  ">Home Care Services</h5>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="service-card p-5 reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/icon 3.png' %}">
-                        <h5 class="text-blue-dark p-2  ">Cutting Edge Facility</h5>
-                    </div>
-                </div>
+               {% for feature in features %}
                 <div class="col-md-2">
                     <div class="service-card p-5  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/icon 4.png' %}">
-                        <h5 class="text-blue-dark p-2 ">Emergency Help 24/7</h5>
+                        <img src="{{ feature.image.url }}"  alt="{{ feature.title }}">
+                        <h5 class="text-blue-dark p-2 ">{{ feature.title }}</h5>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="service-card p-5  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/icon 5.png' %}">
-                        <h5 class="text-blue-dark ">In-House Pharmacy</h5>
-                    </div>
-                </div>
+                {% endfor %}
+               
             </div>
         </div>
-    </section>
+
+</section>
+
+ 
 
 
 
  <!-- Section 3 -->
     <section class="section-padding" style="background-color: #f7f7f7;">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center" style="margin-top:20px">
                 <div class="col-lg-5">
-                    <h6 class="text-blue fw-bold reveal reveal-right">About Us</h6>
-                    <h2 class="display-5 fw-bold mb-4 text-blue-medium  reveal reveal-left">Delivering World Class
-                        Healthcare</h2>
-                    <img src="{% static 'assets/images/siteimages/section 3 Image 1.png' %}"
-                        class=" reveal reveal-right img-fluid rounded-corner mb-4" alt="Doctor Hand">
+                    <h6 class="text-blue fw-bold reveal reveal-right">{{homepage.about_subtitle}}</h6>
+                    <h2 class="display-5 fw-bold mb-4 text-blue-medium  reveal reveal-left">{{homepage.about_title}}</h2>
+                    <img src="{{homepage.about_image1.url}}"
+                        class=" reveal reveal-right img-fluid rounded-corner mb-4" alt="{{homepage.about_image1_alt}}">
                 </div>
                 <div class="col-lg-7">
                     <div class="row g-3 img-grid">
                         <div class="col-lg-6 col-md-12 col-sm-12">
-                            <img class="reveal reveal-right" src="{% static 'assets/images/siteimages/section 3 Image 2.png' %}"
-                                alt="Clinic">
+                            <img class="reveal reveal-right" src="{{homepage.about_image2.url}}"
+                                alt="{{homepage.about_image2_alt}}">
                             <p class="text-muted py-4  reveal reveal-left">
-                                We bring our heritage of excellence in healthcare from India to Dubai. With an
-                                unwavering commitment to quality, our superspeciality clinic offers 360° medical
-                                services, combining expert physicians, cutting-edge diagnostics, and patient-first
-                                care—all under one roof.
+                               {{homepage.about_description }}
                             </p>
                         </div>
                         <div class="col-lg-6 col-md-12 col-sm-12  reveal reveal-right">
-                            <img src="{% static 'assets/images/siteimages/section 3 Image 3.png' %}" alt="Lab">
+                            <img src="{{homepage.about_image3.url}}" alt="{{homepage.about_image3_alt}}">
                         </div>
                     </div>
                 </div>
@@ -160,98 +123,60 @@ background-repeat: no-repeat;">
      <!-- Section 4 -->
     <!-- linear-gradient(rgba(0, 60, 120, 0.6), rgba(0, 60, 120, 0.6)),  -->
  
-    <section class="blue-section" style="
-  
-        background-image: url('{% static 'assets/images/siteimages/section-4-hero.jpeg' %}');
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        padding: 80px 0; 
-        color: white; 
-        position: relative;">
-        <div class="container text-center">
+    <section class="blue-section position-relative overflow-hidden">
+
+    <!-- Background Image (replaces CSS background) -->
+    <img src="{{homepage.why_choose_banner}}"
+         alt="{{homepage.why_choose_title}}"
+         class="position-absolute top-0 start-0 w-100 h-100"
+         style="object-fit: cover; z-index: 0;">
+
+    <!-- Optional Overlay (keeps text readable like before) -->
+    <div class="position-absolute top-0 start-0 w-100 h-100"
+         style="background: rgba(0,0,0,0.4); z-index: 0;"></div>
+
+   <div class="container text-center">
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-lg-6 text-start">
-                    <h6 class="text-blue fw-bold  reveal reveal-left">Bringing Elister's Proven Care and Expertise to
-                        Dubai</h6>
-                    <h2 class="mb-3  reveal reveal-right">We Provide Comprehensive Medical <br
-                            class="mobile-hide-element"> Care for Every
-                        Member of Your Family</h2>
+                    <h6 class="text-blue fw-bold  reveal reveal-left">{{homepage.why_choose_subtitle}}</h6>
+                    <h2 class="mb-3  reveal reveal-right">{{homepage.why_choose_title}} 
+                         </h2>
                 </div>
                 <div class="col-md-12 col-sm-12 col-lg-6 text-start  reveal reveal-left">
                     <p>
-                        ELISTER MED brings trusted Indian healthcare excellence to Dubai, offering complete,
-                        patient-centered medical care under one roof. Coming Soon at ELISTER MED – Expanding Our
-                        Expertise We’re growing to serve you better. ELISTER MED is proud to announce the upcoming
-                        launch of new superspeciality departments, bringing even more expert care under one roof.
+                        {{homepage.why_choose_description}}
                     </p>
                 </div>
             </div>
-            <div class="row mt-5">
+            <div class="row mt-5 mb-5">
+                {% for wch in why_specialization %}
                 <div class="col-md-3 col-6">
                     <div class="feature-icon-box  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/Icon 1 section 4.png' %}">
-                        <p>Pulmonology <br>Department</p>
+                        <img src="{{wch.image.url}}">
+                        <p>{{wch.title}}</p>
                     </div>
                 </div>
-                <div class="col-md-3 col-6">
-                    <div class="feature-icon-box  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/Icon 2 section 4.png' %}">
-                        <p>Educrine <br>Surgery</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="feature-icon-box  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/Icon_3 _section 4.png' %}">
-                        <p>Gastro <br>Surgery</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="feature-icon-box  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/Icon 4 section 4.png' %}">
-                        <p>Neuro <br>Surgery</p>
-                    </div>
-                </div>
+                 {% endfor %}
+               
             </div>
-            <div class="row mb-5">
-                <div class="col-md-3 col-6">
-                    <div class="feature-icon-box  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/Icon 5 section 4.png' %}">
-                        <p>Dentistry</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="feature-icon-box  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/Icon 6 section 4.png' %}">
-                        <p>Orthopedics</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="feature-icon-box  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/Icon 7 section 4.png' %}">
-                        <p>Dermatology</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="feature-icon-box  reveal reveal-left">
-                        <img src="{% static 'assets/images/siteimages/Icon 8 section 4.png' %}">
-                        <p>Pediatrics</p>
-                    </div>
-                </div>
-            </div>
+           
             <div class="row">
                 <div class="col justify-content-center">
-                    <button class="btn btn-light btn-custom reveal reveal-right">Read More</button>
+                 
+                    <a href="{% url 'userapp:specialization_list' %}" class="btn btn-light btn-custom reveal reveal-right">
+    Read More
+</a>
                 </div>
             </div>
         </div>
-    </section>
+
+</section>
 
        <!-- Section 5 -->
     <section class="py-5" style="background-color: #f8f9fa;">
         <div class="container text-center mb-5">
-            <h6 class="text-blue mb-2 fw-bold  reveal reveal-left">Our Staff</h6>
-            <h2 class="text-blue-dark fw-bold  reveal reveal-right">Meet Our Consultants & Medical Specialists</h2>
+            <h6 class="text-blue mb-2 fw-bold  reveal reveal-left">{{homepage.staff_subtitle}}</h6>
+            <h2 class="text-blue-dark fw-bold  reveal reveal-right">{{homepage.staff_title}}</h2>
         </div>
 
         <div class="container">
@@ -345,77 +270,38 @@ background-repeat: no-repeat;">
                 <div class="col">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-lg-6  reveal reveal-left">
-                            <h6 class="mb-2" style="letter-spacing: 1px; font-size: 0.9rem;">Why Choose
-                                Elister
+                            <h6 class="mb-2" style="letter-spacing: 1px; font-size: 0.9rem;">{{homepage.highlights_subtitle}}
                             </h6>
-                            <h2 class="display-6 fw-bold mb-4">The Best Medical And <br> General Practice Care!</h2>
+                            <h2 class="display-6 fw-bold mb-4">{{homepage.highlights_title}}</h2>
                         </div>
                         <div class="col-md-12 col-sm-12 col-lg-6  reveal reveal-right">
                             <p class="mb-5 opacity-90" style="line-height: 1.8;">
-                                At Elister Hospital, we believe that quality healthcare goes beyond treatment it is
-                                about trust,
-                                comfort, and consistent support. Our hospital is designed to provide a safe.
+                               {{homepage.highlights_description}}
                             </p>
                         </div>
                     </div>
                     <div class="feature-rows">
+                        {% for highlight in highlights %}
                         <div class="row align-items-center border-bottom border-light py-4">
                             <div class="col-1">
-                                <img src="{% static 'assets/images/siteimages/Icon 1 section 6.png' %}" style="height: 80px;">
+                                <img src="{{highlight.image.url}}" style="height: 80px;">
                             </div>
                             <div class="col-4  reveal reveal-left">
-                                <h5 class="mb-1 fw-bold text-start">EXPERT DOCTORS</h5>
+                                <h5 class="mb-1 fw-bold text-start">{{highlight.title}}</h5>
                             </div>
                             <div class="col-4">
                                 <p class="small mb-0 opacity-75 text-start  reveal reveal-right">
-                                    Our team of highly qualified specialists brings years of experience across multiple
-                                    medical fields.
+                                 {{highlight.description}}
                                 </p>
-                                <img class="why-choose-section-img"
-                                    src="{% static 'assets/images/siteimages/Section 6 Image 1.png' %}">
+                            
                             </div>
                             <div class="col-3 text-end  reveal reveal-left">
-                                <a href="#" class="text-white text-decoration-none small">Know More &rarr;</a>
+                                <a href="{% url 'userapp:about-us' %}" class="text-white text-decoration-none small">Know More &rarr;</a>
                             </div>
                         </div>
+                        {% endfor %}
 
-                        <div class="row align-items-center border-bottom border-light py-4">
-                            <div class="col-1">
-                                <img src="{% static 'assets/images/siteimages/Icon 2 section 6.png' %}" style="height: 80px;">
-                            </div>
-                            <div class="col-4">
-                                <h5 class="mb-1 fw-bold text-start  reveal reveal-left">MODERN INFRASTRUCTURE</h5>
-                            </div>
-                            <div class="col-4">
-                                <p class="small mb-0 opacity-75 text-start  reveal reveal-right">
-                                    Our team of highly qualified specialists brings years of experience across multiple
-                                    medical fields.
-                                </p>
-                            </div>
-                            <div class="col-3 text-end">
-                                <a href="#" class="text-white text-decoration-none small  reveal reveal-left">Know More
-                                    &rarr;</a>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center py-4">
-                            <div class="col-1">
-                                <img src="{% static 'assets/images/siteimages/Icon 3 section 6.png' %}" style="height: 80px;">
-                            </div>
-                            <div class="col-4">
-                                <h5 class="mb-1 fw-bold text-start  reveal reveal-left">24/7 EMERGENCY SUPPORT</h5>
-                            </div>
-                            <div class="col-4">
-                                <p class="small mb-0 opacity-75 text-start  reveal reveal-right">
-                                    Our team of highly qualified specialists brings years of experience across multiple
-                                    medical fields.
-                                </p>
-                            </div>
-                            <div class="col-3 text-end">
-                                <a href="#" class="text-white text-decoration-none small  reveal reveal-left">Know More
-                                    &rarr;</a>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -427,8 +313,8 @@ background-repeat: no-repeat;">
         <div class="container">
             <div class="row align-items-end mb-5">
                 <div class="col-md-6  reveal reveal-left">
-                    <h3 style="color: #008eb3; font-weight: 700; margin-bottom: 5px;">Our Blogs</h3>
-                    <h5 style="color: #333; font-weight: 600;">Articles from Elister</h5>
+                    <h3 style="color: #008eb3; font-weight: 700; margin-bottom: 5px;">{{homepage.blog_subtitle}}</h3>
+                    <h5 style="color: #333; font-weight: 600;">{{homepage.blog_title}}</h5>
                 </div>
                 <div class="col-md-6 text-md-end  reveal reveal-right">
                     <a href="{% url 'userapp:blog_list'%}" class="btn btn-view-more  mobile-hide-element">View More &rsaquo;</a>
@@ -446,8 +332,8 @@ background-repeat: no-repeat;">
                                 
                         </div>
                         <div class="blog-content mt-3">
-                            <h5 class="blog-title">{{ blog.title }}</h5>
-                            <p class="blog-date">{{ blog.published_at}}</p>
+                            <h5 class="blog-title text-center">{{ blog.title }}</h5>
+                            <p class="blog-date text-center">{{ blog.published_at}}</p>
                         </div>
                     </div>
                 </div>
@@ -487,18 +373,21 @@ background-repeat: no-repeat;">
 
  <!-- Section 8 -->
     <section style="position: relative; width: 100%; overflow: hidden;">
-        <img src="{% static 'assets/images/elister page 9 image Background.png' %}" class="img-pop reveal reveal-right"
+        <img src="{{homepage.parallax_banner.url}}" class="img-pop reveal reveal-right"
             style="width: 100%; height: auto; display: block;">
 
         <div class="img-pop-content">
             <div class="container">
                 <div class="row align-items-center" style="padding-top: 120px;">
                     <div class="col-4"></div>
-                    <div class="col-md-4 text-center">
-                        <h3 class="text-white reveal reveal-left">Rebuilding Smiles Through Advanced Care</h3>
+                    <div class="col-md-4 text-center ">
+                        <h3 class="text-white reveal reveal-left">{{homepage.parallax_title}}</h3>
+                        <p class="text-center text-white">{{homepage.parallax_description}}</p>
                     </div>
                     <div class="col-md-4 text-md-end">
-                        <button class="btn-custom reveal reveal-left">+ Book an Appointment</button>
+                         <a href="{% url 'booking:book_appointment'%}" class="btn-custom reveal reveal-left text-decoration-none">
+                         + {{ homepage.parallax_cta }}
+                      </a>
                     </div>
                 </div>
             </div>
