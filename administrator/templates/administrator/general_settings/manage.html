@@ -1,0 +1,183 @@
+{% extends "administrator/shared/base.html" %}
+{% block title %}Global Settings{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<h4 class="mb-4">Global Settings</h4>
+
+<form method="post" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="accordion">
+
+<!-- BRANDING -->
+
+<div class="accordion-item">
+<h2 class="accordion-header">
+<button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#brandingSection">
+Branding
+</button>
+</h2>
+
+<div id="brandingSection" class="accordion-collapse collapse show">
+<div class="accordion-body">
+<div class="row g-3">
+
+<div class="col-md-4">
+<label>Site Logo</label>
+
+{% if settings and settings.site_logo %}
+<img src="{{ settings.site_logo.url }}" width="120" class="mb-2 border rounded">
+{% endif %}
+
+<input type="file" name="site_logo" class="form-control">
+</div>
+
+<div class="col-md-4">
+<label>Favicon</label>
+
+{% if settings and settings.favicon %}
+<img src="{{ settings.favicon.url }}" width="80" class="mb-2 border rounded">
+{% endif %}
+
+<input type="file" name="favicon" class="form-control">
+</div>
+
+<div class="col-md-4">
+<label>Footer Logo</label>
+
+{% if settings and settings.footer_logo %}
+<img src="{{ settings.footer_logo.url }}" width="120" class="mb-2 border rounded">
+{% endif %}
+
+<input type="file" name="footer_logo" class="form-control">
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- CONTACT -->
+
+<div class="accordion-item">
+<h2 class="accordion-header">
+<button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#contactSection">
+Contact Information
+</button>
+</h2>
+
+<div id="contactSection" class="accordion-collapse collapse">
+<div class="accordion-body">
+<div class="row g-3">
+
+<div class="col-md-12">
+<label>Address</label>
+<textarea name="address" class="form-control">{{ form.address.value|default:'' }}</textarea>
+</div>
+
+<div class="col-md-6">
+<label>Primary Phone</label>
+<input type="text" name="phone_primary" class="form-control" value="{{ form.phone_primary.value|default:'' }}">
+</div>
+
+<div class="col-md-6">
+<label>Secondary Phone</label>
+<input type="text" name="phone_secondary" class="form-control" value="{{ form.phone_secondary.value|default:'' }}">
+</div>
+
+<div class="col-md-6">
+<label>Primary Email</label>
+<input type="email" name="email_primary" class="form-control" value="{{ form.email_primary.value|default:'' }}">
+</div>
+
+<div class="col-md-6">
+<label>Secondary Email</label>
+<input type="email" name="email_secondary" class="form-control" value="{{ form.email_secondary.value|default:'' }}">
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- WHATSAPP -->
+
+<div class="accordion-item">
+<h2 class="accordion-header">
+<button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#whatsappSection">
+WhatsApp Settings
+</button>
+</h2>
+
+<div id="whatsappSection" class="accordion-collapse collapse">
+<div class="accordion-body">
+<div class="row g-3">
+
+<div class="col-md-6">
+<label>WhatsApp Number</label>
+<input type="text" name="whatsapp_number" class="form-control" value="{{ form.whatsapp_number.value|default:'' }}">
+</div>
+
+<div class="col-md-6">
+<label>Default Message</label>
+<input type="text" name="whatsapp_message" class="form-control" value="{{ form.whatsapp_message.value|default:'' }}">
+</div>
+
+<div class="col-md-12 form-check mt-2">
+<input type="checkbox" name="is_whatsapp_enabled" class="form-check-input"
+{% if form.is_whatsapp_enabled.value %}checked{% endif %}>
+<label class="form-check-label">Enable WhatsApp Floating</label>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+
+<div class="accordion-item">
+<h2 class="accordion-header">
+<button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#footerSection">
+Footer Settings
+</button>
+</h2>
+
+<div id="footerSection" class="accordion-collapse collapse">
+<div class="accordion-body">
+<div class="row g-3">
+
+<div class="col-md-12">
+<label>Footer Description</label>
+<textarea name="footer_description" class="form-control">{{ form.footer_description.value|default:'' }}</textarea>
+</div>
+
+<div class="col-md-12">
+<label>Copyright</label>
+<input type="text" name="copyright_text" class="form-control" value="{{ form.copyright_text.value|default:'' }}">
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- SUBMIT -->
+
+<div class="mt-4">
+<button type="submit" class="btn btn-success px-4">
+Save Settings
+</button>
+</div>
+
+</form>
+
+</div>
+
+{% endblock %}

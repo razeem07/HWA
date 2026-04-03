@@ -1,0 +1,44 @@
+{% extends "administrator/shared/base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="d-flex justify-content-between mb-3">
+<h4>Packages</h4>
+<a href="{% url 'administrator:package-product-create' %}" class="btn btn-primary">+ Add</a>
+</div>
+
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Category</th>
+<th>Price</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for item in products %}
+<tr>
+<td>{{ forloop.counter }}</td>
+<td>{{ item.name }}</td>
+<td>{{ item.category.name }}</td>
+<td>{{ item.offer_price }} / {{ item.actual_price }}</td>
+<td>{{ item.is_active|yesno:"Active,Inactive" }}</td>
+<td>
+<a href="{% url 'administrator:package-product-update' item.id %}" class="btn btn-warning btn-sm">Edit</a>
+<!-- <a href="{% url 'administrator:package-product-delete' item.id %}" class="btn btn-danger btn-sm">Delete</a> -->
+</td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

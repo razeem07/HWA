@@ -1,0 +1,51 @@
+{% extends "administrator/shared/base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+
+<h4 class="mb-4">Manage Testimonial</h4>
+
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+
+<div class="row g-3">
+
+<div class="col-md-6">
+<label>Name</label>
+{{ form.name }}
+</div>
+
+<div class="col-md-6">
+<label>Designation</label>
+{{ form.designation }}
+</div>
+
+<div class="col-md-6">
+<label>Image</label>
+
+{% if object and object.image %}
+<img src="{{ object.image.url }}" width="100" class="mb-2">
+{% endif %}
+
+{{ form.image }}
+</div>
+
+<div class="col-md-12">
+<label>Description</label>
+{{ form.short_description }}
+</div>
+
+<div class="col-md-12 form-check">
+{{ form.is_active }}
+<label>Active</label>
+</div>
+
+</div>
+
+<button type="submit" class="btn btn-success mt-3">Save</button>
+
+</form>
+
+</div>
+
+{% endblock %}

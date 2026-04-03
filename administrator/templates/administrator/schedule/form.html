@@ -1,0 +1,198 @@
+
+
+{% extends "administrator/shared/base.html" %}
+{% block title %}Doctor Schedule Page{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h4>Doctor Schedule</h4>
+
+<form method="post">
+    {% csrf_token %}
+
+    <!-- HEADER -->
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label>Specialization</label>
+            {{ form.specialization }}
+        </div>
+
+        <div class="col-md-4">
+            <label>Doctor</label>
+            {{ form.doctor }}
+        </div>
+    </div>
+
+  <div id="formset-wrapper" data-prefix="{{ formset.prefix }}">
+
+    {{ formset.management_form }}
+
+    <table class="table table-bordered" id="formset-table">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Duration</th>
+                <th>Active</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <tbody id="formset-body">
+
+            {% for form in formset %}
+            <tr class="formset-row">
+
+                {{ form.id }}
+
+                <td>{{ form.day_of_week }}</td>
+                <td>{{ form.start_time }}</td>
+                <td>{{ form.end_time }}</td>
+                <td>{{ form.slot_duration }}</td>
+                <td>{{ form.is_active }}</td>
+                <td>
+                    {{ form.DELETE }}
+                    <button type="button" class="btn btn-danger remove-row">X</button>
+                </td>
+
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    </div>
+
+    <button type="button" class="btn btn-success" id="add-row">+ Add Row</button>
+
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+
+</form>
+
+</div>
+
+<!-- JS -->
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const specialization = document.getElementById("id_specialization");
+    const doctor = document.getElementById("id_doctor");
+
+    // ================= LOAD DOCTORS FUNCTION =================
+    function loadDoctors(specId, selectedDoctor=null){
+
+        if(!specId){
+            doctor.innerHTML = '<option value="">Select Doctor</option>';
+            return;
+        }
+
+        fetch(`/administrator/load-doctors/?specialization=${specId}`)
+        .then(res => res.json())
+        .then(data => {
+
+            doctor.innerHTML = '<option value="">Select Doctor</option>';
+
+            data.forEach(function(doc){
+
+                let selected = (selectedDoctor == doc.id) ? "selected" : "";
+
+                doctor.innerHTML += `
+                    <option value="${doc.id}" ${selected}>
+                        ${doc.name}
+                    </option>
+                `;
+            });
+
+        });
+    }
+
+
+    // ================= ON SPECIALIZATION CHANGE =================
+    specialization.addEventListener("change", function(){
+
+        loadDoctors(this.value);
+
+    });
+
+
+    // ================= INITIAL LOAD (UPDATE CASE) =================
+    if(selectedSpecialization){
+
+        loadDoctors(selectedSpecialization, selectedDoctor);
+
+    }
+
+});
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const wrapper = document.getElementById("formset-wrapper");
+    const prefix = wrapper.dataset.prefix;
+
+    const totalForms = document.getElementById(`id_${prefix}-TOTAL_FORMS`);
+    const tbody = document.getElementById("formset-body");
+    const addBtn = document.getElementById("add-row");
+
+    addBtn.addEventListener("click", function(){
+
+        let formCount = parseInt(totalForms.value);
+
+        let firstRow = document.querySelector(".formset-row");
+
+        let newRow = firstRow.cloneNode(true);
+
+        newRow.querySelectorAll("input, select").forEach(el => {
+
+            if(el.name){
+                el.name = el.name.replace(/-\d+-/, `-${formCount}-`);
+            }
+
+            if(el.id){
+                el.id = el.id.replace(/-\d+-/, `-${formCount}-`);
+            }
+
+            if(el.type === "checkbox"){
+                el.checked = false;
+            } else {
+                el.value = "";
+            }
+
+        });
+
+        tbody.appendChild(newRow);
+
+        totalForms.value = formCount + 1;
+    });
+
+
+    // DELETE ROW
+    document.addEventListener("click", function(e){
+
+        if(e.target.classList.contains("remove-row")){
+
+            let row = e.target.closest("tr");
+
+            let deleteInput = row.querySelector("input[type='checkbox']");
+
+            if(deleteInput){
+                deleteInput.checked = true;
+            }
+
+            row.style.display = "none";
+        }
+
+    });
+
+});
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "administrator/shared/base.html" %}
+{% block title %}Menu settings{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Menu Groups</h2>
+
+    <a href="{% url 'administrator:menu-create' %}" class="btn btn-primary mb-3">
+        + Create Menu
+    </a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for menu in menus %}
+            <tr>
+                <td>{{ menu.name }}</td>
+                <td>{{ menu.slug }}</td>
+                <td>
+                    <a href="{% url 'administrator:menu-update' menu.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'administrator:menu-delete' menu.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No menus found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

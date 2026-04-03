@@ -1,0 +1,104 @@
+{% extends "administrator/shared/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4>Services</h4>
+
+        <a href="{% url 'administrator:service-create' %}" 
+           class="btn btn-primary">
+            + Add Service
+        </a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Specialization</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th width="180">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for service in services %}
+            <tr>
+
+                <td>{{ forloop.counter }}</td>
+
+                <!-- IMAGE -->
+                <td>
+                    {% if service.featured_image %}
+                        <img src="{{ service.featured_image.url }}" 
+                             width="60" 
+                             class="rounded">
+                    {% else %}
+                        <span class="text-muted">No Image</span>
+                    {% endif %}
+                </td>
+
+                <!-- NAME -->
+                <td>
+                    <strong>{{ service.name }}</strong>
+                </td>
+
+                <!-- SPECIALIZATION -->
+                <td>
+                    {{ service.specialization.name }}
+                </td>
+
+                <!-- STATUS -->
+                <td>
+                    {% if service.is_active %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactive</span>
+                    {% endif %}
+                </td>
+
+                <!-- DATE -->
+                <td>
+                    {{ service.created_at|date:"d M Y" }}
+                </td>
+
+                <!-- ACTIONS -->
+                <td>
+
+                    <a href="{% url 'administrator:service-update' service.pk %}" 
+                       class="btn btn-sm btn-warning">
+                        Edit
+                    </a>
+
+                    <!-- <a href="{% url 'administrator:service-delete' service.pk %}" 
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this service?')">
+                        Delete
+                    </a> -->
+
+                </td>
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">
+                    No services found
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,37 @@
+<section class="about-hero" 
+        {% if banner_image %}
+        style="background-image: linear-gradient(rgba(0, 143, 179, 0.644), rgba(0, 108, 138, 0.578)),url('{{ banner_image.url }}'); background-size: cover; background-position: center;"
+    {% endif %}>
+  <div class="container">
+
+    <!-- BREADCRUMB -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-custom">
+
+        <li class="breadcrumb-item">
+          <a href="{% url 'userapp:home' %}">Home</a>
+        </li>
+
+        {% for item in breadcrumbs %}
+            {% if not forloop.last %}
+                <li class="breadcrumb-item">
+                    <a href="{{ item.url }}">{{ item.name }}</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ item.name }}
+                </li>
+            {% endif %}
+        {% endfor %}
+
+      </ol>
+    </nav>
+
+    <!-- TITLE -->
+    <h1>{{ page_title }}</h1>
+
+    <!-- DESCRIPTION -->
+    <p class="lead">{{ page_description }}</p>
+
+  </div>
+</section>

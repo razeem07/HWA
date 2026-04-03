@@ -1,0 +1,72 @@
+{% extends "administrator/shared/base.html" %}
+{% block title %}Legal Pages{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="d-flex justify-content-between mb-3">
+
+<h4>Legal Pages</h4>
+
+<a href="{% url 'administrator:legal-create' %}" class="btn btn-primary">
++ Add Page
+</a>
+
+</div>
+
+<table class="table table-bordered table-hover">
+
+<thead>
+<tr>
+<th>#</th>
+<th>Page Type</th>
+<th>Title</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in pages %}
+
+<tr>
+
+<td>{{ forloop.counter }}</td>
+
+<td>{{ item.get_content_type_display }}</td>
+
+<td>{{ item.title }}</td>
+
+<td>
+{% if item.is_active %}
+<span class="badge bg-success">Active</span>
+{% else %}
+<span class="badge bg-danger">Inactive</span>
+{% endif %}
+</td>
+
+<td>
+
+<a href="{% url 'administrator:legal-update' item.id %}" class="btn btn-warning btn-sm">
+Edit
+</a>
+
+<!-- <a href="{% url 'administrator:legal-delete' item.id %}" class="btn btn-danger btn-sm">
+Delete
+</a> -->
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

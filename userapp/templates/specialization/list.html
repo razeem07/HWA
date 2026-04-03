@@ -1,0 +1,73 @@
+{% extends "shared/base.html" %} {% load static %} {% block title %}Home |
+Elister Med{% endblock %} {% block content %}
+
+
+<!-- Hero Section -->
+{% include "shared/hero.html" %}
+
+
+ <!-- Specializations -->
+    <section class="specializations-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>{{ page.page_title }}</h2>
+            </div>
+
+            <div class="row g-4">
+
+                {% for spec in specializations %}
+                <!-- Cardiology -->
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="card special-card">
+                        <div class="card-image-wrapper">
+
+                                {% if spec.featured_image %}
+                            <img src="{{ spec.featured_image.url }}" alt="{{spec.name }}">
+                             {% endif %}
+                            <div class="card-overlay"></div>
+                            <div class="card-icon">
+
+                               {% if spec.icon %}
+                                  <img src="{{ spec.icon.url }}" alt="{{ spec.name }}" width="40">
+                               {% else %}
+                                   <i class="fas fa-heart"></i> <!-- fallback -->
+                               {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5>{{ spec.name }}</h5>
+                            <p> {{ spec.short_description|truncatewords:20 }}</p>
+                            <a href="{% url 'userapp:specialization_detail' spec.slug %}" class="btn-details">
+                                View Details
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                  {% endfor %}
+
+               
+            </div>
+        </div>
+    </section>
+
+
+ 
+
+   <!-- CTA Section -->
+    <section class="section-padding">
+        <div class="cta-section">
+            <h2>  {{page.footer_title}}</h2>
+            <p>{{page.footer_description}}</p>
+            <a href="#" class="btn btn-light-custom">{{page.page_cta}}</a>
+        </div>
+
+    </section>
+
+
+
+
+{% endblock %}

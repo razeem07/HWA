@@ -1,0 +1,68 @@
+{% extends "administrator/shared/base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="d-flex justify-content-between mb-3">
+<h4>Insurance List</h4>
+
+<a href="{% url 'administrator:insurance-create' %}" class="btn btn-primary">
++ Add Insurance
+</a>
+</div>
+
+<table class="table table-bordered table-hover">
+
+<thead>
+<tr>
+<th>#</th>
+<th>Image</th>
+<th>Name</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in insurances %}
+<tr>
+
+<td>{{ forloop.counter }}</td>
+
+<td>
+{% if item.featured_image %}
+<img src="{{ item.featured_image.url }}" width="60" class="rounded">
+{% endif %}
+</td>
+
+<td>{{ item.name }}</td>
+
+<td>
+{% if item.is_active %}
+<span class="badge bg-success">Active</span>
+{% else %}
+<span class="badge bg-danger">Inactive</span>
+{% endif %}
+</td>
+
+<td>
+<a href="{% url 'administrator:insurance-update' item.id %}" class="btn btn-warning btn-sm">
+Edit
+</a>
+
+<!-- <a href="{% url 'administrator:insurance-delete' item.id %}" class="btn btn-danger btn-sm">
+Delete
+</a> -->
+</td>
+
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

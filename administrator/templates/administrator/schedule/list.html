@@ -1,0 +1,47 @@
+
+{% extends "administrator/shared/base.html" %}
+{% block title %}Doctor Schedule Page{% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="container mt-4">
+
+<h4>Doctor Schedules</h4>
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Specialization</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for schedule in schedules %}
+        <tr>
+            <td>{{ schedule.doctor }}</td>
+            <td>{{ schedule.specialization }}</td>
+
+            <td>
+                <a href="{% url 'administrator:schedule_update' schedule.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'administrator:schedule_delete' schedule.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+
+
+
+{% endblock %}

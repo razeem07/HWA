@@ -1,0 +1,40 @@
+{% extends 'accounts/shared/base.html' %}
+{% block title %}Admin Login{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card border-danger shadow-sm">
+                <div class="card-body">
+
+                    <h4 class="text-center mb-4 text-danger">Admin Login</h4>
+
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Email or Username</label>
+                            <input type="text" name="username" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger w-100">
+                            Login
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

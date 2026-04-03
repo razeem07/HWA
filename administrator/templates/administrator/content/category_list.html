@@ -1,0 +1,78 @@
+{% extends "administrator/shared/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="d-flex justify-content-between mb-3">
+
+<h4>Content Categories</h4>
+
+<a href="{% url 'administrator:content-category-create' %}" class="btn btn-success">
+
+Add Category
+
+</a>
+
+</div>
+
+<table class="table table-striped">
+
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for object in object_list %}
+
+<tr>
+
+<td>{{ forloop.counter }}</td>
+
+<td>{{ object.name }}</td>
+
+<td>
+
+{% if object.is_active %}
+<span class="badge bg-success">Active</span>
+{% else %}
+<span class="badge bg-secondary">Inactive</span>
+{% endif %}
+
+</td>
+
+<td>
+
+<a href="{% url 'administrator:content-category-update' object.id %}"
+class="text-primary me-2">
+
+<i class="bi bi-pencil"></i>
+
+</a>
+
+<a href="{% url 'administrator:content-category-delete' object.id %}"
+class="text-danger">
+
+<i class="bi bi-trash"></i>
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

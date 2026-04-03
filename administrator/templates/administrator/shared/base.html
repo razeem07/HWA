@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Admin Panel{% endblock %}</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f4f6f9;
+overflow-x:hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:56px;
+left:0;
+height:100%;
+width:240px;
+background:#1f2937;
+padding-top:20px;
+overflow-y:auto;
+}
+
+.sidebar a{
+color:#d1d5db;
+padding:10px 20px;
+display:block;
+text-decoration:none;
+font-size:14px;
+}
+
+.sidebar a:hover{
+background:#374151;
+color:white;
+}
+
+.sidebar .menu-title{
+color:#9ca3af;
+font-size:11px;
+padding:15px 20px 5px;
+text-transform:uppercase;
+}
+
+.sidebar i{
+margin-right:8px;
+}
+
+/* PAGE CONTENT */
+
+.main-content{
+margin-left:240px;
+padding:30px;
+}
+
+/* DASHBOARD CARDS */
+
+.dashboard-card{
+border:none;
+border-radius:12px;
+color:white;
+padding:20px;
+}
+
+.card-doctor{
+background:linear-gradient(135deg,#4f46e5,#6366f1);
+}
+
+.card-department{
+background:linear-gradient(135deg,#10b981,#34d399);
+}
+
+.card-appointment{
+background:linear-gradient(135deg,#f59e0b,#fbbf24);
+}
+
+.card-patient{
+background:linear-gradient(135deg,#ef4444,#f87171);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-dark bg-dark px-4 navbar-fixed">
+<span class="navbar-brand">Hospital Admin</span>
+
+<div class="ms-auto">
+
+{% if request.user.is_authenticated %}
+
+<div class="dropdown">
+<a class="text-white dropdown-toggle text-decoration-none"
+href="#"
+data-bs-toggle="dropdown">
+
+<i class="bi bi-person-circle"></i>
+{{ request.user.username }}
+
+</a>
+
+<ul class="dropdown-menu dropdown-menu-end">
+
+<li>
+<a class="dropdown-item" href="#">
+Account Settings
+</a>
+</li>
+
+<li><hr class="dropdown-divider"></li>
+
+<li>
+<a class="dropdown-item" href="{% url 'accounts:logout' %}">
+Logout
+</a>
+</li>
+
+</ul>
+</div>
+
+{% endif %}
+
+</div>
+</nav>
+
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="menu-title">Hospital Modules</div>
+
+<a href="{% url 'administrator:dashboard' %}">
+<i class="bi bi-speedometer2"></i> Dashboard
+</a>
+
+<a href="{% url 'administrator:branch-list' %}">
+<i class="bi bi-building"></i> Branches
+</a>
+
+<a href="{% url 'administrator:specialization-list' %}">
+<i class="bi bi-diagram-3"></i> Specializations
+</a>
+
+<a href="{% url 'administrator:service-list' %}">
+<i class="bi bi-diagram-3"></i> Services
+</a>
+
+<a href="{% url 'administrator:doctor-list' %}">
+<i class="bi bi-person-badge"></i> Doctors
+</a>
+
+
+
+<a href="#">
+<i class="bi bi-calendar-check"></i> Appointments
+</a>
+
+
+<div class="menu-title">Website Pages</div>
+
+<!-- DROPDOWN MENU -->
+
+<a data-bs-toggle="collapse" href="#pages">
+<i class="bi bi-diagram-3"></i> Pages
+</a>
+
+<div class="collapse" id="pages">
+
+<a href="{% url 'administrator:homepage-manage' %}"> <i class="ps-4"></i>home</a>
+<a href="{% url 'administrator:about-manage' %}"> <i class="ps-4"></i>About</a>
+<a href="{% url 'administrator:contact-manage' %}"> <i class="ps-4"></i>Contact</a>
+<a href="{% url 'administrator:listing-page-list'%}"> <i class="ps-4"></i>Archive Banners</a>
+<a href="{% url 'administrator:team-list' %}"><i class="ps-4"></i> Teams</a>
+<a href="{% url 'administrator:testimonial-list' %}"><i class="ps-4"></i> Testimonials</a>
+
+
+</div>
+
+
+<a data-bs-toggle="collapse" href="#servicepages">
+<i class="bi bi-diagram-3"></i> Service Pages
+</a>
+
+<div class="collapse" id="servicepages">
+
+<a href="{% url 'administrator:package-category-list' %}"> <i class="ps-4"></i>Package Category</a>
+<a href="{% url 'administrator:package-product-list' %}"> <i class="ps-4"></i>Packages</a>
+<a href="{% url 'administrator:insurance-list' %}"> <i class="ps-4"></i>Insurance</a>
+
+
+
+</div>
+
+
+
+
+<div class="menu-title">Content</div>
+
+<a data-bs-toggle="collapse" href="#contenttype">
+<i class="bi bi-newspaper"></i> CMS
+</a>
+
+<div class="collapse" id="contenttype">
+
+<a href="{% url 'administrator:content-list' %}" class="ps-4">Content Management</a>
+<a href="{% url 'administrator:content-category-list' %}" class="ps-4">Categories</a>
+<a href="{% url 'administrator:tag-list' %}" class="ps-4">Tags</a>
+
+
+</div>
+
+<div class="menu-title">Submissions</div>
+
+<a data-bs-toggle="collapse" href="#submissions">
+<i class="bi bi-newspaper"></i> Lead Magnets
+</a>
+
+<div class="collapse" id="submissions">
+
+<a href="{% url 'administrator:contact-submissions' %}" class="ps-4">Contact</a>
+<a href="{% url 'administrator:contact-submissions' %}" class="ps-4">Newsletter</a>
+
+
+
+</div>
+
+<div class="menu-title">Legal Pages</div>
+
+<a href="{% url 'administrator:legal-list' %}" class="ps-4">Legal Pages</a>
+
+<div class="menu-title">General Settings</div>
+
+<a data-bs-toggle="collapse" href="#gensettings">
+<i class="bi bi-newspaper"></i> Settings
+</a>
+
+<div class="collapse" id="gensettings">
+
+<a href="{% url 'administrator:global-settings' %}" class="ps-4">Web Settings</a>
+<a href="{% url 'administrator:social-list' %}" class="ps-4">Social Settings</a>
+<a href="{% url 'administrator:menu-list' %}" class="ps-4">Menu Settings</a>
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main-content">
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+{{ message }}
+<button class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+{% block content %}{% endblock %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

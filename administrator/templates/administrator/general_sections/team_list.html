@@ -1,0 +1,75 @@
+{% extends "administrator/shared/base.html" %} {% block title %}Team
+{%endblock %} {% block content %}
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Team</h4>
+    <a
+      href="{% url 'administrator:team-create' %}"
+      class="btn btn-primary btn-sm"
+    >
+      + Add 
+    </a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <table class="table table-striped table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Designation</th>
+            <th>Status</th>
+           
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ object.name}}</td>
+            
+             <td>{{ object.designation }}</td>
+            <td>
+              {% if object.is_active %}
+              <span class="badge bg-success">Active</span>
+              {% else %}
+              <span class="badge bg-secondary">Inactive</span>
+              {% endif %}
+            </td>
+           
+            <!-- Edit -->
+            <td>
+              <a href="{% url 'administrator:team-update' object.id %}" class="text-primary">
+            <i class="bi bi-pencil-square"></i>
+             </a>
+            </td>
+
+            <!-- Delete -->
+            <td>
+              <a
+                href="{% url 'administrator:team-delete' object.id %}"
+                class="text-danger"
+                onclick="
+                  return confirm(
+                    'Are you sure you want to delete this Team?',
+                  );
+                "
+              >
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-center py-4">Nothing found</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

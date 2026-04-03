@@ -1,0 +1,566 @@
+{% extends "administrator/shared/base.html" %} {% block title %}Add Doctor{%endblock %} 
+{% block content %}
+<div class="container-fluid">
+
+<h4 class="mb-4">Manage Doctor</h4>
+
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.media }}
+
+<div class="accordion" id="doctorAccordion">
+
+<!-- ACCOUNT INFO -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+<button type="button"
+class="accordion-button"
+data-bs-toggle="collapse"
+data-bs-target="#accountInfo">
+Doctor Account
+</button>
+</h2>
+
+<div id="accountInfo" class="accordion-collapse collapse show">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+<div class="col-md-6">
+<label class="form-label">Username *</label>
+{{ form.username }}
+{{ form.username.errors }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Email *</label>
+{{ form.email }}
+{{ form.email.errors }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">First Name *</label>
+{{ form.first_name }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Last Name</label>
+{{ form.last_name }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Phone Number</label>
+{{ form.phone_number }}
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- DOCTOR INFO -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+<button type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#doctorInfo">
+Doctor Information
+</button>
+</h2>
+
+<div id="doctorInfo" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+<div class="col-md-6">
+<label class="form-label">Branch *</label>
+{{ form.branch }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Specialization *</label>
+{{ form.specialization }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Designation *</label>
+{{ form.designation }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Years of Experience *</label>
+{{ form.years_of_experience }}
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- HERO SECTION -->
+
+<div class="accordion-item">
+
+    <h2 class="accordion-header">
+        <button type="button"
+            class="accordion-button collapsed"
+            data-bs-toggle="collapse"
+            data-bs-target="#doctorHero">
+            Hero Section
+        </button>
+    </h2>
+
+    <div id="doctorHero" class="accordion-collapse collapse">
+        <div class="accordion-body">
+
+            <div class="row">
+
+                <!-- HERO TITLE -->
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Hero Title</label>
+                    {{ form.hero_title }}
+                </div>
+
+                <!-- HERO DESCRIPTION -->
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Hero Description</label>
+                    {{ form.hero_description }}
+                </div>
+
+                <!-- HERO IMAGE -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Hero Banner</label>
+
+                    {% if object and object.doctor_hero_banner %}
+                    <div class="mb-2">
+                        <img src="{{ object.doctor_hero_banner.url }}" 
+                             width="150" 
+                             class="rounded border">
+                    </div>
+                    {% endif %}
+
+                    {{ form.doctor_hero_banner }}
+
+                    <!-- LIVE PREVIEW -->
+                    <img id="preview_doctor_banner" 
+                         class="mt-2 rounded d-none" 
+                         width="150">
+                </div>
+
+                <!-- ALT TEXT -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Banner Alt Text</label>
+                    {{ form.doctor_hero_banner_alt }}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- PROFILE IMAGE -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+<button type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#profileImage">
+Profile Image
+</button>
+</h2>
+
+<div id="profileImage" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row">
+
+<div class="col-md-6">
+
+<label class="form-label">Doctor Image *</label>
+
+{% if object and object.profile_image %}
+<div class="mb-2">
+<img src="{{ object.profile_image.url }}" width="120" class="rounded border">
+</div>
+{% endif %}
+
+{{ form.profile_image }}
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+<!-- PROFESSIONAL DETAILS -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+<button type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#professionalDetails">
+Professional Details
+</button>
+</h2>
+
+<div id="professionalDetails" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+<div class="col-md-6">
+<label class="form-label">Specialized In</label>
+{{ form.specialized_in }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Languages</label>
+{{ form.languages }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Procedures</label>
+{{ form.procedures }}
+</div>
+
+<div class="col-md-3">
+<label class="form-label">Success Rate</label>
+{{ form.success_rate }}
+</div>
+
+<div class="col-md-3">
+<label class="form-label">Patients Treated</label>
+{{ form.patients_treated }}
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- BIO -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+<button type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#doctorBio">
+Doctor Biography
+</button>
+</h2>
+
+<div id="doctorBio" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row">
+
+<div class="col-md-12">
+<label class="form-label">Short Bio *</label>
+{{ form.short_bio }}
+</div>
+
+<div class="col-md-12">
+<label class="form-label">Full Bio</label>
+{{ form.full_bio }}
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+<!-- EDUCATION & QUALIFICATIONS -->
+
+
+
+
+{% include "administrator/doctor/partials/formset_block.html" with formset=edu_formset title="Education & Qualifications" prefix="educations" section_id="educationSection" %}
+
+{% include "administrator/doctor/partials/formset_block.html" with formset=cert_formset title="Certifications" prefix="certifications" section_id="certSection" %}
+
+{% include "administrator/doctor/partials/formset_block.html" with formset=exp_formset title="Clinical Expertise" prefix="expertise" section_id="expSection" %}
+
+{% include "administrator/doctor/partials/formset_block.html" with formset=mem_formset title="Professional Memberships" prefix="memberships" section_id="memSection" %}
+<!-- SEO -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+<button type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#seoSection">
+SEO Settings
+</button>
+</h2>
+
+<div id="seoSection" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+<div class="col-md-6">
+<label class="form-label">Meta Title</label>
+{{ form.meta_title }}
+</div>
+
+<div class="col-md-12">
+<label class="form-label">Meta Description</label>
+{{ form.meta_description }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Slug *</label>
+{{ form.slug }}
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Canonical URL</label>
+{{ form.canonical_url }}
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+<!-- SOCIAL -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+<button type="button"
+class="accordion-button collapsed"
+data-bs-toggle="collapse"
+data-bs-target="#socialMedia">
+Social Media
+</button>
+</h2>
+
+<div id="socialMedia" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="row g-3">
+
+<div class="col-md-6">
+<label class="form-label">OG Title</label>
+{{ form.og_title }}
+</div>
+
+<div class="col-md-12">
+<label class="form-label">OG Description</label>
+{{ form.og_description }}
+</div>
+
+<div class="col-md-6">
+
+<label class="form-label">OG Image</label>
+
+{% if object and object.og_image %}
+<div class="mb-2">
+<img src="{{ object.og_image.url }}" width="120" class="rounded border">
+</div>
+{% endif %}
+
+{{ form.og_image }}
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+
+<div class="mt-4">
+
+<div class="form-check mb-3">
+{{ form.is_active }}
+<label class="form-check-label">Active</label>
+</div>
+
+<button type="submit" class="btn btn-success px-4">
+Save Doctor
+</button>
+
+<a href="{% url 'administrator:doctor-list' %}" class="btn btn-outline-secondary">
+Cancel
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const branchField = document.getElementById("id_branch");
+    const specializationField = document.getElementById("id_specialization");
+
+    branchField.addEventListener("change", function () {
+      const branchId = this.value;
+
+      if (!branchId) return;
+
+      fetch(`/administrator/ajax/load-specializations/?branch=${branchId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          specializationField.innerHTML =
+            '<option value="">Select Specialization</option>';
+
+          data.forEach(function (item) {
+            const option = document.createElement("option");
+
+            option.value = item.id;
+            option.textContent = item.name;
+
+            specializationField.appendChild(option);
+          });
+        });
+    });
+  });
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const designation = document.getElementById("id_designation");
+const slug = document.getElementById("id_slug");
+
+let slugEdited = false;
+
+slug.addEventListener("input", function(){
+slugEdited = true;
+});
+
+designation.addEventListener("keyup", function(){
+
+if(slugEdited) return;
+
+let value = designation.value
+.toLowerCase()
+.replace(/[^\w ]+/g,'')
+.replace(/ +/g,'-');
+
+slug.value = value;
+
+});
+
+});
+
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    // 🔥 ADD FORM
+    document.addEventListener("click", function(e){
+
+        if(e.target.classList.contains("add-form")){
+
+            let prefix = e.target.getAttribute("data-prefix");
+
+            let formsetDiv = document.getElementById(prefix + "-formset");
+            let totalForms = document.getElementById("id_" + prefix + "-TOTAL_FORMS");
+
+            // ❌ If not found → prefix mismatch
+            if(!totalForms){
+                console.error("Prefix mismatch:", prefix);
+                return;
+            }
+
+            let formCount = parseInt(totalForms.value);
+
+            let forms = formsetDiv.querySelectorAll(".formset-item");
+            let lastForm = forms[forms.length - 1];
+            let newForm = lastForm.cloneNode(true);
+
+            // clear values
+            newForm.querySelectorAll("input, textarea").forEach(input => {
+                if(input.type !== "hidden") input.value = "";
+            });
+
+            // update attributes
+            newForm.querySelectorAll("input, textarea, label").forEach(el => {
+
+                if(el.name){
+                    el.name = el.name.replace(/-\d+-/g, `-${formCount}-`);
+                }
+
+                if(el.id){
+                    el.id = el.id.replace(/-\d+-/g, `-${formCount}-`);
+                }
+
+                if(el.htmlFor){
+                    el.htmlFor = el.htmlFor.replace(/-\d+-/g, `-${formCount}-`);
+                }
+
+            });
+
+            formsetDiv.appendChild(newForm);
+            totalForms.value = formCount + 1;
+        }
+
+    });
+
+    // 🔥 DELETE FORM
+    document.addEventListener("click", function(e){
+
+        if(e.target.classList.contains("remove-form")){
+
+            let formBlock = e.target.closest(".formset-item");
+
+            let deleteInput = formBlock.querySelector("input[type='checkbox']");
+            if(deleteInput){
+                deleteInput.checked = true;
+            }
+
+            formBlock.style.display = "none";
+        }
+
+    });
+
+});
+</script>
+
+
+
+
+{% endblock %}

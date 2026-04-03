@@ -1,0 +1,54 @@
+{% extends "administrator/shared/base.html" %}
+{% block title %}Doctor Schedule Page{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h4>Doctor Leave</h4>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <label>Doctor</label>
+            {{ form.doctor }}
+        </div>
+
+        <div class="col-md-4">
+            <label>Date</label>
+            {{ form.date }}
+        </div>
+
+        <div class="col-md-4">
+            <label>Full Day</label><br>
+            {{ form.is_full_day }}
+        </div>
+
+        <div class="col-md-4 mt-3">
+            <label>Start Time</label>
+            {{ form.start_time }}
+        </div>
+
+        <div class="col-md-4 mt-3">
+            <label>End Time</label>
+            {{ form.end_time }}
+        </div>
+
+        <div class="col-md-4 mt-3">
+            <label>Reason</label>
+            {{ form.reason }}
+        </div>
+
+    </div>
+
+    <button class="btn btn-danger mt-3">Save</button>
+
+</form>
+
+</div>
+
+
+{% endblock %}

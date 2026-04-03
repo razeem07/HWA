@@ -1,0 +1,195 @@
+{% extends "administrator/shared/base.html" %}
+
+{% block title %}Menu Settings{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3 class="mb-3">
+        {{ view.object|default:"Create Menu" }}
+    </h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- ===================== -->
+        <!-- MENU GROUP FORM -->
+        <!-- ===================== -->
+        <div class="card p-3 mb-4">
+            <h5 class="mb-3">Menu Group</h5>
+
+            <div class="mb-2">
+                <label>Name</label>
+                {{ form.name }}
+            </div>
+
+            <div class="mb-2">
+                <label>Slug</label>
+                {{ form.slug }}
+            </div>
+
+            <div class="form-check mt-2">
+                {{ form.is_active }}
+                <label class="form-check-label">Active</label>
+            </div>
+        </div>
+
+
+        <!-- ===================== -->
+        <!-- MENU ITEMS FORMSET -->
+        <!-- ===================== -->
+        <div class="card p-3">
+
+            <h5 class="mb-3">Menu Items</h5>
+
+            {{ formset.management_form }}
+
+            <div id="menuitem_set-formset">
+
+                {% for form in formset %}
+                <div class="formset-item border rounded p-3 mb-3">
+
+                    {{ form.id }}
+
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <label>Parent</label>
+                            {{ form.parent }}
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Title</label>
+                            {{ form.title }}
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>URL</label>
+                            {{ form.url }}
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Icon</label>
+                            {{ form.icon_class }}
+                        </div>
+
+                        <div class="col-md-1">
+                            <label>Order</label>
+                            {{ form.order }}
+                        </div>
+
+                        <div class="col-md-1 d-flex align-items-center mt-4">
+                            {{ form.is_active }}
+                        </div>
+
+                        <div class="col-md-2 d-flex align-items-center mt-4">
+                            {{ form.DELETE }}
+                            <button type="button" class="btn btn-danger btn-sm ms-2 remove-form">
+                                Remove
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <!-- ADD BUTTON -->
+            <button type="button"
+                    class="btn btn-success add-form mt-2"
+                    data-prefix="menuitem_set">
+                + Add Menu Item
+            </button>
+
+        </div>
+
+
+        <!-- ===================== -->
+        <!-- SUBMIT -->
+        <!-- ===================== -->
+        <button type="submit" class="btn btn-primary mt-4">
+            Save Menu
+        </button>
+
+    </form>
+
+</div>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+document.addEventListener("click", function(e){
+
+// ================= ADD =================
+if(e.target.classList.contains("add-form")){
+
+    let prefix = e.target.dataset.prefix;
+
+    let formset = document.getElementById(prefix + "-formset");
+    let total = document.getElementById("id_" + prefix + "-TOTAL_FORMS");
+
+    let formCount = parseInt(total.value);
+
+    let lastForm = formset.querySelector(".formset-item:last-child");
+    let newForm = lastForm.cloneNode(true);
+
+    // 🔥 RESET VALUES + FIX INDEX
+    newForm.querySelectorAll("input, textarea, select").forEach(function(el){
+
+        if (el.name) {
+            el.name = el.name.replace(/-\d+-/, "-" + formCount + "-");
+        }
+
+        if (el.id) {
+            el.id = el.id.replace(/-\d+-/, "-" + formCount + "-");
+        }
+
+        // 🔥 CLEAR VALUES
+        if (el.name && el.name.includes("-id")) {
+            el.value = "";
+        } else if (el.type === "checkbox") {
+            el.checked = false;
+        } else if (el.type !== "hidden") {
+            el.value = "";
+        }
+
+    });
+
+    // 🔥 LABEL FIX
+    newForm.querySelectorAll("label").forEach(function(label){
+        if (label.htmlFor) {
+            label.htmlFor = label.htmlFor.replace(/-\d+-/, "-" + formCount + "-");
+        }
+    });
+
+    formset.appendChild(newForm);
+
+    // 🔥 VERY IMPORTANT
+    total.value = formCount + 1;
+}
+
+
+// ================= DELETE =================
+if(e.target.classList.contains("remove-form")){
+
+    let block = e.target.closest(".formset-item");
+    let del = block.querySelector("input[type='checkbox'][name$='-DELETE']");
+
+    if(del){
+        del.checked = true;
+    }
+
+    block.style.display = "none";
+}
+
+});
+
+});
+</script>
+
+{% endblock %}

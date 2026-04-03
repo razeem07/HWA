@@ -1,0 +1,376 @@
+{% extends "shared/base.html" %}
+ {% load static %}
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="about-hero">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-custom">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Book Now</li>
+      </ol>
+    </nav>
+    <h1>About Eleister Med</h1>
+    <p class="lead">Bringing Excellence in Healthcare from India to Dubai</p>
+  </div>
+</section>
+
+   <!-- BOOKING SECTION -->
+    <section class="booking-section">
+        <div class="container">
+
+            <div class="booking-card">
+
+                <!-- Location -->
+                <h5 class="section-title">Select Location</h5>
+
+                <select class="form-select mb-4">
+                    <option>Main Medical Center</option>
+                    <option>City Clinic Branch</option>
+                </select>
+
+
+                <!-- Date -->
+                <h5 class="section-title">Select Date</h5>
+
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <div class="date-btn active">Mon 10</div>
+                    <div class="date-btn">Tue 11</div>
+                    <div class="date-btn">Wed 12</div>
+                    <div class="date-btn">Thu 13</div>
+                    <div class="date-btn">Fri 14</div>
+                </div>
+
+
+                <!-- Time -->
+                <h5 class="section-title">Available Time</h5>
+
+                <div class="mb-4">
+                    <span class="time-slot active">09:00 AM</span>
+                    <span class="time-slot">09:30 AM</span>
+                    <span class="time-slot">10:00 AM</span>
+                    <span class="time-slot">10:30 AM</span>
+                    <span class="time-slot">11:00 AM</span>
+                    <span class="time-slot">02:00 PM</span>
+                    <span class="time-slot">03:00 PM</span>
+                </div>
+
+
+                <!-- Patient Info -->
+                <h5 class="section-title">Patient Details</h5>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Patient Name">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="tel" class="form-control" placeholder="Phone Number">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="email" class="form-control" placeholder="Email">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="number" class="form-control" placeholder="Age">
+                    </div>
+
+                    <div class="col-12">
+                        <textarea class="form-control" rows="3" placeholder="Notes (Optional)"></textarea>
+                    </div>
+
+                </div>
+
+                <!-- Button -->
+                <div class="mt-4">
+                    <button class="btn btn-book w-100">
+                        Confirm Appointment
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <div class="container">
+        <hr class="my-5" style="border-top: 2px solid #e0f7fa; opacity: 1;">
+        <div class="instruction-box mt-4">
+
+            <div class="instruction-header">
+                <i class="fa-solid fa-circle-info"></i>
+                <h6>Important Instructions</h6>
+            </div>
+
+            <ul>
+                <li>Please arrive 15 minutes before appointment.</li>
+                <li>Carry previous medical reports.</li>
+                <li>Appointment can be rescheduled 24 hours before.</li>
+            </ul>
+
+        </div>
+    </div>
+
+
+    <form method="post">
+{% csrf_token %}
+
+<!-- BOOKING SECTION -->
+<section class="booking-section">
+    <div class="container">
+
+        <div class="booking-card">
+
+            <!-- Specialization -->
+            <h5 class="section-title">Select Department</h5>
+
+            {{ form.specialization }}
+
+
+            <!-- Doctor -->
+            <h5 class="section-title">Select Doctor</h5>
+
+            {{ form.doctor }}
+
+
+            <!-- Date -->
+            <h5 class="section-title">Select Date</h5>
+
+            {{ form.date }}
+
+            {% if form.date.errors %}
+              <div class="text-danger">
+             {{ form.date.errors }}
+              </div>
+            {% endif %}
+
+
+            <!-- Time -->
+            <h5 class="section-title">Available Time</h5>
+
+            
+
+            {{ form.time }}
+
+
+            <!-- Patient Info -->
+            <h5 class="section-title">Patient Details</h5>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    {{ form.first_name }}
+                </div>
+                 <div class="col-md-6">
+                    {{ form.last_name }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.phone }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.email }}
+                </div>
+
+               
+
+            </div>
+
+            <!-- Button -->
+            <div class="mt-4">
+                <button type="submit" class="btn btn-book w-100">
+                    Confirm Appointment
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+{% if success %}
+<div class="alert alert-success">
+    Appointment booked successfully! Our team will contact you soon.
+</div>
+{% endif %}
+
+</form>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const specialization = document.getElementById("id_specialization");
+    const doctor = document.getElementById("id_doctor");
+    const date = document.getElementById("id_date");
+    const time = document.getElementById("id_time");
+
+    // ================= LOAD DOCTORS =================
+    specialization.addEventListener("change", function(){
+
+        let specId = this.value;
+
+        // Reset doctor
+        doctor.innerHTML = '<option value="">Select Doctor</option>';
+
+        // Reset time only
+        time.innerHTML = '<option value="">Select Time</option>';
+        time.disabled = true;
+
+        if(!specId) return;
+
+        fetch(`/appointment/load-doctors/?specialization=${specId}`)
+        .then(res => res.json())
+        .then(data => {
+
+            data.forEach(function(doc){
+                doctor.innerHTML += `<option value="${doc.id}">${doc.user__first_name}</option>`;
+            });
+
+        });
+
+    });
+
+
+    // ================= DOCTOR CHANGE =================
+    doctor.addEventListener("change", function(){
+
+        // 🔥 DO NOT reset date (IMPORTANT FIX)
+        // Only reset time
+        time.innerHTML = '<option value="">Select Time</option>';
+        time.disabled = true;
+
+        // If date already selected → reload slots
+        if(date.value){
+            loadSlots();
+        }
+
+    });
+
+
+    // ================= DATE CHANGE =================
+    date.addEventListener("change", function(){
+
+        time.innerHTML = '<option value="">Select Time</option>';
+        time.disabled = true;
+
+        loadSlots();
+    });
+
+
+    // ================= LOAD SLOTS =================
+    function loadSlots(){
+
+        let doctorId = doctor.value;
+        let selectedDate = date.value;
+
+        if(!doctorId || !selectedDate) return;
+
+        time.innerHTML = '<option>Loading...</option>';
+        time.disabled = true;
+
+        fetch(`/appointment/load-slots/?doctor=${doctorId}&date=${selectedDate}`)
+        .then(res => res.json())
+        .then(data => {
+
+            time.innerHTML = '';
+
+            if(data.length === 0){
+                time.innerHTML = '<option>No slots available</option>';
+                time.disabled = true;
+                return;
+            }
+
+            time.innerHTML = '<option value="">Select Time</option>';
+
+            data.forEach(function(slot){
+                time.innerHTML += `<option value="${slot}">${slot}</option>`;
+            });
+
+            time.disabled = false;
+        });
+
+    }
+
+});
+</script>
+
+<!-- 
+
+<script>
+
+document.getElementById("id_specialization").addEventListener("change", function(){
+
+    let specializationId = this.value;
+
+    fetch(`/appointment/load-doctors/?specialization=${specializationId}`)
+    .then(response => response.json())
+    .then(data => {
+
+        let doctorSelect = document.getElementById("id_doctor");
+
+        doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+
+        data.forEach(function(doctor){
+            doctorSelect.innerHTML += `<option value="${doctor.id}">${doctor.user__first_name}</option>`;
+        });
+
+    });
+
+});
+
+</script>
+
+
+<script>
+
+document.getElementById("id_doctor").addEventListener("change", loadSlots);
+document.getElementById("id_date").addEventListener("change", loadSlots);
+
+function loadSlots(){
+
+    let doctor = document.getElementById("id_doctor").value;
+    let date = document.getElementById("id_date").value;
+
+    if(!doctor || !date) return;
+
+    fetch(`/appointment/load-slots/?doctor=${doctor}&date=${date}`)
+    .then(response => response.json())
+    .then(data => {
+
+        let timeSelect = document.getElementById("id_time");
+
+          // 🔥 clear previous options
+         timeSelect.innerHTML = '';
+
+         // 🔥 IF NO SLOTS
+         if(data.length === 0){
+            timeSelect.innerHTML = '<option value="">No slots available</option>';
+            return;
+         }
+
+        timeSelect.innerHTML = '<option value="">Select Time</option>';
+
+        data.forEach(function(slot){
+            timeSelect.innerHTML += `<option value="${slot}">${slot}</option>`;
+        });
+
+    });
+
+}
+
+</script> -->
+
+
+
+
+
+
+
+{% endblock %}

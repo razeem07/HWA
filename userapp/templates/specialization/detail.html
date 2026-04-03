@@ -1,0 +1,313 @@
+{% extends "shared/base.html" %} {% load static %} {% block title %}Home |
+Elister Med{% endblock %} {% block content %}
+
+
+
+   <!-- Hero Section -->
+  <section class="about-hero" 
+        {% if specialization.hero_banner %}
+        style="background-image: linear-gradient(rgba(0, 143, 179, 0.644), rgba(0, 108, 138, 0.578)),url('{{ specialization.hero_banner.url}}'); background-size: cover; background-position: center;"
+    {% endif %}>
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-custom">
+                    <li class="breadcrumb-item"> <a href="{% url 'userapp:home' %}">Home</a></li>
+
+                      {% for item in breadcrumbs %}
+                          {% if not forloop.last %}
+                             <li class="breadcrumb-item">
+                                 <a href="{{ item.url }}">{{ item.name }}</a>
+                              </li>
+                         {% else %}
+                             <li class="breadcrumb-item active" aria-current="page">
+                                {{ item.name }}
+                            </li>
+                         {% endif %}
+                     {% endfor %}
+                </ol>
+            </nav>
+            <h1>{{specialization.hero_title}}</h1>
+            <p class="lead">{{specialization.hero_description }}</p>
+        </div>
+    </section>
+
+
+    <section class="py-5 about-section">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-lg-6">
+                    <h2 class="section-title">{{specialization.main_title}}</h2>
+
+
+                     {{specialization.main_description |safe}}
+                  
+                  
+
+                </div>
+
+                <div class="col-lg-6">
+                    <img src="{{specialization.main_image.url }}" class="section-img" alt="{{specialization.hero_banner_alt}}">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <h2 class="text-center section-title">Our {{ specialization.name }} Services</h2>
+
+            <div class="row g-4 mt-4">
+                 {% for service in specialization.services.all %}
+                <div class="col-md-4 service-col">
+                    <div class="card service-card p-4 text-center">
+                        <div class="service-icon">
+
+
+                         {% if service.icon %}
+                             <img src="{{ service.icon.url }}" width="60" class="mb-3">
+                         {% else %}
+                              <i class="fas fa-spa"></i>
+                         {% endif %}
+
+                           
+                        </div>
+                            
+                        <h5>{{ service.title }}</h5>
+                        <p>
+                           {{ service.description }}
+                        </p>
+                    </div>
+                </div>
+
+                      {% endfor %}
+
+                <!-- <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <div class="service-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h5>Cosmetic Dermatology</h5>
+                        <p>
+                            Anti-aging treatments, Botox, fillers, skin tightening and rejuvenation
+                            procedures performed by experts.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <div class="service-icon">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <h5>Hair Loss Treatment</h5>
+                        <p>
+                            Comprehensive scalp evaluation, PRP therapy, and customized hair
+                            restoration treatments.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <div class="service-icon">
+                            <i class="fas fa-allergies"></i>
+                        </div>
+                        <h5>Skin Allergy Management</h5>
+                        <p>
+                            Diagnosis and treatment of allergic skin reactions, rashes and
+                            dermatitis using advanced medical care.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <div class="service-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <h5>Pigmentation & Laser Treatment</h5>
+                        <p>
+                            Modern laser procedures to treat pigmentation, sun damage and uneven
+                            skin tone safely.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card service-card p-4 text-center">
+                        <div class="service-icon">
+                            <i class="fas fa-band-aid"></i>
+                        </div>
+                        <h5>Skin Infection Treatment</h5>
+                        <p>
+                            Effective care for bacterial, viral and fungal infections with modern
+                            therapies.
+                        </p>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- WHEN TO VISIT -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center g-4">
+
+                <div class="col-lg-6">
+                    <img src="{{specialization.secondary_image.url}}" class="section-img"  alt="{{specialization.secondary_image_alt}}">
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="info-box">
+
+                        <h3 class="section-title">{{specialization.secondary_title}} </h3>
+
+
+                             {{specialization.long_description_primary |safe}}
+
+                       
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- DOCTORS -->
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <h2 class="text-center section-title">Meet Our {{ specialization.name }}</h2>
+
+            <div class="row g-4 mt-4">
+                  {% for doctor in doctors %}
+                <div class="col-lg-4">
+                    <div class="doctor-card card">
+                           {% if doctor.profile_image %}
+                               <img src="{{ doctor.profile_image.url }}" class="doctor-img">
+                            {% endif %}
+
+                        <div class="card-body text-center">
+                            <h5> Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h5>
+                            <p class="text-muted small"> {{ doctor.designation }}</p>
+                            <p class="small"> {{ doctor.specialized_in }} • {{ doctor.years_of_experience }}+ Years Experience</p>
+                            <a href="{% url 'userapp:doctor_detail' doctor.slug %}" class="btn-details">
+                                View Profile
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                   {% endfor %}
+
+              
+
+            </div>
+        </div>
+    </section>
+
+
+       <section class="py-5">
+    <div class="container">
+
+        <h2 class="text-center mb-4">
+            {{ specialization.name }} Services
+        </h2>
+
+        <div class="row g-4">
+
+            {% for service in services %}
+            <div class="col-lg-4">
+
+                <div class="card h-100">
+
+                    <!-- IMAGE -->
+                    {% if service.featured_image %}
+                    <img src="{{ service.featured_image.url }}" class="card-img-top">
+                    {% endif %}
+
+                    <div class="card-body">
+
+                        <h5>{{ service.name }}</h5>
+
+                        <p>
+                            {{ service.short_description|truncatewords:15 }}
+                        </p>
+
+                        <a href="{% url 'userapp:service_detail' service.slug %}" 
+                           class="btn btn-primary btn-sm">
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+
+
+<section class="py-5 bg-light">
+    <div class="container">
+
+        <h3 class="text-center mb-4">FAQs</h3>
+
+        {% for service in services %}
+            {% if service.faqs.all %}
+            
+            <div class="mb-4">
+
+                <h5 class="mb-3">{{ service.name }}</h5>
+
+                <div class="accordion" id="faqAccordion{{ forloop.counter }}">
+
+                    {% for faq in service.faqs.all %}
+                    <div class="accordion-item">
+
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#faq{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                                {{ faq.question }}
+                            </button>
+                        </h2>
+
+                        <div id="faq{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#faqAccordion{{ forloop.parentloop.counter }}">
+
+                            <div class="accordion-body">
+                                {{ faq.answer }}
+                            </div>
+
+                        </div>
+
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            {% endif %}
+        {% endfor %}
+
+    </div>
+</section>
+
+
+    
+  {% endblock %}

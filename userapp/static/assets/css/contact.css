@@ -1,0 +1,375 @@
+ :root {
+     --primary-color: #008eb3;
+     --primary-dark: #006d8a;
+     --light-bg: #f6fbfd;
+     --border-gray: #e0e0e0;
+     --text-dark: #333;
+     --text-muted: #666;
+ }
+
+ * {
+     font-family: 'Poppins', sans-serif;
+ }
+
+ body {
+     color: var(--text-dark);
+     overflow-x: hidden;
+ }
+
+
+
+ /* Hero Banner */
+ .contact-hero {
+     background: linear-gradient(rgba(0, 143, 179, 0.525), rgba(0, 108, 138, 0.284)), url('../images/contact-banner.jpg');
+     background-size: cover;
+     background-position: center;
+     padding: 150px 0 100px 0;
+     color: white;
+ }
+
+ .contact-hero h1 {
+     font-size: 3.5rem;
+     font-weight: 700;
+     margin-bottom: 20px;
+ }
+
+ .breadcrumb-custom {
+     background: transparent;
+     padding: 0;
+     margin: 0;
+ }
+
+ .breadcrumb-custom a {
+     color: white;
+     text-decoration: none;
+ }
+
+ .breadcrumb-custom .active {
+     color: rgba(255, 255, 255, 0.8);
+ }
+
+ /* Section Styling */
+ .section-padding {
+     padding: 80px 0;
+ }
+
+ .section-title {
+     color: var(--primary-color);
+     font-weight: 700;
+     font-size: 1rem;
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     margin-bottom: 10px;
+ }
+
+ .section-heading {
+     font-size: 2.5rem;
+     font-weight: 700;
+     color: var(--text-dark);
+     margin-bottom: 30px;
+ }
+
+ /* Contact Info Cards */
+ .contact-info-card {
+     background: white;
+     border-radius: 20px;
+     padding: 40px;
+     text-align: center;
+     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+     transition: all 0.3s;
+     height: 100%;
+ }
+
+ .contact-info-card:hover {
+     transform: translateY(-10px);
+     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+ }
+
+ .contact-icon {
+     width: 80px;
+     height: 80px;
+     background: var(--light-bg);
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin: 0 auto 20px;
+ }
+
+ .contact-icon i {
+     font-size: 2.5rem;
+     color: var(--primary-color);
+ }
+
+ .contact-info-card h4 {
+     font-weight: 700;
+     margin-bottom: 15px;
+     color: var(--text-dark);
+ }
+
+ .contact-info-card p {
+     color: var(--text-muted);
+     margin: 0;
+ }
+
+ /* Section */
+ .form-section {
+     background: #f8f9fa;
+     padding: 80px 0;
+ }
+
+ /* Form Wrapper - Simple Card */
+ .contact-form-wrapper {
+     background: #ffffff;
+     border-radius: 8px;
+     /* smaller radius */
+     padding: 35px;
+     /* reduced padding */
+     box-shadow: none;
+     /* remove heavy shadow */
+     border: 1px solid #eee;
+     /* light border instead */
+ }
+
+ /* Labels */
+ .form-label {
+     font-weight: 500;
+     color: #333;
+     margin-bottom: 6px;
+     font-size: 14px;
+ }
+
+ /* Inputs */
+ .form-control {
+     border: 1px solid #ddd;
+     /* thinner border */
+     border-radius: 6px;
+     padding: 10px 14px;
+     font-size: 14px;
+     transition: 0.2s ease;
+     background: #fff;
+ }
+
+ .form-control:focus {
+     border-color: var(--primary-color);
+     box-shadow: none;
+     /* remove glow */
+     outline: none;
+ }
+
+ /* Textarea */
+ textarea.form-control {
+     resize: vertical;
+     min-height: 120px;
+ }
+
+ /* Two Column Layout */
+ .form-row {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 20px;
+ }
+
+ /* Button - Simple Flat */
+ .btn-submit {
+     background: var(--primary-color);
+     color: #fff;
+     border: none;
+     padding: 12px;
+     border-radius: 6px;
+     font-weight: 500;
+     font-size: 14px;
+     transition: 0.2s ease;
+     cursor: pointer;
+     width: 100%;
+ }
+
+ .btn-submit:hover {
+     background: var(--primary-dark);
+     transform: none;
+     /* remove lift effect */
+     box-shadow: none;
+ }
+
+ /* Messages */
+ .success-message,
+ .error-message {
+     padding: 12px;
+     border-radius: 6px;
+     margin-bottom: 15px;
+     display: none;
+     font-size: 14px;
+ }
+
+ /* Map - Clean */
+ .map-section {
+     border-radius: 8px;
+     overflow: hidden;
+     height: 450px;
+     /* slightly reduced */
+     box-shadow: none;
+     /* remove heavy shadow */
+     border: 1px solid #eee;
+ }
+
+ .map-container {
+     width: 100%;
+     height: 100%;
+ }
+
+ /* Hours Section */
+ .hours-section {
+     background: var(--light-bg);
+ }
+
+ .hours-card {
+     background: white;
+     border-radius: 20px;
+     padding: 40px;
+     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+ }
+
+ .hours-title {
+     font-size: 1.5rem;
+     font-weight: 700;
+     color: var(--text-dark);
+     margin-bottom: 30px;
+     display: flex;
+     align-items: center;
+ }
+
+ .hours-title i {
+     color: var(--primary-color);
+     margin-right: 15px;
+     font-size: 2rem;
+ }
+
+ .hours-item {
+     display: flex;
+     justify-content: space-between;
+     padding: 15px 0;
+     border-bottom: 1px solid var(--border-gray);
+ }
+
+ .hours-item:last-child {
+     border-bottom: none;
+ }
+
+ .hours-day {
+     font-weight: 600;
+     color: var(--text-dark);
+ }
+
+ .hours-time {
+     color: var(--primary-color);
+     font-weight: 600;
+ }
+
+ /* CTA Section */
+ .cta-section {
+     background: var(--primary-color);
+     background: linear-gradient(#008fb3a6, #008fb3be), url('../images/siteimages/Section\ 2\ Background.jpg') no-repeat;
+     color: white;
+     padding: 60px 40px;
+     text-align: center;
+     background-size: 100% 100%;
+ }
+
+ .cta-section h2 {
+     font-size: 2.5rem;
+     font-weight: 700;
+     margin-bottom: 20px;
+ }
+
+ .cta-section p {
+     font-size: 1.1rem;
+     margin-bottom: 30px;
+     opacity: 0.95;
+ }
+
+ .btn-light-custom {
+     background: white;
+     color: var(--primary-color);
+     padding: 15px 40px;
+     border-radius: 5px;
+     font-weight: 600;
+     border: none;
+     transition: all 0.3s;
+     text-decoration: none;
+     display: inline-block;
+ }
+
+ .btn-light-custom:hover {
+     transform: scale(1.05);
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+     color: var(--primary-color);
+ }
+
+ /* Footer */
+ .footer-section {
+     background: white;
+     padding: 60px 0 30px 0;
+ }
+
+ .footer-links li {
+     margin-bottom: 12px;
+ }
+
+ .footer-links a {
+     color: var(--text-muted);
+     text-decoration: none;
+     transition: all 0.3s;
+ }
+
+ .footer-links a:hover {
+     color: var(--primary-color);
+     padding-left: 5px;
+ }
+
+ .social-icon {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     width: 40px;
+     height: 40px;
+     background: var(--light-bg);
+     border-radius: 50%;
+     color: var(--primary-color);
+     margin-left: 10px;
+     transition: all 0.3s;
+ }
+
+ .social-icon:hover {
+     background: var(--primary-color);
+     color: white;
+     transform: translateY(-3px);
+ }
+
+ /* Responsive */
+ @media (max-width: 767.98px) {
+     .contact-hero h1 {
+         font-size: 2rem;
+     }
+
+     .section-heading {
+         font-size: 1.8rem;
+     }
+
+     .contact-form-wrapper {
+         padding: 30px;
+     }
+
+     .form-row {
+         grid-template-columns: 1fr;
+     }
+
+     .map-section {
+         height: 300px;
+     }
+
+     .navbar-nav {
+         background-color: rgba(0, 142, 179, 0.95);
+         border-radius: 10px;
+         padding: 20px;
+     }
+ }

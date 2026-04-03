@@ -1,0 +1,283 @@
+{% extends "administrator/shared/base.html" %} {% block title %}About Us{%endblock %} 
+{% block content %}
+
+<div class="container-fluid">
+  <h4 class="mb-4">Manage About Page</h4>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %} {{ form.media }}
+
+    <div class="accordion" id="aboutAccordion">
+      <!-- BASIC INFO -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#basicInfo"
+          >
+            Basic Information
+          </button>
+        </h2>
+
+        <div id="basicInfo" class="accordion-collapse collapse show">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              {{ form.title }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 1 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#section1"
+          >
+            Section 1 (Intro)
+          </button>
+        </h2>
+
+        <div id="section1" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <label class="form-label">Image</label>
+
+            <!-- 🔥 Existing Image Preview -->
+            {% if about and about.image_one %}
+            <div class="mb-2">
+              <img
+                src="{{ about.image_one.url }}"
+                width="150"
+                class="rounded border"
+              />
+            </div>
+            {% endif %}
+
+            <!-- 🔥 File Input -->
+            {{ form.image_one }}
+
+            <!-- 🔥 Live Preview -->
+            <img
+              id="preview_image_one"
+              class="mt-2 rounded d-none"
+              width="150"
+            />
+
+            <div class="mt-3">
+              <label class="form-label">Content</label>
+              {{ form.section_one }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#section2"
+          >
+            Section 2
+          </button>
+        </h2>
+
+        <div id="section2" class="accordion-collapse collapse">
+          <div class="accordion-body">{{ form.section_two }}</div>
+        </div>
+      </div>
+
+      <!-- SECTION 3 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#section3"
+          >
+            Section 3
+          </button>
+        </h2>
+
+        <div id="section3" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            {{ form.section_three }}
+
+            <div class="mt-3">
+              <label class="form-label">Image</label>
+
+              <!-- 🔥 Existing Image Preview -->
+              {% if about and about.image_two %}
+              <div class="mb-2">
+                <img
+                  src="{{ about.image_two.url }}"
+                  width="150"
+                  class="rounded border"
+                />
+              </div>
+              {% endif %}
+
+              <!-- 🔥 File Input -->
+              {{ form.image_two }}
+
+              <!-- 🔥 Live Preview -->
+              <img
+                id="preview_image_two"
+                class="mt-2 rounded d-none"
+                width="150"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#section4"
+          >
+            Section 4
+          </button>
+        </h2>
+
+        <div id="section4" class="accordion-collapse collapse">
+          <div class="accordion-body">{{ form.section_four }}</div>
+        </div>
+      </div>
+
+      <!-- SEO -->
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            type="button"
+            class="accordion-button collapsed"
+            data-bs-toggle="collapse"
+            data-bs-target="#seoSection"
+          >
+            SEO Settings
+          </button>
+        </h2>
+
+        <div id="seoSection" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Meta Title</label>
+                {{ form.meta_title }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Slug</label>
+                {{ form.slug }}
+              </div>
+
+              {% if form.slug.errors %}
+              <div class="text-danger small">{{ form.slug.errors }}</div>
+              {% endif %}
+
+              <div class="col-md-12">
+                <label class="form-label">Meta Description</label>
+                {{ form.meta_description }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Primary Keywords</label>
+                {{ form.primary_keywords }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Secondary Keywords</label>
+                {{ form.secondary_keywords }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Canonical URL</label>
+                {{ form.canonical_url }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">OG Title</label>
+                {{ form.og_title }}
+              </div>
+
+              <div class="col-md-12">
+                <label class="form-label">OG Description</label>
+                {{ form.og_description }}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">OG Image</label>
+
+                {% if object and object.og_image %}
+
+                <div class="mb-2">
+                  <img
+                    src="{{ object.og_image.url }}"
+                    width="120"
+                    class="rounded border"
+                  />
+                </div>
+
+                {% endif %} {{ form.og_image }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="mt-4">
+      <button type="submit" class="btn btn-success">Save About Page</button>
+    </div>
+
+
+  </form>
+</div>
+
+<!-- 🚀 IMAGE PREVIEW SCRIPT -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function previewImage(inputId, previewId) {
+      const input = document.getElementById(inputId);
+      const preview = document.getElementById(previewId);
+
+      if (!input) return;
+
+      input.addEventListener("change", function () {
+        const file = this.files[0];
+
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.classList.remove("d-none");
+          };
+
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    // Django default IDs
+    previewImage("id_image_one", "preview_image_one");
+    previewImage("id_image_two", "preview_image_two");
+  });
+</script>
+
+{% endblock %}

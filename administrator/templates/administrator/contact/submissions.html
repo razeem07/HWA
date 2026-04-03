@@ -1,0 +1,73 @@
+{% extends "administrator/shared/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<h4 class="mb-4">Contact Submissions</h4>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Subject</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+
+{% for item in submissions %}
+<tr {% if not item.is_read %} style="background:#f8f9fa;" {% endif %}>
+
+    <td>{{ item.name }}</td>
+    <td>{{ item.email }}</td>
+    <td>{{ item.phone }}</td>
+    <td>{{ item.subject }}</td>
+    <td>{{ item.created_at|date:"d M Y H:i" }}</td>
+
+    <td>
+        {% if item.is_read %}
+            <span class="badge bg-success">Read</span>
+        {% else %}
+            <span class="badge bg-warning">New</span>
+        {% endif %}
+    </td>
+
+    <td>
+
+        <!-- MARK AS READ -->
+        {% if not item.is_read %}
+        <a href="{% url 'administrator:contact-read' item.pk %}"
+           class="btn btn-sm btn-info">
+           Mark Read
+        </a>
+        {% endif %}
+
+        <!-- DELETE -->
+        <a href="{% url 'administrator:contact-delete' item.pk %}"
+           class="btn btn-sm btn-danger"
+           onclick="return confirm('Delete this message?')">
+           Delete
+        </a>
+
+    </td>
+
+</tr>
+
+<!-- MESSAGE ROW -->
+<tr>
+    <td colspan="7">
+        <strong>Message:</strong><br>
+        {{ item.message }}
+    </td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

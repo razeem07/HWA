@@ -1,0 +1,298 @@
+{% extends "administrator/shared/base.html" %}
+
+{% block title %}Manage Content{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<h4 class="mb-4">Manage Content</h4>
+
+<form method="post" enctype="multipart/form-data">
+
+{% csrf_token %}
+{{ form.media }}
+
+<div class="accordion" id="contentAccordion">
+
+<!-- BASIC INFO -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+
+<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#basicInfo">
+
+Basic Information
+
+</button>
+
+</h2>
+
+<div id="basicInfo" class="accordion-collapse collapse show">
+
+<div class="accordion-body">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Content Type</label>
+{{ form.content_type }}
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Title</label>
+{{ form.title }}
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Category</label>
+{{ form.category }}
+</div>
+
+<!-- <div class="col-md-6 mb-3">
+<label class="form-label">Tags</label>
+{{ form.tags }}
+</div> -->
+
+   <div class="col-md-6 mb-3">
+    <label class="form-label">Tags</label>
+        {% for checkbox in form.tags %}
+            <div class="form-check inline">
+                {{ checkbox.tag }}
+                <label class="form-check-label">
+                    {{ checkbox.choice_label }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Published By</label>
+{{ form.published_by }}
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Publish Time</label>
+{{ form.published_at }}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contentSection">
+
+Content
+
+</button>
+
+</h2>
+
+<div id="contentSection" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="mb-3">
+
+<label class="form-label">Short Description</label>
+
+{{ form.short_description }}
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">Content</label>
+
+{{ form.content }}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FEATURED IMAGE -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#imageSection">
+
+Featured Image
+
+</button>
+
+</h2>
+
+<div id="imageSection" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<label class="form-label">Featured Image</label>
+
+{% if object.featured_image %}
+<div class="mb-2">
+<img src="{{ object.featured_image.url }}" width="150" class="rounded border">
+</div>
+{% endif %}
+
+{{ form.featured_image }}
+
+<label class="form-label">Banner Image</label>
+
+{% if object.hero_banner %}
+<div class="mb-2">
+<img src="{{ object.hero_banner.url }}" width="150" class="rounded border">
+</div>
+{% endif %}
+
+{{ form.hero_banner }}
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SEO -->
+
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#seoSection">
+
+SEO Settings
+
+</button>
+
+</h2>
+
+<div id="seoSection" class="accordion-collapse collapse">
+
+<div class="accordion-body">
+
+<div class="mb-3">
+
+<label class="form-label">Meta Title</label>
+
+{{ form.meta_title }}
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">Meta Description</label>
+
+{{ form.meta_description }}
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">Slug</label>
+
+{{ form.slug }}
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">Canonical URL</label>
+
+{{ form.canonical_url }}
+
+</div>
+
+<div class="form-check mb-3">
+{{ form.is_active }}
+<label class="form-check-label">Active</label>
+</div>
+
+<div class="form-check mb-3">
+{{ form.is_featured }}
+<label class="form-check-label">Featured</label>
+</div>
+
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="mt-4">
+
+<button type="submit" class="btn btn-success">
+
+Save Content
+
+</button>
+
+<a href="{% url 'administrator:content-list' %}" class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const titleField = document.getElementById("id_title");
+    const slugField = document.getElementById("id_slug");
+
+    if (!titleField || !slugField) return;
+
+    let slugEdited = false;
+
+    slugField.addEventListener("input", () => slugEdited = true);
+
+    const generateSlug = (text) => {
+        return text
+            .toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+    };
+
+    titleField.addEventListener("input", function(){
+        if (!slugEdited) {
+            slugField.value = generateSlug(this.value);
+        }
+    });
+
+});
+</script>
+
+
+
+
+{% endblock %}

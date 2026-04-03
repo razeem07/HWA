@@ -1,0 +1,97 @@
+{% extends "administrator/shared/base.html" %}
+{% block title %}Specializations{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Specializations</h4>
+        <a href="{% url 'administrator:specialization-create' %}"
+           class="btn btn-primary btn-sm">
+            + Add Specialization
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+
+            <table class="table table-striped table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Featured Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for object in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+
+                        <!-- Featured Image -->
+                        <td>
+                            {% if object.featured_image %}
+                                <img src="{{ object.featured_image.url }}"
+                                     width="60"
+                                     class="rounded">
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- Name -->
+                        <td>{{ object.name }}</td>
+
+                        <!-- Short Description -->
+                        <td>
+                            {{ object.short_description|truncatechars:60 }}
+                        </td>
+
+                        <!-- Status -->
+                        <td>
+                            {% if object.is_active %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- Edit -->
+                        <td>
+                            <a href="{% url 'administrator:specialization-update' object.id %}"
+                               class="text-primary">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+
+                        <!-- Delete -->
+                        <td>
+                            <a href="{% url 'administrator:specialization-delete' object.id %}"
+                               class="text-danger"
+                               onclick="return confirm('Are you sure?');">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            No specializations found
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

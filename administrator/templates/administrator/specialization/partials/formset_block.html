@@ -1,0 +1,62 @@
+<div class="accordion-item">
+
+    <h2 class="accordion-header">
+        <button type="button"
+            class="accordion-button collapsed"
+            data-bs-toggle="collapse"
+            data-bs-target="#{{ section_id }}">
+            {{ title }}
+        </button>
+    </h2>
+
+    <div id="{{ section_id }}" class="accordion-collapse collapse">
+        <div class="accordion-body">
+
+            <!-- 🔥 REQUIRED -->
+            {{ formset.management_form }}
+
+            <div id="{{ prefix }}-formset">
+
+                {% for form in formset %}
+                <div class="border rounded p-3 mb-3 formset-item">
+
+                    {{ form.id }}
+
+                    <div class="row g-3">
+
+                        {% for field in form.visible_fields %}
+                        <div class="col-md-4">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                        {% endfor %}
+
+                        <!-- DELETE BUTTON -->
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="button" class="btn btn-danger btn-sm remove-form">
+                                ✕
+                            </button>
+
+                            <div style="display:none;">
+                                {{ form.DELETE }}
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <!-- ADD BUTTON -->
+            <button type="button"
+                class="btn btn-outline-primary btn-sm add-form mt-2"
+                data-prefix="{{ prefix }}">
+                + Add {{ title }}
+            </button>
+
+        </div>
+    </div>
+
+</div>

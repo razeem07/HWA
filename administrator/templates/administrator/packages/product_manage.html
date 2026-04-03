@@ -1,0 +1,157 @@
+{% extends "administrator/shared/base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+
+<h4 class="mb-4">Manage Package</h4>
+
+<form method="post">
+{% csrf_token %}
+
+<div class="accordion">
+
+<!-- BASIC -->
+<div class="accordion-item">
+<div class="accordion-header">
+<button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#basic">Basic</button>
+</div>
+
+<div id="basic" class="accordion-collapse collapse show">
+<div class="accordion-body">
+
+<label class="form-label">Choose Package Category </label>
+<select name="category" class="form-control mb-2">
+    {% for cat in form.category.field.queryset %}
+        <option value="{{ cat.id }}" {% if form.category.value == cat.id %}selected{% endif %}>
+            {{ cat.name }}
+        </option>
+    {% endfor %}
+</select>
+
+<label class="form-label"> Package Name </label>
+<input type="text" name="name" class="form-control mb-2" value="{{ form.name.value }}">
+
+<label class="form-label">Package Prameters</label>
+<textarea name="parameters" class="form-control mb-2">{{ form.parameters.value }}</textarea>
+
+
+<label class="form-label">Actual Price</label>
+<input type="number" name="actual_price" class="form-control mb-2" value="{{ form.actual_price.value }}">
+
+<label class="form-label">Offer Price</label>
+<input type="number" name="offer_price" class="form-control mb-2" value="{{ form.offer_price.value }}">
+
+<label class="form-label">Featured Image</label>
+
+{% if object and object.featured_image %}
+
+<div class="mb-2">
+<img src="{{ object.featured_image.url }}" width="120" class="rounded border">
+</div>
+
+{% endif %}
+
+{{ form.featured_image }}
+
+<label class="form-label">Featured Image ALT</label>
+{{ form.featured_image_alt }}
+
+</div>
+
+</div>
+</div>
+
+
+<!-- FEATURES -->
+{% include "administrator/specialization/partials/formset_block.html" with formset=feature_formset title="Package Features" prefix="features" section_id="featureSection" %}
+</div>
+
+
+
+</div>
+
+<div class="form-check mb-3">
+
+{{ form.is_active }}
+<label class="form-check-label">Active</label>
+
+</div>
+
+<button class="btn btn-success mt-3">Save</button>
+
+</form>
+
+</div>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    document.addEventListener("click", function(e){
+
+        // ADD
+        if(e.target.classList.contains("add-form")){
+
+            let prefix = e.target.dataset.prefix;
+
+            let formsetDiv = document.getElementById(prefix + "-formset");
+            let totalForms = document.getElementById("id_" + prefix + "-TOTAL_FORMS");
+
+            if(!totalForms){
+                console.error("Prefix mismatch:", prefix);
+                return;
+            }
+
+            let formCount = parseInt(totalForms.value);
+
+            let forms = formsetDiv.querySelectorAll(".formset-item");
+            let lastForm = forms[forms.length - 1];
+            let newForm = lastForm.cloneNode(true);
+
+            // clear values
+            newForm.querySelectorAll("input, textarea").forEach(input => {
+                if(input.type !== "hidden") input.value = "";
+            });
+
+            // update index
+            newForm.querySelectorAll("input, textarea, label").forEach(el => {
+
+                if(el.name){
+                    el.name = el.name.replace(/-\d+-/g, `-${formCount}-`);
+                }
+
+                if(el.id){
+                    el.id = el.id.replace(/-\d+-/g, `-${formCount}-`);
+                }
+
+                if(el.htmlFor){
+                    el.htmlFor = el.htmlFor.replace(/-\d+-/g, `-${formCount}-`);
+                }
+
+            });
+
+            formsetDiv.appendChild(newForm);
+            totalForms.value = formCount + 1;
+        }
+
+        // DELETE
+        if(e.target.classList.contains("remove-form")){
+
+            let formBlock = e.target.closest(".formset-item");
+
+            let deleteInput = formBlock.querySelector("input[type='checkbox']");
+            if(deleteInput){
+                deleteInput.checked = true;
+            }
+
+            formBlock.style.display = "none";
+        }
+
+    });
+
+});
+</script>
+
+
+{% endblock %}

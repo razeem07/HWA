@@ -1,0 +1,754 @@
+ body {
+     color: #333;
+     overflow-x: hidden;
+ }
+
+ * {
+     font-family: 'Gotham Bold', sans-serif;
+ }
+
+ /* --- Navigation --- */
+ .navbar {
+     transition: background 0.3s ease;
+ }
+
+ @media (max-width: 767.98px) {
+     .navbar-nav {
+         background-color: #0056b3;
+         border-radius: 50px;
+         padding-bottom: 50px;
+     }
+ }
+
+ .navbar-brand img {
+     height: 40px;
+ }
+
+ .nav-link {
+     color: white !important;
+     font-weight: 500;
+     margin: 0 10px;
+ }
+
+ .nav-link:hover {
+     color: #efefef !important;
+     /* change to your desired color */
+     font-weight: 500;
+     margin: 0 10px;
+     text-decoration: underline;
+     /* adds underline */
+ }
+
+ /* --- Hero Section Top Banner --- */
+ .hero {
+     background: url('../images/siteimages/Background\ image.jpg');
+     background-size: cover;
+     background-position: center;
+     height: 90vh;
+     display: flex;
+     align-items: center;
+     color: white;
+     position: relative;
+ }
+
+ #heroCarousel h1 {
+     font-size: 3.5rem;
+     font-weight: 700;
+     line-height: 1.2;
+ }
+
+
+ /* Styling for the carousel items to ensure flex behavior */
+ #heroCarousel .carousel-item {
+     min-height: 90vh;
+     position: relative;
+ }
+
+ /* Added a slight overlay directly in the inline style (the linear-gradient) 
+   to make sure the white text pops against bright images. */
+ #heroCarousel .carousel-item .container {
+     z-index: 2;
+     position: relative;
+ }
+
+ @media (max-width: 767px) {
+     #heroCarousel .carousel-item {
+         /* 'contain' ensures the full width and height are visible */
+         background-size: 100% 100% !important;
+     }
+ }
+
+
+ .btn-custom {
+     background-color: #00bcd4;
+     color: white;
+     border-radius: 5px;
+     padding: 12px 30px;
+     border: none;
+ }
+
+ /* End of carousel top banner  */
+
+ @media (max-width: 767px) {
+
+     /* Target the specific section or div */
+     .mobile-hide-bg {
+         background-image: none !important;
+         /* Optional: adjust height since the image is gone */
+         min-height: auto !important;
+     }
+
+     .mobile-hide-element {
+         display: none;
+     }
+
+     .desktop-hide-element {
+         display: block !important;
+     }
+ }
+
+ .desktop-hide-element {
+     display: none;
+ }
+
+
+ /* --- Overlapping Service Cards --- */
+ .services-overlap {
+     margin-top: -80px;
+     position: relative;
+     z-index: 10;
+ }
+
+ .service-card {
+     background: white;
+     border-radius: 10px;
+     text-align: center;
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+     transition: transform 0.3s;
+     height: 100%;
+     font-size: 3.5rem;
+ }
+
+ .service-card:hover {
+     transform: translateY(-10px);
+ }
+
+ .service-card i {
+     font-size: 3.0rem;
+     color: #007bff;
+     margin-bottom: 15px;
+ }
+
+ .text-blue-dark {
+     color: #0a488b;
+ }
+
+ .text-blue-light {
+     color: #459fff;
+ }
+
+ .text-blue {
+     color: #6fa9e7;
+ }
+
+ .text-blue-medium {
+     color: #2a90b8;
+ }
+
+ /* --- Healthcare Section --- */
+ .section-padding {
+     padding: 80px 0;
+ }
+
+ .img-grid img {
+     border-radius: 15px;
+     width: 100%;
+     object-fit: cover;
+ }
+
+ .rounded-corner {
+     border-radius: 50px 0 50px 0;
+ }
+
+ /* --- Blue Info Section --- */
+ .blue-section {
+     background-color: #0056b3;
+     color: white;
+     padding: 100px 0;
+ }
+
+ .feature-icon-box {
+     border-radius: 10px;
+     padding-top: 20px;
+     padding-bottom: 20px;
+     padding-left: 5px;
+     padding-right: 5px;
+     margin-bottom: 20px;
+     transition: 0.3s;
+ }
+
+ .feature-icon-box:hover {
+     border: #0056b3 solid 1px;
+     border-color: rgb(255, 255, 255);
+ }
+
+
+ /* Carousel */
+ /* Container for the whole card */
+ .doctor-card {
+     background: #fff;
+     border-radius: 40px;
+     /* Highly rounded corners from mock */
+     overflow: hidden;
+     max-width: 900px;
+     position: relative;
+ }
+
+ /* Image container with decorative blue/teal shape */
+ .doctor-img-container {
+     position: relative;
+     display: inline-block;
+     background: linear-gradient(135deg, #00bcd4 50%, #0097a7 50%);
+     border-radius: 100px 0 0 100px;
+     /* Teardrop shape behind doctor */
+     padding-left: 50px;
+ }
+
+ .doctor-img {
+     height: 350px;
+     width: auto;
+     object-fit: cover;
+ }
+
+ /* Custom Carousel Arrows */
+ .carousel-control-icon {
+     background-color: #87b8cf;
+     /* Matches the light blue in image */
+     color: white;
+     width: 40px;
+     height: 40px;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 14px;
+ }
+
+ .carousel-control-prev,
+ .carousel-control-next {
+     width: 5%;
+     opacity: 1;
+ }
+
+ /* Responsive adjustments */
+ @media (max-width: 768px) {
+     .doctor-img-container {
+         border-radius: 0;
+         padding-left: 0;
+         width: 100%;
+         text-align: center;
+     }
+
+     .doctor-img {
+         height: 250px;
+     }
+ }
+
+ /* Why Choose Us */
+ /* Custom Styles for Why Choose Section */
+ .why-choose-section {
+     min-height: 600px;
+     /* Gradient mimicking the mock-up */
+     background: linear-gradient(135deg, #00acc1 0%, #0097a7 100%) !important;
+ }
+
+ .why-choose-section-img {
+     position: absolute;
+     top: 100px;
+     left: 960px;
+     width: 200px;
+     height: auto;
+     transform: rotate(20deg);
+     transition: transform 0.4s ease-in-out;
+     border-radius: 20px;
+     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+     z-index: 2;
+ }
+
+ /* Decorative Light-Blue/White overlay shapes seen on the right */
+ .bg-shape-overlay {
+     position: absolute;
+     top: 0;
+     right: 0;
+     width: 50%;
+     height: 100%;
+     background: rgba(255, 255, 255, 0.1);
+     clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+     z-index: 1;
+ }
+
+ /* Feature row styling */
+ .feature-rows .row {
+     transition: background 0.3s ease;
+ }
+
+ .feature-rows .row:hover {
+     background: rgba(255, 255, 255, 0.05);
+ }
+
+ .feature-rows i {
+     width: 60px;
+     text-align: center;
+ }
+
+ /* Image tilt/rotation as seen in the mock */
+ .rotate-img {
+     transform: rotate(-5deg);
+     border: 8px solid rgba(255, 255, 255, 0.2);
+     transition: transform 0.5s ease;
+ }
+
+ .rotate-img:hover {
+     transform: rotate(0deg) scale(1.05);
+ }
+
+ .doctor-highlight-box {
+     position: relative;
+     display: inline-block;
+ }
+
+ /* Responsive fixes */
+ @media (max-width: 991px) {
+     .bg-shape-overlay {
+         display: none;
+     }
+ }
+
+ /* View More Button Styling */
+ .btn-view-more {
+     padding: 0.85rem 2rem;
+     border-radius: 30px;
+     font-weight: 600;
+     transition: all 0.3s;
+     border: 1px solid #008eb3;
+     color: #008eb3;
+     background: none;
+ }
+
+ /* .btn-view-more {
+            background-color: #4ca1af;
+            /* Teal/Blue color from mock */
+ /* color: white !important;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s ease; 
+        } */
+
+ .btn-view-more:hover {
+     background-color: #008eb3;
+     color: white;
+ }
+
+ .btn-custom {
+     padding: 0.85rem 2rem;
+     border-radius: 30px;
+     font-weight: 600;
+     transition: all 0.3s;
+     /* display: inline-flex;
+            align-items: center;
+            gap: 0.5rem; */
+     background: #008eb3;
+     color: white;
+     border: none;
+ }
+
+ .btn-custom:hover {
+     background: #0077a3;
+     color: white;
+     transform: translateY(-2px);
+ }
+
+ /* Blog Image Rounded Corners */
+ .blog-img-wrapper {
+     overflow: hidden;
+     border-radius: 25px;
+     /* Large rounded corners as seen in mock */
+ }
+
+ .blog-img-wrapper img {
+     width: 100%;
+     height: 250px;
+     object-fit: cover;
+     transition: transform 0.5s ease;
+ }
+
+ /* Hover Effect for Image */
+ .blog-card:hover .blog-img-wrapper img {
+     transform: scale(1.05);
+ }
+
+ /* Typography */
+ .blog-title {
+     font-size: 1.15rem;
+     font-weight: 700;
+     color: #444;
+     line-height: 1.4;
+     margin-bottom: 10px;
+ }
+
+ .blog-date {
+     font-size: 0.85rem;
+     color: #999;
+     font-weight: 500;
+ }
+
+ /* Grid Spacing fix */
+ .blog-card {
+     height: 100%;
+     cursor: pointer;
+ }
+
+
+ /* --- Footer --- */
+ /* Styling to match the clean, airy look of your mock-up */
+ .footer-section {
+     font-family: 'Poppins', sans-serif;
+     letter-spacing: 0.2px;
+ }
+
+ /* Increase vertical spacing between list items */
+ .footer-links li {
+     margin-bottom: 14px;
+ }
+
+ .footer-links li a {
+     color: #6c757d !important;
+     text-decoration: none;
+     font-size: 0.92rem;
+     transition: all 0.3s ease;
+ }
+
+ .footer-links li a:hover {
+     color: #00bcd4 !important;
+     padding-left: 5px;
+     /* Subtle hover slide effect */
+ }
+
+ /* Legal links at the bottom */
+ .bottom-legal-links a {
+     color: #adb5bd;
+     text-decoration: none;
+     font-size: 0.85rem;
+     font-weight: 500;
+ }
+
+ /* Social icons layout */
+ .social-icon {
+     color: #212529;
+     font-size: 1.1rem;
+     margin-left: 18px;
+     transition: color 0.3s, transform 0.3s;
+     display: inline-block;
+ }
+
+ .social-icon:hover {
+     color: #00bcd4;
+     transform: translateY(-3px);
+ }
+
+ /* Mobile responsive padding reset */
+ @media (max-width: 991px) {
+     .ps-lg-5 {
+         padding-left: 0 !important;
+     }
+
+     .footer-section {
+         text-align: center;
+     }
+
+     .contact-info p {
+         justify-content: center;
+     }
+ }
+
+
+
+ /* Add this to the top of your style block */
+ html,
+ body {
+     max-width: 100%;
+     overflow-x: hidden;
+     position: relative;
+ }
+
+ /* Ensure the navbar doesn't inherit any overflow issues */
+ .navbar {
+     width: 100%;
+     overflow: hidden;
+ }
+
+ /* Initial hidden state */
+ .reveal {
+     opacity: 0;
+     filter: blur(5px);
+     transition: all 0.8s ease-out;
+ }
+
+ /* Scroll-in from left animation */
+ .reveal-left {
+     transform: translateX(-50px);
+ }
+
+ /* Scroll-in from right animation */
+ .reveal-right {
+     transform: translateX(50px);
+ }
+
+ /* Visible state (when scrolled into view) */
+ .reveal.active {
+     opacity: 1;
+     filter: blur(0);
+     transform: translateX(0) translateY(0);
+ }
+
+ /* The hidden/base state */
+ .rock-item {
+     transition: all 0.8s ease;
+ }
+
+ /* The Shake Animation */
+ @keyframes rock-shake {
+     0% {
+         transform: rotate(0deg);
+     }
+
+     25% {
+         transform: rotate(5deg);
+     }
+
+     50% {
+         transform: rotate(-5deg);
+     }
+
+     75% {
+         transform: rotate(5deg);
+     }
+
+     100% {
+         transform: rotate(0deg);
+     }
+ }
+
+ /* Triggered by the Intersection Observer */
+ .rock-item.active {
+     animation: rock-shake 0.5s ease-in-out;
+     /* Optional: If you want it to shake 3 times then stop */
+     animation-iteration-count: 1;
+ }
+
+ .img-pop-content {
+     /* Position it on top of the image */
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     /* Perfectly centers the content */
+
+     /* Ensure it spans the width of the container */
+     width: 100%;
+     z-index: 2;
+ }
+
+ /* Button Styling to match your previous mock-ups */
+ .btn-appointment {
+     background-color: #126084;
+     color: white;
+     border: none;
+     padding: 15px 30px;
+     border-radius: 10px;
+     font-weight: 600;
+     font-size: 1.1rem;
+     transition: 0.3s ease;
+ }
+
+ .btn-appointment:hover {
+     background-color: #0b4561;
+     transform: scale(1.05);
+ }
+
+ /* Responsive fix: If the image gets too small on mobile, adjust text */
+ @media (max-width: 768px) {
+     .img-pop-content {
+         background: linear-gradient(to bottom, #08c5d7, #a6edf2);
+     }
+
+     .img-pop-content h1 {
+         font-size: 1.5rem;
+         text-align: center;
+         margin-bottom: 20px;
+     }
+
+     .img-pop-content .text-md-end {
+         text-align: center !important;
+     }
+ }
+
+ /* --- Global Responsive Updates --- */
+
+ @media (max-width: 991.98px) {
+
+     /* Hero Section Adjustments */
+     .hero {
+         height: auto;
+         padding: 120px 0 60px 0;
+         text-align: center;
+     }
+
+     #heroCarousel h1 {
+         font-size: 2.2rem;
+     }
+
+     /* Blue Info Section Fixes */
+     .blue-section {
+         padding: 40px 0;
+         text-align: center !important;
+     }
+
+     .blue-section .col.text-start {
+         text-align: center !important;
+         margin-bottom: 20px;
+     }
+
+     /* Why Choose Us Section Fixes */
+     .why-choose-section {
+         text-align: center;
+     }
+
+     .why-choose-section-img {
+         display: none;
+         /* Hide the absolute floating image on mobile to prevent layout break */
+     }
+
+     .feature-rows .row {
+         text-align: center;
+     }
+
+     .feature-rows i {
+         margin-bottom: 10px;
+         display: block;
+         width: 100%;
+     }
+
+     .feature-rows .col-4,
+     .feature-rows .col-1,
+     .feature-rows .col-3 {
+         width: 100% !important;
+         margin-bottom: 15px;
+     }
+
+     .feature-rows .text-start,
+     .feature-rows .text-end {
+         text-align: center !important;
+     }
+ }
+
+
+
+ @media (max-width: 767.98px) {
+
+     /* Overlapping Service Cards */
+     .services-overlap {
+         margin-top: -30px;
+     }
+
+     .service-card {
+         margin-bottom: 15px;
+         padding: 20px;
+     }
+
+     .service-card h5 {
+         font-size: 1rem;
+     }
+
+     /* About Us Section */
+     .section-padding {
+         padding: 40px 0;
+     }
+
+     .display-5 {
+         font-size: 1.8rem;
+     }
+
+     /* Doctor Carousel Fixes */
+     .doctor-card {
+         border-radius: 20px !important;
+     }
+
+     .doctor-card .row.g-0 {
+         flex-direction: column-reverse;
+         /* Put image on top for mobile */
+     }
+
+     .doctor-card .col-md-6 {
+         width: 100%;
+     }
+
+     .doctor-card .text-end {
+         text-align: center !important;
+     }
+
+     .doctor-card .text-end div {
+         border-radius: 20px 20px 0 0 !important;
+         padding-left: 0 !important;
+         width: 100%;
+     }
+
+     .doctor-img {
+         height: 250px !important;
+     }
+
+     .carousel-control-prev,
+     .carousel-control-next {
+         width: 10%;
+     }
+
+     /* Banner "Pop" Content (Smile Section) */
+     .img-pop-content {
+         position: relative !important;
+         top: 0 !important;
+         left: 0 !important;
+         transform: none !important;
+         background: #126084;
+         /* Fallback color for readability */
+         padding: 30px 0;
+     }
+
+     .img-pop-content .row {
+         padding-top: 0 !important;
+     }
+
+     .img-pop {
+         height: 200px;
+         object-fit: cover;
+     }
+
+     .btn-appointment {
+         margin-top: 20px;
+         width: 100%;
+     }
+
+     /* Footer Centering */
+     .footer-section {
+         text-align: center;
+     }
+
+     .contact-info p {
+         justify-content: center;
+     }
+
+     .ps-lg-5 {
+         padding-left: 0 !important;
+     }
+ }

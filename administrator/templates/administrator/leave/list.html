@@ -1,0 +1,58 @@
+{% extends "administrator/shared/base.html" %}
+{% block title %}Doctor Schedule Page{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h4>Doctor Leaves</h4>
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for leave in leaves %}
+        <tr>
+            <td>{{ leave.doctor }}</td>
+            <td>{{ leave.date }}</td>
+
+            <td>
+                {% if leave.is_full_day %}
+                    Full Day
+                {% else %}
+                    Partial
+                {% endif %}
+            </td>
+
+            <td>
+                {% if not leave.is_full_day %}
+                    {{ leave.start_time|time:"h:i A" }} - {{ leave.end_time|time:"h:i A" }}
+                {% else %}
+                    —
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{% url 'administrator:leave_update' leave.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'administrator:leave_delete' leave.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+{% endblock %}
