@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Branch,Specialization,Doctor,ListingPage,Content,ContentCategory,AboutPage,DoctorEducation,DoctorCertification,DoctorExpertise,DoctorMembership,SpecializationService,SpecializationFAQ,TeamMember,Testimonial,ContactPage,Service,ServiceFAQ,PackageCategory,PackageCategoryFAQ,PackageProduct,PackageFeature,Insurance,LegalPage,GlobalSettings,SocialLink,MenuGroup,MenuItem,HomePage,HomeBanner,HomeFeature,WhyChooseItem,HomeFAQ,HighlightItem,DoctorSchedule,DoctorScheduleTime,DoctorLeave
+from .models import Branch,Specialization,Doctor,ListingPage,Content,ContentCategory,AboutPage,DoctorEducation,DoctorCertification,DoctorExpertise,DoctorMembership,SpecializationFAQ,TeamMember,Testimonial,ContactPage,Service,ServiceFAQ,Packages,PackageFeature,Insurance,LegalPage,GlobalSettings,SocialLink,MenuGroup,MenuItem,HomePage,HomeBanner,HomeFeature,WhyChooseItem,HomeFAQ,HighlightItem,DoctorSchedule,DoctorScheduleTime,DoctorLeave,Gallery,GalleryImage
+from django.forms.widgets import ClearableFileInput
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -89,6 +90,16 @@ class AboutPageForm(forms.ModelForm):
     class Meta:
         model = AboutPage
         fields = "__all__"
+
+
+        widgets = {
+            'chairman_msg': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Chairman Message Title'
+            }),
+
+        
+        }
 
 class SpecializationForm(forms.ModelForm):
     class Meta:
@@ -189,17 +200,36 @@ class SpecializationForm(forms.ModelForm):
         raise forms.ValidationError("Slug already exists.")
        return slug
        
-ServiceFormSet = inlineformset_factory(
-    Specialization,
-    SpecializationService,
-    fields=('title', 'description', 'icon'),
-    extra=1,
-    can_delete=True
-)
+# ServiceFormSet = inlineformset_factory(
+#     Specialization,
+#     SpecializationService,
+#     fields=('title', 'description', 'icon'),
+#     extra=1,
+#     can_delete=True
+# )
+
+class SpecializationFAQForm(forms.ModelForm):
+
+    class Meta:
+        model = SpecializationFAQ
+        fields = ['question', 'answer']
+
+        widgets = {
+            'question': forms.TextInput(attrs={
+                'class': 'form-control mb-2',
+                'placeholder': 'Enter question'
+            }),
+            'answer': forms.Textarea(attrs={
+                'class': 'form-control mb-2',
+                'rows': 3,
+                'placeholder': 'Enter answer'
+            }),
+        }
 
 FAQFormSet = inlineformset_factory(
     Specialization,
     SpecializationFAQ,
+    form=SpecializationFAQForm, 
     fields=('question', 'answer'),
     extra=1,
     can_delete=True
@@ -513,45 +543,13 @@ class ContactPageForm(forms.ModelForm):
 class PackageCategoryForm(forms.ModelForm):
 
     class Meta:
-        model = PackageCategory
+        model = Packages
         fields = '__all__'
 
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'hero_title': forms.TextInput(attrs={'class': 'form-control'}),
-            'hero_description': forms.Textarea(attrs={'class': 'form-control'}),
-            'main_title': forms.TextInput(attrs={'class': 'form-control'}),
-            'main_description': forms.Textarea(attrs={'class': 'form-control'}),
-            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        }
-
-PackageCategoryFAQFormSet = inlineformset_factory(
-    PackageCategory,
-    PackageCategoryFAQ,
-    fields=('question', 'answer', 'is_active'),
-    extra=1,
-    can_delete=True
-)
-
-
-class PackageProductForm(forms.ModelForm):
-
-    class Meta:
-        model = PackageProduct
-        fields = '__all__'
-
-        widgets = {
-            'category': forms.Select(attrs={'class': 'form-control'}),
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'parameters': forms.Textarea(attrs={'class': 'form-control'}),
-            'actual_price': forms.NumberInput(attrs={'class': 'form-control'}),
-            'offer_price': forms.NumberInput(attrs={'class': 'form-control'}),
-            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        }
 
 
 PackageFeatureFormSet = inlineformset_factory(
-    PackageProduct,
+    Packages,
     PackageFeature,
     fields=('feature',),
     extra=1,
@@ -912,4 +910,33 @@ class DoctorLeaveForm(forms.ModelForm):
             raise forms.ValidationError("End time must be greater than start time")
 
        return cleaned_data
+    
 
+# ✅ Custom Widget
+class MultipleFileInput(ClearableFileInput):
+    allow_multiple_selected = True
+
+
+# ✅ Custom Field
+class MultipleFileField(forms.FileField):
+    widget = MultipleFileInput
+
+    def clean(self, data, initial=None):
+        if isinstance(data, (list, tuple)):
+            return data
+        return [data]
+
+
+class GalleryForm(forms.ModelForm):
+
+    images = MultipleFileField(required=False)
+
+    class Meta:
+        model = Gallery
+        fields = ['title', 'media_type', 'video_url']
+
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'media_type': forms.Select(attrs={'class': 'form-control', 'id': 'id_media_type'}),
+            'video_url': forms.Textarea(attrs={'class': 'form-control','rows':4}),
+        }

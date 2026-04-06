@@ -1,163 +1,163 @@
 {% extends "shared/base.html" %} {% load static %} {% block title %}Home |
 Elister Med{% endblock %} {% block content %}
 
-<!-- Hero Section -->
-<section class="about-hero">
-  <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb breadcrumb-custom">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">About Us</li>
-      </ol>
-    </nav>
-    <h1>About Eleister Med</h1>
-    <p class="lead">Bringing Excellence in Healthcare from India to Dubai</p>
-  </div>
-</section>
+  <!-- Hero Section -->
+    {% include "shared/hero.html" %}
 
 <!-- Blog Section -->
 <section class="blog-section">
   <div class="container">
     <div class="row">
       <!-- Main Content -->
-      <div class="col-lg-8">
-        <div class="row g-4">
-          <!-- Blog Card 1 -->
-          {% for package in packages %}
-          <div class="col-md-6">
-            <article class="blog-card">
-              <div class="blog-card-image">
-                <img src="{{ package.featured_image.url }}" alt="Family Medicine" />
-                <span class="blog-category">{{package.category }}</span>
-              </div>
-              <div class="blog-card-body">
-                <div class="blog-meta">
-                  <span class="blog-meta-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    {{ package.published_at }}
-                  </span>
-                  <span class="blog-meta-item">
-                    <i class="fas fa-user"></i>
-                     {{ package.published_by }}
-                  </span>
-                </div>
-                <h3 class="blog-card-title">
-                  <a href="{% url 'userapp:packages_detail' package.slug %}">{{ package.title }}</a>
-                </h3>
-                <p class="blog-card-excerpt">
-                  {{ package.short_description|truncatewords:20 }}
-                </p>
-                <a
-                  href="{% url 'userapp:packages_detail' package.slug %}"
-                  class="blog-read-more"
-                >
-                  Read More <i class="fas fa-arrow-right"></i>
-                </a>
-              </div>
-            </article>
-          </div>
+       <div class="row">
 
-          {% endfor %}
-        </div>
 
-        <!-- Pagination -->
-        <div class="pagination-wrapper">
-          <nav aria-label="Blog pagination">
-            <ul class="pagination">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <i class="fas fa-chevron-left"></i>
-                </a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <i class="fas fa-chevron-right"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+        <div class="col-md-3">
 
-      <!-- Sidebar -->
-      <div class="col-lg-4">
-        <div class="blog-sidebar">
-          <!-- Search Widget -->
-          <div class="sidebar-widget">
-            <h5>Search Articles</h5>
-            <form class="search-form">
-              <input type="text" placeholder="Search for articles..." />
-              <button type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-            </form>
-          </div>
 
-          <!-- Newsletter Widget -->
-          <div class="sidebar-widget newsletter-widget">
-            <h5>Subscribe to Updates</h5>
-            <p>
-              Get the latest health tips and medical updates delivered to your
-              inbox.
-            </p>
-            <input type="email" placeholder="Enter your email" />
-            <button>Subscribe</button>
-          </div>
 
-          <!-- Categories Widget -->
-          <div class="sidebar-widget">
-            <h5>Categories</h5>
-              {% for cat in categories %}
-            <div class="category-item">
-              <a href="#"> {{ cat.category__name }}</a>
-              <span class="category-count"> {{ cat.total }} </span>
-            </div>
-                {% endfor %}
-          </div>
+<ul class="category-list">
 
-          <!-- Recent Posts Widget -->
-          <div class="sidebar-widget">
-            <h5>Recent Articles</h5>
-             {% for post in recent_posts %}
-            <div class="recent-post">
-             
+    <li>
+        <a href="#" class="filter-link active" data-id="">
+            All Packages <span class="count">{{packages.count}}</span>
+        </a>
+    </li>
 
-               {% if post.featured_image %}
-        <img src="{{ post.featured_image.url }}" width="80" class=" recent-post-image me-2">
-        {% endif %}
-              <div class="recent-post-content">
-                <h6>
-                  <a href="#"> {{ post.title }}</a>
-                </h6>
-                <div class="recent-post-date">
-                  <i class="fas fa-calendar-alt"></i>  {{ post.published_at|date:"d M Y" }}
-                </div>
-              </div>
-            </div>
-                {% endfor %}
-           
-          </div>
+    {% for category in categories %}
+    <li>
+        <a href="#" class="filter-link" data-id="{{ category.id }}">
+            {{ category.name }} 
+            <span class="count">{{ category.packages.count }}</span>
+        </a>
+    </li>
+    {% endfor %}
 
-          <!-- Tags Widget -->
-          <div class="sidebar-widget">
-            <h5>Popular Tags</h5>
-             {% for tag in tags %}
-            <div class="tags-cloud">
-              <a href="#" class="tag"> {{ tag.name }}</a> <br>
-             
-            </div>
+</ul>
 
-              {% endfor %}
-          </div>
-        </div>
-      </div>
-    </div>
+</div>
+
+  <!-- col-8: Package cards -->
+ <div class="col-md-9" id="package-container">
+
+    {% include "partials/package_list.html" %}
+
+</div>
+
+
   </div>
 </section>
+
+
+   <!-- CTA Section -->
+    <section class="section-padding">
+        <div class="cta-section">
+            <h2>  {{page.footer_title}}</h2>
+            <p>{{page.footer_description}}</p>
+            <a href="#" class="btn btn-light-custom">{{page.page_cta}}</a>
+        </div>
+
+    </section>
+
+<script>
+document.querySelectorAll(".filter-link").forEach(link => {
+
+    link.addEventListener("click", function(e) {
+        e.preventDefault();
+
+        let id = this.dataset.id;
+
+        fetch(`/packages/ajax/?specialization=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("package-container").innerHTML = data.html;
+            });
+    });
+
+});
+
+document.querySelectorAll(".filter-link").forEach(link => {
+    link.addEventListener("click", function() {
+
+        document.querySelectorAll(".filter-link").forEach(l => l.classList.remove("active"));
+        this.classList.add("active");
+
+    });
+});
+
+</script>
+
+<style>
+
+/* Wrapper */
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Item spacing */
+.category-list li {
+    margin-bottom: 12px;
+}
+
+/* Base style */
+.category-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 16px;
+    border-radius: 12px;
+
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: all 0.25s ease;
+}
+
+/* Hover (your previous style preserved) */
+.category-list a:hover {
+    background: #eef4ff;
+    border-color: #bfc9ff;
+    transform: translateX(6px);
+    color: #3c3cff;
+}
+
+/* Active (matches screenshot) */
+.category-list a.active {
+    background: #e9e7ff;
+    border: 1px solid #8f88ff;
+    color: #3c3cff;
+}
+
+/* Count badge */
+.category-list .count {
+    background: #e0e0e0;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #555;
+}
+
+/* Active badge */
+.category-list a.active .count {
+    background: #b9b4ff;
+    color: #2d2d8f;
+}
+
+/* Hover badge */
+.category-list a:hover .count {
+    background: #3c3cff;
+    color: #fff;
+}
+
+
+</style>
 
 {% endblock %}

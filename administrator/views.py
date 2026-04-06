@@ -4,8 +4,8 @@ from django.views.generic import CreateView,ListView,UpdateView,DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from .decorators import admin_required
-from .models import Branch,Specialization,Doctor,ListingPage,Content,ContentCategory,Tag,AboutPage,Testimonial,TeamMember,ContactPage,Service,PackageCategory,PackageProduct,Insurance,LegalPage,GlobalSettings,SocialLink,MenuGroup,MenuItem,HomePage,DoctorSchedule,DoctorLeave
-from .forms import BranchForm,SpecializationForm,DoctorForm,ListingPageForm,ContentForm,ContentCategoryForm,AboutPageForm,EducationFormSet,CertificationFormSet,ExpertiseFormSet,MembershipFormSet,ServiceFormSet,FAQFormSet,TestimonialForm,TeamMemberForm,ContactPageForm,ServiceForm,ServiceFAQFormSet,PackageCategoryForm,PackageProductForm,PackageCategoryFAQFormSet,PackageFeatureFormSet,InsuranceForm,LegalPageForm,GlobalSettingsForm,SocialLinkForm,MenuGroupForm,MenuItemFormSet,HomePageForm,HomeBannerFormSet,HomeFeatureFormSet,WhyChooseFormSet,HomeFAQFormSet,HighlightFormSet,DoctorScheduleForm,DoctorScheduleTimeFormSet,DoctorLeaveForm
+from .models import Branch,Specialization,Doctor,ListingPage,Content,ContentCategory,Tag,AboutPage,Testimonial,TeamMember,ContactPage,Service,Packages,Insurance,LegalPage,GlobalSettings,SocialLink,MenuGroup,MenuItem,HomePage,DoctorSchedule,DoctorLeave,Gallery
+from .forms import BranchForm,SpecializationForm,DoctorForm,ListingPageForm,ContentForm,ContentCategoryForm,AboutPageForm,EducationFormSet,CertificationFormSet,ExpertiseFormSet,MembershipFormSet,FAQFormSet,TestimonialForm,TeamMemberForm,ContactPageForm,ServiceForm,ServiceFAQFormSet,PackageCategoryForm,PackageFeatureFormSet,InsuranceForm,LegalPageForm,GlobalSettingsForm,SocialLinkForm,MenuGroupForm,MenuItemFormSet,HomePageForm,HomeBannerFormSet,HomeFeatureFormSet,WhyChooseFormSet,HomeFAQFormSet,HighlightFormSet,DoctorScheduleForm,DoctorScheduleTimeFormSet,DoctorLeaveForm,GalleryImage,GalleryForm
 from userapp.models import ContactSubmission
 from django.contrib.auth import get_user_model
 from django.db import transaction
@@ -45,7 +45,7 @@ def dashboard(request):
         "doctor_count": Doctor.objects.count(),
         "specialization_count": Specialization.objects.count(),
         "service_count": Service.objects.count(),
-        "package_count": PackageProduct.objects.count(),
+        "package_count": Packages.objects.count(),
         "total": total,
         "approved": approved,
         "pending": pending,
@@ -144,10 +144,10 @@ class SpecializationCreateView(CreateView):
         context = super().get_context_data(**kwargs)
 
         if self.request.POST:
-            context['service_formset'] = ServiceFormSet(self.request.POST, self.request.FILES)
+            # context['service_formset'] = ServiceFormSet(self.request.POST, self.request.FILES)
             context['faq_formset'] = FAQFormSet(self.request.POST)
         else:
-            context['service_formset'] = ServiceFormSet()
+            # context['service_formset'] = ServiceFormSet()
             context['faq_formset'] = FAQFormSet()
 
         return context
@@ -157,21 +157,21 @@ class SpecializationCreateView(CreateView):
 
         context = self.get_context_data()
 
-        service_formset = context['service_formset']
+        # service_formset = context['service_formset']
         faq_formset = context['faq_formset']
 
         # 🔥 VALIDATE ALL
-        if not (service_formset.is_valid() and faq_formset.is_valid()):
+        if not  faq_formset.is_valid():
             print("FORMSET ERRORS ❌")
-            print(service_formset.errors)
+            # print(service_formset.errors)
             print(faq_formset.errors)
             return self.form_invalid(form)
 
         specialization = form.save()
 
         # 🔥 SAVE SERVICES
-        service_formset.instance = specialization
-        service_formset.save()
+        # service_formset.instance = specialization
+        # service_formset.save()
 
         # 🔥 SAVE FAQ
         faq_formset.instance = specialization
@@ -199,17 +199,17 @@ class SpecializationUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
 
         if self.request.POST:
-            context['service_formset'] = ServiceFormSet(
-                self.request.POST,
-                self.request.FILES,
-                instance=self.object
-            )
+            # context['service_formset'] = ServiceFormSet(
+            #     self.request.POST,
+            #     self.request.FILES,
+            #     instance=self.object
+            # )
             context['faq_formset'] = FAQFormSet(
                 self.request.POST,
                 instance=self.object
             )
         else:
-            context['service_formset'] = ServiceFormSet(instance=self.object)
+            # context['service_formset'] = ServiceFormSet(instance=self.object)
             context['faq_formset'] = FAQFormSet(instance=self.object)
 
         return context
@@ -219,19 +219,19 @@ class SpecializationUpdateView(UpdateView):
 
         context = self.get_context_data()
 
-        service_formset = context['service_formset']
+        # service_formset = context['service_formset']
         faq_formset = context['faq_formset']
 
-        if not (service_formset.is_valid() and faq_formset.is_valid()):
+        if not faq_formset.is_valid():
             print("FORMSET ERRORS ❌")
-            print(service_formset.errors)
+            # print(service_formset.errors)
             print(faq_formset.errors)
             return self.form_invalid(form)
 
         specialization = form.save()
 
-        service_formset.instance = specialization
-        service_formset.save()
+        # service_formset.instance = specialization
+        # service_formset.save()
 
         faq_formset.instance = specialization
         faq_formset.save()
@@ -342,6 +342,7 @@ class ServiceListView(ListView):
 
 class ServiceDeleteView(DeleteView):
     model = Service
+    template_name = 'administrator/service/confirm_delete.html'
     success_url = reverse_lazy("administrator:service-list")
 
     def delete(self, request, *args, **kwargs):
@@ -860,105 +861,14 @@ class ContactSubmissionDeleteView(DeleteView):
 
 
 @method_decorator(admin_required, name='dispatch')
-class PackageCategoryCreateView(CreateView):
+class PackageCreateView(CreateView):
 
-    model = PackageCategory
+    model = Packages
     form_class = PackageCategoryForm
-    template_name = "administrator/packages/category_manage.html"
-    success_url = reverse_lazy("administrator:package-category-list")
+    template_name = "administrator/packages/form.html"
+    success_url = reverse_lazy("administrator:package-list")
 
     # ✅ CONTEXT
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        if self.request.POST:
-            context['faq_formset'] = PackageCategoryFAQFormSet(self.request.POST)
-        else:
-            context['faq_formset'] = PackageCategoryFAQFormSet()
-
-        return context
-
-    @transaction.atomic
-    def form_valid(self, form):
-
-        context = self.get_context_data()
-        faq_formset = context['faq_formset']
-
-        if not faq_formset.is_valid():
-            print("FAQ ERRORS ❌", faq_formset.errors)
-            return self.form_invalid(form)
-
-        category = form.save()
-
-        faq_formset.instance = category
-        faq_formset.save()
-
-        messages.success(self.request, "Package Category created successfully")
-        return super().form_valid(form)
-
-@method_decorator(admin_required, name='dispatch')
-class PackageCategoryUpdateView(UpdateView):
-
-    model = PackageCategory
-    form_class = PackageCategoryForm
-    template_name = "administrator/packages/category_manage.html"
-    success_url = reverse_lazy("administrator:package-category-list")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        if self.request.POST:
-            context['faq_formset'] = PackageCategoryFAQFormSet(
-                self.request.POST,
-                instance=self.object
-            )
-        else:
-            context['faq_formset'] = PackageCategoryFAQFormSet(
-                instance=self.object
-            )
-
-        return context
-
-    @transaction.atomic
-    def form_valid(self, form):
-
-        context = self.get_context_data()
-        faq_formset = context['faq_formset']
-
-        if not faq_formset.is_valid():
-            print("FAQ ERRORS ❌", faq_formset.errors)
-            return self.form_invalid(form)
-
-        category = form.save()
-
-        faq_formset.instance = category
-        faq_formset.save()
-
-        messages.success(self.request, "Package Category updated successfully")
-        return super().form_valid(form)
-
-class PackageCategoryListView(ListView):
-    model = PackageCategory
-    template_name = "administrator/packages/category_list.html"
-    context_object_name = "categories"
-
-class PackageCategoryDeleteView(DeleteView):
-    model = PackageCategory
-    success_url = reverse_lazy("administrator:package-category-list")
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, "Category deleted successfully")
-        return super().delete(request, *args, **kwargs)
-
-
-@method_decorator(admin_required, name='dispatch')
-class PackageProductCreateView(CreateView):
-
-    model = PackageProduct
-    form_class = PackageProductForm
-    template_name = "administrator/packages/product_manage.html"
-    success_url = reverse_lazy("administrator:package-product-list")
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -976,25 +886,24 @@ class PackageProductCreateView(CreateView):
         feature_formset = context['feature_formset']
 
         if not feature_formset.is_valid():
-            print("FEATURE ERRORS ❌", feature_formset.errors)
+            print("Feature Errors ❌", feature_formset.errors)
             return self.form_invalid(form)
 
-        product = form.save()
+        package = form.save()
 
-        feature_formset.instance = product
+        feature_formset.instance = package
         feature_formset.save()
 
-        messages.success(self.request, "Package created successfully")
+        messages.success(self.request, "Package  created successfully")
         return super().form_valid(form)
-    
 
 @method_decorator(admin_required, name='dispatch')
-class PackageProductUpdateView(UpdateView):
+class PackageUpdateView(UpdateView):
 
-    model = PackageProduct
-    form_class = PackageProductForm
-    template_name = "administrator/packages/product_manage.html"
-    success_url = reverse_lazy("administrator:package-product-list")
+    model = Packages
+    form_class = PackageCategoryForm
+    template_name = "administrator/packages/form.html"
+    success_url = reverse_lazy("administrator:package-list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1018,31 +927,29 @@ class PackageProductUpdateView(UpdateView):
         feature_formset = context['feature_formset']
 
         if not feature_formset.is_valid():
-            print("FEATURE ERRORS ❌", feature_formset.errors)
+            print("Feature Errors ❌", feature_formset.errors)
             return self.form_invalid(form)
 
-        product = form.save()
+        package = form.save()
 
-        feature_formset.instance = product
+        feature_formset.instance = package
         feature_formset.save()
 
         messages.success(self.request, "Package updated successfully")
         return super().form_valid(form)
-    
 
+class PackageListView(ListView):
+    model = Packages
+    template_name = "administrator/packages/list.html"
+    context_object_name = "packages"
 
-class PackageProductListView(ListView):
-    model = PackageProduct
-    template_name = "administrator/packages/product_list.html"
-    context_object_name = "products"
-
-
-class PackageProductDeleteView(DeleteView):
-    model = PackageProduct
-    success_url = reverse_lazy("administrator:package-product-list")
+class PackageDeleteView(DeleteView):
+    model = Packages
+    template_name = "administrator/packages/confirm_delete.html"
+    success_url = reverse_lazy("administrator:package-list")
 
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request, "Package deleted successfully")
+        messages.success(self.request, "package deleted successfully")
         return super().delete(request, *args, **kwargs)
 
 
@@ -1419,7 +1326,7 @@ class DoctorScheduleCreateView(CreateView):
     model = DoctorSchedule
     form_class = DoctorScheduleForm
     template_name = "administrator/schedule/form.html"
-    success_url = reverse_lazy("create_schedule")
+    success_url = reverse_lazy("administrator:schedule-list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1482,7 +1389,7 @@ class DoctorScheduleUpdateView(UpdateView):
     template_name = "administrator/schedule/form.html"
 
     def get_success_url(self):
-        return reverse_lazy("administrator:schedule-list")
+        return reverse_lazy("administrator:schedule_list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1510,7 +1417,7 @@ class DoctorScheduleUpdateView(UpdateView):
             formset.instance = self.object
             formset.save()
 
-            return redirect("administrator:schedule-list")
+            return redirect("administrator:schedule_list")
 
         return self.form_invalid(form)
 
@@ -1519,7 +1426,7 @@ class DoctorScheduleDeleteView(DeleteView):
 
     model = DoctorSchedule
     template_name = "administrator/schedule/confirm_delete.html"
-    success_url = reverse_lazy("administrator:schedule-list")
+    success_url = reverse_lazy("administrator:schedule_list")
 
 
 
@@ -1668,3 +1575,63 @@ def delete_booking(request, pk):
     booking.delete()
 
     return redirect("administrator:booking_list")
+
+class GalleryListView(ListView):
+    model = Gallery
+    template_name = "administrator/gallery/list.html"
+    context_object_name = "galleries"
+
+class GalleryCreateView(CreateView):
+    model = Gallery
+    form_class = GalleryForm
+    template_name = "administrator/gallery/form.html"
+    success_url = reverse_lazy("administrator:gallery_list")
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        files = self.request.FILES.getlist('images')
+
+        for f in files:
+            GalleryImage.objects.create(
+                gallery=self.object,
+                image=f
+            )
+
+        return redirect(self.success_url)
+
+
+class GalleryUpdateView(UpdateView):
+    model = Gallery
+    form_class = GalleryForm
+    template_name = "administrator/gallery/form.html"
+    success_url = reverse_lazy("administrator:gallery_list")
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        files = self.request.FILES.getlist('images')
+
+        for f in files:
+            GalleryImage.objects.create(
+                gallery=self.object,
+                image=f
+            )
+
+        return redirect(self.success_url)
+
+class GalleryDeleteView(DeleteView):
+    model = Gallery
+    template_name = "administrator/gallery/confirm_delete.html"
+    success_url = reverse_lazy("administrator:gallery_list")
+
+
+
+def gallery_image_delete(request, pk):
+
+    image = get_object_or_404(GalleryImage, pk=pk)
+    gallery_id = image.gallery.id
+
+    image.delete()
+
+    return redirect('administrator:gallery_edit', pk=gallery_id)

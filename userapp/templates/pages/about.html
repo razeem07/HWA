@@ -53,7 +53,7 @@ Elister Med{% endblock %} {% block content %}
                         <div class="mvv-icon">
                             <i class="fas fa-heart"></i>
                         </div>
-                         {{about.section_four |safe}}
+                         {{about.section_five |safe}}
                     </div>
                 </div>
             </div>
@@ -140,8 +140,33 @@ Elister Med{% endblock %} {% block content %}
   </div>
 </section>
 
+<!-- Why Choose Us -->
+<section class="section-padding" style="background-color: var(--light-bg)">
+  <div class="container">
+    <div class="row align-items-center mission-content">
+    
+      <div class="col-lg-6">
+        <img
+          src="{{ about.chairman_profile.url }}" style="width: 300px;"
+          alt=""
+          class="about-image"
+        />
+      </div>
+
+        <div class="col-lg-6 mb-4 mb-lg-0">
+        <h6></h6>
+        <h2 class="section-heading">{{about.chairman_msg}}</h2>
+        <p class="mb-4">
+             {{about.chairman_description |safe}}
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Timeline Section -->
-<section class="timeline-section section-padding">
+<!-- <section class="timeline-section section-padding">
   <div class="container">
     <div class="text-center mb-5">
       <h6 class="section-title">Our Journey</h6>
@@ -188,7 +213,7 @@ Elister Med{% endblock %} {% block content %}
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- Leadership Team -->
 <section class="section-padding">
@@ -267,7 +292,7 @@ Elister Med{% endblock %} {% block content %}
     <p>
         {{ page.footer_description }}
     </p>
-    <a href="#" class="btn btn-light-custom">{{page.page_cta}}</a>
+    <a href="{% url 'booking:book_appointment'%}" class="btn btn-light-custom">{{page.page_cta}}</a>
   </div>
 </section>
 

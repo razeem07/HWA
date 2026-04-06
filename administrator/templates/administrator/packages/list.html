@@ -1,0 +1,40 @@
+{% extends "administrator/shared/base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="d-flex justify-content-between mb-3">
+<h4>Package Categories</h4>
+<a href="{% url 'administrator:package-create' %}" class="btn btn-primary">+ Add</a>
+</div>
+
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>#</th>
+<th>Package Category</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for item in packages %}
+<tr>
+<td>{{ forloop.counter }}</td>
+<td>{{ item.name }}</td>
+<td>{{ item.is_active|yesno:"Active,Inactive" }}</td>
+<td>
+<a href="{% url 'administrator:package-update' item.id %}" class="btn btn-warning btn-sm">Edit</a>
+<a href="{% url 'administrator:package-delete' item.id %}" class="btn btn-danger btn-sm">Delete</a> 
+</td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

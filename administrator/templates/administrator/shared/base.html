@@ -161,9 +161,28 @@ Logout
 
 
 
-<a href="#">
+
+
+
+
+
+<div class="menu-title">Appointment</div>
+
+<!-- DROPDOWN MENU -->
+
+<a data-bs-toggle="collapse" href="#appointments">
 <i class="bi bi-calendar-check"></i> Appointments
 </a>
+
+<div class="collapse" id="appointments">
+
+<a href="{% url 'administrator:booking_list' %}"> <i class="ps-4"></i>Appointments</a>
+<a href="{% url 'administrator:schedule_list' %}"> <i class="ps-4"></i>Doctor Schedule</a>
+<a href="{% url 'administrator:leave_list' %}"> <i class="ps-4"></i>Doctor Leave</a>
+
+
+
+</div>
 
 
 <div class="menu-title">Website Pages</div>
@@ -182,19 +201,20 @@ Logout
 <a href="{% url 'administrator:listing-page-list'%}"> <i class="ps-4"></i>Archive Banners</a>
 <a href="{% url 'administrator:team-list' %}"><i class="ps-4"></i> Teams</a>
 <a href="{% url 'administrator:testimonial-list' %}"><i class="ps-4"></i> Testimonials</a>
+<a href="{% url 'administrator:gallery_list' %}"><i class="ps-4"></i> Gallery</a>
 
 
 </div>
 
 
 <a data-bs-toggle="collapse" href="#servicepages">
-<i class="bi bi-diagram-3"></i> Service Pages
+<i class="bi bi-diagram-3"></i> Packages/Insurance
 </a>
 
 <div class="collapse" id="servicepages">
 
-<a href="{% url 'administrator:package-category-list' %}"> <i class="ps-4"></i>Package Category</a>
-<a href="{% url 'administrator:package-product-list' %}"> <i class="ps-4"></i>Packages</a>
+
+<a href="{% url 'administrator:package-list' %}"> <i class="ps-4"></i>Packages</a>
 <a href="{% url 'administrator:insurance-list' %}"> <i class="ps-4"></i>Insurance</a>
 
 

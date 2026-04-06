@@ -7,6 +7,13 @@
 
 <h4>Doctor Leave</h4>
 
+   <a
+      href="{% url 'administrator:leave_list' %}"
+      class="btn btn-primary btn-sm mb-3"
+    >
+       Back
+    </a>
+
 <form method="post">
     {% csrf_token %}
 
@@ -43,9 +50,12 @@
         </div>
 
     </div>
+ <div>
+    <button class="btn btn-success mt-3">Save</button>
 
-    <button class="btn btn-danger mt-3">Save</button>
-
+   
+ 
+    </div>
 </form>
 
 </div>

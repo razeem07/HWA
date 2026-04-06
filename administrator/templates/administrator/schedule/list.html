@@ -11,6 +11,13 @@
 
 <h4>Doctor Schedules</h4>
 
+  <a
+      href="{% url 'administrator:schedule-create' %}"
+      class="btn btn-primary btn-sm mb-3"
+    >
+      + Add Schedule
+    </a>
+
 <table class="table table-bordered">
 
     <thead>
@@ -30,7 +37,14 @@
 
             <td>
                 <a href="{% url 'administrator:schedule_update' schedule.id %}" class="btn btn-primary btn-sm">Edit</a>
-                <a href="{% url 'administrator:schedule_delete' schedule.id %}" class="btn btn-danger btn-sm">Delete</a>
+                <a href="{% url 'administrator:schedule_delete' schedule.id %}" class="btn btn-danger btn-sm"  onclick="
+                  return confirm(
+                    'Are you sure you want to delete this item',
+                  );
+                ">Delete
+
+                    
+                </a>
             </td>
         </tr>
         {% endfor %}

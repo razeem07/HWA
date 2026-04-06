@@ -116,11 +116,21 @@ class AboutPage(SEOModel):
         null=True
     )
 
-    # 🔹 Content Sections
+    #chairman
+     
+
+    chairman_msg = models.CharField(max_length=200,blank=True)
+    chairman_description = RichTextUploadingField(blank=True, null=True)
+    chairman_profile = models.ImageField(upload_to='uploads/about/',blank=True,null=True)
+
+    # 🔹 Content Sections -set four into & mission vision values
     section_one = RichTextUploadingField(blank=True, null=True)
     section_two = RichTextUploadingField(blank=True, null=True)
     section_three = RichTextUploadingField(blank=True, null=True)
     section_four = RichTextUploadingField(blank=True, null=True)
+    section_five = RichTextUploadingField(blank=True, null=True)
+    
+    
 
     # 🔹 Meta
     updated_at = models.DateTimeField(auto_now=True)
@@ -213,26 +223,28 @@ class Specialization(SEOModel):
         return self.name
 
 
-class SpecializationService(models.Model):
+# class SpecializationService(models.Model):
 
-    specialization = models.ForeignKey(
-        Specialization,
-        on_delete=models.CASCADE,
-        related_name="services"
-    )
+#     specialization = models.ForeignKey(
+#         Specialization,
+#         on_delete=models.CASCADE,
+#         related_name="services"
+#     )
 
-    title = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
+#     title = models.CharField(max_length=255)
+#     description = models.TextField(blank=True)
 
-    icon = models.ImageField(
-        upload_to="uploads/specializations/services/",
-        blank=True,
-        null=True
-    )
+#     icon = models.ImageField(
+#         upload_to="uploads/specializations/services/",
+#         blank=True,
+#         null=True
+#     )
 
-    def __str__(self):
-        return self.title
-    
+#     def __str__(self):
+#         return self.title
+
+
+  
 
 class SpecializationFAQ(models.Model):
 
@@ -733,7 +745,7 @@ class ContactPage(models.Model):
 
 
     
-class PackageCategory(SEOModel):
+class Packages(models.Model):
 
     # -------------------------
     # BASIC
@@ -744,33 +756,11 @@ class PackageCategory(SEOModel):
     Specialization = models.ForeignKey(
         Specialization,
         on_delete=models.CASCADE,
-        related_name='package_category'
+        related_name='packages'
     )
 
     short_description = models.TextField(blank=True)
 
-
-    # -------------------------
-    # HERO SECTION
-    # -------------------------
-    hero_title = models.CharField(max_length=255, blank=True)
-
-    hero_description = models.TextField(blank=True)
-
-    hero_banner = models.ImageField(
-        upload_to='uploads/packages/',
-        blank=True,
-        null=True
-    )
-
-    hero_banner_alt = models.CharField(max_length=255, blank=True)
-
-    # -------------------------
-    # MAIN SECTION
-    # -------------------------
-    main_title = models.CharField(max_length=255, blank=True)
-
-    main_description = models.TextField(blank=True)
 
     main_image = models.ImageField(
         upload_to='uploads/packages/',
@@ -779,75 +769,6 @@ class PackageCategory(SEOModel):
     )
 
     main_image_alt = models.CharField(max_length=255, blank=True)
-
-    # -------------------------
-    # LONG CONTENT
-    # -------------------------
-    primary_long_description = RichTextUploadingField(blank=True)
-
-    secondary_long_description = RichTextUploadingField(blank=True)
-
-    # -------------------------
-    # STATUS
-    # -------------------------
-    is_active = models.BooleanField(default=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    # -------------------------
-    # SLUG
-    # -------------------------
-    def generate_slug(self):
-        return self.name
-
-    class Meta:
-        ordering = ['-created_at']
-        verbose_name = "Package Category"
-        verbose_name_plural = "Package Categories"
-
-    def __str__(self):
-        return self.name
-
-class PackageCategoryFAQ(models.Model):
-
-    category = models.ForeignKey(
-        PackageCategory,
-        on_delete=models.CASCADE,
-        related_name="faqs"
-    )
-
-    question = models.CharField(max_length=255)
-    answer = models.TextField()
-
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.question
-
-class PackageProduct(models.Model):
-
-    # -------------------------
-    # RELATIONSHIP
-    # -------------------------
-    category = models.ForeignKey(
-        PackageCategory,
-        on_delete=models.CASCADE,
-        related_name="packages"
-    )
-
-    featured_image = models.ImageField(
-        upload_to='uploads/packages/',
-        blank=True,
-        null=True
-    )
-
-    featured_image_alt = models.CharField(max_length=255, blank=True)
-
-    # -------------------------
-    # BASIC INFO
-    # -------------------------
-    name = models.CharField(max_length=255)
 
     parameters = models.TextField(
         blank=True,
@@ -869,21 +790,28 @@ class PackageProduct(models.Model):
         null=True
     )
 
-    # -------------------------
-    # STATUS
-    # -------------------------
+
+
     is_active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Package Category"
+        verbose_name_plural = "Package Categories"
 
     def __str__(self):
         return self.name
 
+
 class PackageFeature(models.Model):
 
     package = models.ForeignKey(
-        PackageProduct,
+        Packages,
         on_delete=models.CASCADE,
         related_name="features"
     )
@@ -1425,3 +1353,40 @@ class DoctorLeave(models.Model):
 
     def __str__(self):
         return f"{self.doctor} - {self.date}"
+
+
+
+
+
+class Gallery(models.Model):
+
+    MEDIA_TYPE = (
+        ('image', 'Image'),
+        ('video', 'Video'),
+    )
+
+    title = models.CharField(max_length=255, blank=True)
+
+    media_type = models.CharField(
+        max_length=10,
+        choices=MEDIA_TYPE
+    )
+
+    video_url = models.TextField(
+    blank=True,
+    null=True,
+    help_text="Paste full YouTube embed iframe code"
+)
+
+    is_active = models.BooleanField(default=True)
+
+
+class GalleryImage(models.Model):
+
+    gallery = models.ForeignKey(
+        Gallery,
+        on_delete=models.CASCADE,
+        related_name="images"
+    )
+
+    image = models.ImageField(upload_to='uploads/gallery/')

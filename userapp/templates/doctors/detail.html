@@ -30,7 +30,7 @@ Elister Med{% endblock %} {% block content %}
     </section>
 
     <!-- HERO SECTION -->
-    <section class="hero-section-doctor">
+    <section class="hero-section-doctor mt-4">
         <div class="container">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-5">
@@ -39,7 +39,7 @@ Elister Med{% endblock %} {% block content %}
                 </div> 
                 <div class="col-lg-7">
                     <div class="doctor-hero-content">
-                        <h1>{{ doctor.user.first_name }}
+                        <h1>Dr. {{ doctor.user.first_name }}
 {{ doctor.user.last_name }}</h1>
                         <div class="doctor-specialty">{{ doctor.designation}}</div>
 

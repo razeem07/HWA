@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect,redirect
-from administrator.models import Specialization,Redirect,Doctor,Content,AboutPage,TeamMember,Testimonial,ContactPage,Tag,Service,HomePage,LegalPage
+from administrator.models import Specialization,Redirect,Doctor,Content,AboutPage,TeamMember,Testimonial,ContactPage,Tag,Service,HomePage,LegalPage,Packages,Insurance,Gallery
 from .models import ContactSubmission
 from django.http import JsonResponse
 from utils.schema import specialization_schema,doctor_schema
@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.http import HttpResponse
 from utils.pages import get_listing_page
 from django.db.models import Count
+from django.template.loader import render_to_string
+import re
 
 
 # Create your views here.
@@ -285,7 +287,7 @@ def specialization_detail(request, slug):
 
     try:
         specialization = Specialization.objects.prefetch_related(
-            "services",
+           
             "faqs"
         ).get(slug=slug)
 
@@ -336,7 +338,8 @@ def specialization_detail(request, slug):
         "schema": schema,
         "doctors": doctors,
         "breadcrumbs": breadcrumbs,
-        "services":services
+        "services":services,
+        "service_count": services.count()
         
     })
 
@@ -350,6 +353,10 @@ def service_detail(request, slug):
         ).prefetch_related(
             "faqs"
         ).get(slug=slug)
+
+        testimonials = Testimonial.objects.filter(
+        is_active=True
+    ).order_by('-created_at')
 
     except Service.DoesNotExist:
 
@@ -367,9 +374,11 @@ def service_detail(request, slug):
 
         raise
   
+  
     return render(request, "service/detail.html", {
         "service": service,
-        "seo": service
+        "seo": service,
+        "testimonials":testimonials
     })
 
 
@@ -445,202 +454,99 @@ def doctor_list(request):
           "breadcrumbs": breadcrumbs}
     )
 
-   
 
 
-def package_detail(request,slug):
+def get_packages_with_palette(packages):
 
-    packages = get_object_or_404(
-        Content,
-        slug=slug,
-        content_type='health_package',
-        is_active=True
-    )
+    PALETTES = [
+        {'bg': '#185FA5', 'pill': '#B5D4F4', 'pill_text': '#0C447C', 'btn': '#0C447C'},
+        {'bg': '#0F6E56', 'pill': '#9FE1CB', 'pill_text': '#085041', 'btn': '#085041'},
+        {'bg': '#993C1D', 'pill': '#F5C4B3', 'pill_text': '#712B13', 'btn': '#712B13'},
+        {'bg': '#534AB7', 'pill': '#CECBF6', 'pill_text': '#3C3489', 'btn': '#3C3489'},
+        {'bg': '#854F0B', 'pill': '#FAC775', 'pill_text': '#633806', 'btn': '#633806'},
+        {'bg': '#993556', 'pill': '#F4C0D1', 'pill_text': '#72243E', 'btn': '#72243E'},
+    ]
 
-
-      # 🔥 Dynamic categories with count
-    categories = (
-        Content.objects.filter(
-            content_type='health_package',
-            is_active=True
-        )
-        .values('category__id', 'category__name')
-        .annotate(total=Count('id'))
-        .order_by('-total')
-    )
-
-      # 🔥 Related by category
-    related_blogs = Content.objects.filter(
-        content_type='article',
-        is_active=True,
-        category=packages.category
-    ).exclude(id=packages.id)
-
-    # 🔥 If tags exist → improve relevance
-    if packages.tags.exists():
-        related_blogs = related_blogs.filter(
-            tags__in=packages.tags.all()
-        ).distinct()
-
-    related_blogs = related_blogs.order_by('-published_at')[:3]
-
-    return render(
-        request,
-        "packages/detail.html",
-        {"packages": packages,
-        "related_blogs": related_blogs,
-         "categories": categories
-        }
-    )
-
-
+    return [
+        (pkg, PALETTES[i % len(PALETTES)])
+        for i, pkg in enumerate(packages)
+    ] 
 
 def package_list(request):
 
-               
-    packages = Content.objects.filter(
-        content_type='health_package',
-        is_active=True
-    ).order_by('-published_at')
+    page = get_listing_page("packages")
 
+    breadcrumbs = [
+        {"name": "Packages", "url": ""}
+    ]
 
+    category_id = request.GET.get('category')
+
+    categories = Specialization.objects.all()
+
+    packages = Packages.objects.filter(is_active=True)
+
+    if category_id:
+        packages = packages.filter(Specialization_id=category_id)
     
-      # 🔥 Dynamic categories with count
-    categories = (
-        Content.objects.filter(
-            content_type='health_package',
-            is_active=True
-        )
-        .values('category__id', 'category__name')
-        .annotate(total=Count('id'))
-        .order_by('-total')
+    packages_with_palette = get_packages_with_palette(packages)
+
+    return render(request, "packages/list.html", {
+        "packages": packages,
+        "categories": categories,
+        "selected_category": category_id,
+        "packages_with_palette": packages_with_palette,
+         "page_title": page.banner_title if about else "Specializations",
+          "page_description": page.banner_description,
+           "banner_image": page.banner_image if about else None,
+          "breadcrumbs": breadcrumbs
+    })
+
+
+def package_list_ajax(request):
+
+    specialization_id = request.GET.get('specialization')
+
+    packages = Packages.objects.filter(is_active=True)
+
+    if specialization_id:
+        packages = packages.filter(Specialization_id=specialization_id)
+
+    packages_with_palette = get_packages_with_palette(packages)
+
+    html = render_to_string(
+        "partials/package_list.html",
+        {"packages_with_palette": packages_with_palette}
     )
 
-       # ✅ TAGS WITH COUNT 🔥
-    tags = (
-        Tag.objects.filter(
-            is_active=True,
-            contents__content_type='health_package',
-            contents__is_active=True
-        )
-        .annotate(total=Count('contents'))
-        .order_by('-total')
-    )
-
-      # ✅ RECENT POSTS
-    recent_posts = Content.objects.filter(
-        content_type='health_package',
-        is_active=True
-    ).order_by('-published_at')[:3]
-
-    
-
-    return render(
-        request,
-        "packages/list.html",
-        {"packages": packages,
-           "categories": categories,
-             "tags": tags,
-              "recent_posts": recent_posts}
-    )
+    return JsonResponse({"html": html})
 
 
 
-
-def insurance_detail(request,slug):
-
-    packages = get_object_or_404(
-        Content,
-        slug=slug,
-        content_type='insurance',
-        is_active=True
-    )
-
-
-      # 🔥 Dynamic categories with count
-    categories = (
-        Content.objects.filter(
-            content_type='insurance',
-            is_active=True
-        )
-        .values('category__id', 'category__name')
-        .annotate(total=Count('id'))
-        .order_by('-total')
-    )
-
-      # 🔥 Related by category
-    related_blogs = Content.objects.filter(
-        content_type='article',
-        is_active=True,
-        category=packages.category
-    ).exclude(id=packages.id)
-
-    # 🔥 If tags exist → improve relevance
-    if packages.tags.exists():
-        related_blogs = related_blogs.filter(
-            tags__in=packages.tags.all()
-        ).distinct()
-
-    related_blogs = related_blogs.order_by('-published_at')[:3]
-
-    return render(
-        request,
-        "insurance/detail.html",
-        {"packages": packages,
-        "related_blogs": related_blogs,
-         "categories": categories
-        }
-    )
 
 
 
 def insurance_list(request):
 
-    packages = Content.objects.filter(
-        content_type='insurance',
-        is_active=True
-    ).order_by('-published_at')
+    page = get_listing_page("insurance")
 
+    breadcrumbs = [
+        {"name": "Insurance", "url": ""}
+    ]
 
-    
-      # 🔥 Dynamic categories with count
-    categories = (
-        Content.objects.filter(
-            content_type='insurance',
-            is_active=True
-        )
-        .values('category__id', 'category__name')
-        .annotate(total=Count('id'))
-        .order_by('-total')
+   
+    insurances = Insurance.objects.filter(
+        is_active=True,
+        is_deleted=False
     )
 
-       # ✅ TAGS WITH COUNT 🔥
-    tags = (
-        Tag.objects.filter(
-            is_active=True,
-            contents__content_type='insurance',
-            contents__is_active=True
-        )
-        .annotate(total=Count('contents'))
-        .order_by('-total')
-    )
-
-      # ✅ RECENT POSTS
-    recent_posts = Content.objects.filter(
-        content_type='insurance',
-        is_active=True
-    ).order_by('-published_at')[:3]
-
-    
-
-    return render(
-        request,
-        "insurance/list.html",
-        {"packages": packages,
-           "categories": categories,
-             "tags": tags,
-              "recent_posts": recent_posts}
-    )
+    return render(request, "insurance/list.html", {
+        "insurances": insurances,
+        "page_title": page.banner_title if about else "Specializations",
+          "page_description": page.banner_description,
+           "banner_image": page.banner_image if about else None,
+          "breadcrumbs": breadcrumbs
+    })
 
 
 
@@ -750,4 +656,16 @@ def legal_page_detail(request, slug):
 
     return render(request, "pages/legal_detail.html", {
         "page": page
+    })
+
+
+
+
+
+def gallery_page(request):
+
+    galleries = Gallery.objects.filter(is_active=True).prefetch_related('images')
+
+    return render(request, "pages/gallery.html", {
+        "galleries": galleries
     })

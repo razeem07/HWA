@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import dashboard,BranchCreateView,BranchListView,BranchUpdateView,BranchDeleteView,SpecializationListView,SpecializationCreateView,SpecializationUpdateView,SpecializationDeleteView,DoctorCreateView,DoctorListView,DoctorUpdateView,DoctorDeleteView,load_specializations,ListingPageListView,ListingPageCreateView,ListingPageUpdateView,ListingPageDeleteView,ContentListView,ContentCreateView,ContentUpdateView,ContentDeleteView,ContentCategoryCreateView,ContentCategoryListView,ContentCategoryDeleteView,ContentCategoryUpdateView,TagCreateView,TagListView,TagUpdateView,TagDeleteView,about_manage,TestimonialCreateView,TestimonialListView,TestimonialUpdateView,TestimonialDeleteView,TeamCreateView,TeamUpdateView,TeamDeleteView,TeamListView,contact_manage,ContactSubmissionListView,ContactSubmissionDeleteView,mark_submission_read,ServiceCreateView,ServiceListView,ServiceUpdateView,ServiceDeleteView,PackageCategoryCreateView,PackageCategoryDeleteView,PackageCategoryListView,PackageCategoryUpdateView,PackageProductCreateView,PackageProductListView,PackageProductUpdateView,PackageProductDeleteView,InsuranceCreateView,InsuranceListView,InsuranceDeleteView,InsuranceUpdateView,LegalPageCreateView,LegalPageDeleteView,LegalPageUpdateView,LegalPageListView,global_settings_manage,SocialLinkCreateView,SocialLinkListView,SocialLinkUpdateView,SocialLinkDeleteView,MenuGroupListView,MenuGroupCreateView,MenuGroupUpdateView,MenuGroupDeleteView,homepage_manage,DoctorScheduleCreateView,load_doctors_by_specialization,DoctorScheduleListView,DoctorScheduleUpdateView,DoctorScheduleDeleteView,DoctorLeaveCreateView,DoctorLeaveDeleteView,DoctorLeaveListView,DoctorLeaveUpdateView,booking_list,update_booking_status,delete_booking
+from .views import dashboard,BranchCreateView,BranchListView,BranchUpdateView,BranchDeleteView,SpecializationListView,SpecializationCreateView,SpecializationUpdateView,SpecializationDeleteView,DoctorCreateView,DoctorListView,DoctorUpdateView,DoctorDeleteView,load_specializations,ListingPageListView,ListingPageCreateView,ListingPageUpdateView,ListingPageDeleteView,ContentListView,ContentCreateView,ContentUpdateView,ContentDeleteView,ContentCategoryCreateView,ContentCategoryListView,ContentCategoryDeleteView,ContentCategoryUpdateView,TagCreateView,TagListView,TagUpdateView,TagDeleteView,about_manage,TestimonialCreateView,TestimonialListView,TestimonialUpdateView,TestimonialDeleteView,TeamCreateView,TeamUpdateView,TeamDeleteView,TeamListView,contact_manage,ContactSubmissionListView,ContactSubmissionDeleteView,mark_submission_read,ServiceCreateView,ServiceListView,ServiceUpdateView,ServiceDeleteView,PackageCreateView,PackageDeleteView,PackageListView,PackageUpdateView,InsuranceCreateView,InsuranceListView,InsuranceDeleteView,InsuranceUpdateView,LegalPageCreateView,LegalPageDeleteView,LegalPageUpdateView,LegalPageListView,global_settings_manage,SocialLinkCreateView,SocialLinkListView,SocialLinkUpdateView,SocialLinkDeleteView,MenuGroupListView,MenuGroupCreateView,MenuGroupUpdateView,MenuGroupDeleteView,homepage_manage,DoctorScheduleCreateView,load_doctors_by_specialization,DoctorScheduleListView,DoctorScheduleUpdateView,DoctorScheduleDeleteView,DoctorLeaveCreateView,DoctorLeaveDeleteView,DoctorLeaveListView,DoctorLeaveUpdateView,booking_list,update_booking_status,delete_booking,GalleryCreateView,GalleryListView,GalleryUpdateView,GalleryDeleteView,gallery_image_delete
 
 
 
@@ -55,14 +55,10 @@ urlpatterns = [
     path('contact/submissions/', ContactSubmissionListView.as_view(), name='contact-submissions'),
     path('contact/submissions/read/<int:pk>/', mark_submission_read, name='contact-read'),
     path('contact/submissions/delete/<int:pk>/', ContactSubmissionDeleteView.as_view(), name='contact-delete'),
-    path('packages/categories/', PackageCategoryListView.as_view(), name='package-category-list'),
-    path('packages/categories/add/', PackageCategoryCreateView.as_view(), name='package-category-create'),
-    path('packages/categories/edit/<int:pk>/', PackageCategoryUpdateView.as_view(), name='package-category-update'),
-    path('packages/categories/delete/<int:pk>/', PackageCategoryDeleteView.as_view(), name='package-category-delete'),
-    path('packages/', PackageProductListView.as_view(), name='package-product-list'),
-    path('packages/add/', PackageProductCreateView.as_view(), name='package-product-create'),
-    path('packages/edit/<int:pk>/', PackageProductUpdateView.as_view(), name='package-product-update'),
-    path('packages/delete/<int:pk>/', PackageProductDeleteView.as_view(), name='package-product-delete'),
+    path('packages/', PackageListView.as_view(), name='package-list'),
+    path('packages/add/', PackageCreateView.as_view(), name='package-create'),
+    path('packages/edit/<int:pk>/', PackageUpdateView.as_view(), name='package-update'),
+    path('packages/delete/<int:pk>/', PackageDeleteView.as_view(), name='package-delete'),
     path('insurance/', InsuranceListView.as_view(), name='insurance-list'),
     path('insurance/add/', InsuranceCreateView.as_view(), name='insurance-create'),
     path('insurance/edit/<int:pk>/', InsuranceUpdateView.as_view(), name='insurance-update'),
@@ -80,7 +76,7 @@ urlpatterns = [
     path('menu/add/', MenuGroupCreateView.as_view(), name='menu-create'),
     path('menu/edit/<int:pk>/', MenuGroupUpdateView.as_view(), name='menu-update'),
     path('menu/delete/<int:pk>/', MenuGroupDeleteView.as_view(), name='menu-delete'),
-    path('schedule/create/', DoctorScheduleCreateView.as_view(), name='schedule-list'),
+    path('schedule/create/', DoctorScheduleCreateView.as_view(), name='schedule-create'),
     path('load-doctors/', load_doctors_by_specialization, name='load_doctors_admin'),
     path('schedule/', DoctorScheduleListView.as_view(), name='schedule_list'),
     path('schedule/<int:pk>/update/', DoctorScheduleUpdateView.as_view(), name='schedule_update'),
@@ -92,9 +88,14 @@ urlpatterns = [
     path('bookings/', booking_list, name='booking_list'),
     path('bookings/<int:pk>/status/', update_booking_status, name='update_booking_status'),
    path('bookings/<int:pk>/delete/', delete_booking, name='delete_booking'),
+    path('gallery/', GalleryListView.as_view(), name='gallery_list'),
+    path('gallery/add/', GalleryCreateView.as_view(), name='gallery_add'),
+    path('gallery/<int:pk>/edit/', GalleryUpdateView.as_view(), name='gallery_edit'),
+    path('gallery/<int:pk>/delete/', GalleryDeleteView.as_view(), name='gallery_delete'),
+    path('gallery/image/<int:pk>/delete/', gallery_image_delete, name='gallery_image_delete'),
+]
     
 
    
     
 
-]

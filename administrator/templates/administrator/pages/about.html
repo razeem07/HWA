@@ -86,12 +86,26 @@
             data-bs-toggle="collapse"
             data-bs-target="#section2"
           >
-            Section 2
+           Mission Vision Values
           </button>
         </h2>
 
         <div id="section2" class="accordion-collapse collapse">
           <div class="accordion-body">{{ form.section_two }}</div>
+              <div class="mt-3">
+              <label class="form-label">Our Mission</label>       
+              {{ form.section_three }}
+              </div>
+
+               <div class="mt-3">
+              <label class="form-label">Our Vision</label>       
+              {{ form.section_four }}
+              </div>
+
+               <div class="mt-3">
+              <label class="form-label">Our Values</label>       
+              {{ form.section_five }}
+              </div>
         </div>
       </div>
 
@@ -104,13 +118,13 @@
             data-bs-toggle="collapse"
             data-bs-target="#section3"
           >
-            Section 3
+            Why Choose Image
           </button>
         </h2>
 
         <div id="section3" class="accordion-collapse collapse">
           <div class="accordion-body">
-            {{ form.section_three }}
+  
 
             <div class="mt-3">
               <label class="form-label">Image</label>
@@ -149,12 +163,40 @@
             data-bs-toggle="collapse"
             data-bs-target="#section4"
           >
-            Section 4
+           Chairman Message
           </button>
         </h2>
 
         <div id="section4" class="accordion-collapse collapse">
-          <div class="accordion-body">{{ form.section_four }}</div>
+          <div class="accordion-body">
+
+
+              <div class="mb-3">
+        <label class="form-label">Chairman Message</label>
+        {{ form.chairman_msg }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        {{ form.chairman_description }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Profile Image</label>
+        {{ form.chairman_profile }}
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+          </div>
         </div>
       </div>
 

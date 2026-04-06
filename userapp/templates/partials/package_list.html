@@ -1,0 +1,170 @@
+<div class="row">
+
+{% for pkg, palette in packages_with_palette %}
+
+<div class="col-md-4">
+
+    <div class="package-card">
+
+        <div class="package-header" style="background: {{ palette.bg }};">
+
+            <span class="pill"
+                  style="background: {{ palette.pill }};
+                         color: {{ palette.pill_text }};">
+                {{ pkg.Specialization.name }}
+            </span>
+
+            <h5>{{ pkg.name }}</h5>
+
+            <div class="price">
+                <strong>₹{{ pkg.offer_price|default:pkg.actual_price }}</strong>
+
+                {% if pkg.offer_price %}
+                <span class="old">₹{{ pkg.actual_price }}</span>
+                {% endif %}
+            </div>
+
+       {% if pkg.parameters and pkg.parameters != "None" %}
+<h6>{{ pkg.parameters }} parameters</h6>
+{% endif %}
+
+        </div>
+
+        <div class="package-body">
+
+            <ul>
+                {% for feature in pkg.features.all %}
+                <li>{{ feature.feature }}</li>
+                {% endfor %}
+            </ul>
+
+            <a href="#" class="book-btn"
+               style="background: {{ palette.btn }};">
+                Book Now
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+{% endfor %}
+</div>
+
+<style>
+
+
+    .package-card {
+    border-radius: 15px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.package-card:hover {
+    transform: translateY(-8px);
+}
+
+/* HEADER */
+.package-header {
+    padding: 20px;
+    color: #fff;
+    position: relative;
+}
+
+/* Decorative circle */
+.package-header::after {
+    content: "";
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+}
+
+/* Pill */
+.pill {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Price */
+.price {
+    margin-top: 10px;
+}
+
+.price strong {
+    font-size: 22px;
+}
+
+.price .old {
+    text-decoration: line-through;
+    margin-left: 10px;
+    opacity: 0.7;
+}
+
+/* BODY */
+.package-body {
+    padding: 20px;
+}
+
+.package-body ul {
+    padding-left: 18px;
+    margin-bottom: 15px;
+}
+
+.package-body li {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* Button */
+.book-btn {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* CATEGORY */
+.category-box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.category-item.active {
+    background: #eae7ff;
+}
+
+.category-item span {
+    background: #ddd;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.package-body li::marker {
+    color: #185FA5;
+}
+</style>
+
+</div>

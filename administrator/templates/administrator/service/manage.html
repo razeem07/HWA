@@ -1,11 +1,11 @@
 {% extends "administrator/shared/base.html" %}
-{% block title %}Manage Specialization{% endblock %}
+{% block title %}Manage Specialization | Services{% endblock %}
 
 {% block content %}
 
 <div class="container-fluid">
 
-<h4 class="mb-4">Manage Specialization</h4>
+<h4 class="mb-4">Manage Services</h4>
 
 <form method="post" enctype="multipart/form-data">
 
@@ -282,37 +282,13 @@ Main Content
 
 
 
-<div class="col-md-6">
-
-<label class="form-label">Secondary Title</label>
-{{ form.secondary_title }}
-
-</div>
 
 
-<div class="col-md-6">
-
-<label class="form-label">Secondary Image</label>
-
-{% if object and object.secondary_image %}
-
-<div class="mb-2">
-<img src="{{ object.secondary_image.url }}" width="120" class="rounded border">
-</div>
-
-{% endif %}
-
-{{ form.secondary_image }}
-
-</div>
 
 
-<div class="col-md-12">
 
-<label class="form-label">Secondary Image ALT</label>
-{{ form.secondary_image_alt }}
 
-</div>
+
 
 </div>
 

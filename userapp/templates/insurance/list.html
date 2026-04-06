@@ -1,163 +1,280 @@
 {% extends "shared/base.html" %} {% load static %} {% block title %}Home |
 Elister Med{% endblock %} {% block content %}
 
-<!-- Hero Section -->
-<section class="about-hero">
-  <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb breadcrumb-custom">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">About Us</li>
-      </ol>
-    </nav>
-    <h1>About Eleister Med</h1>
-    <p class="lead">Bringing Excellence in Healthcare from India to Dubai</p>
-  </div>
+  <!-- Hero Section -->
+    {% include "shared/hero.html" %}
+
+
+<section class="py-5 bg-light">
+    <div class="container">
+
+        <div class="row g-4 justify-content-center">
+
+            {% for ins in insurances %}
+            {% if ins.featured_image %}
+            <div class="col-6 col-md-4 col-lg-3">
+
+                <div class="insurance-logo">
+
+                    <img src="{{ ins.featured_image.url }}"
+                         alt="{{ ins.featured_image_alt|default:ins.name }}"
+                         class="img-fluid">
+
+                </div>
+
+            </div>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+
+    </div>
 </section>
 
-<!-- Blog Section -->
-<section class="blog-section">
-  <div class="container">
-    <div class="row">
-      <!-- Main Content -->
-      <div class="col-lg-8">
-        <div class="row g-4">
-          <!-- Blog Card 1 -->
-          {% for package in packages %}
-          <div class="col-md-6">
-            <article class="blog-card">
-              <div class="blog-card-image">
-                <img src="{{ package.featured_image.url }}" alt="Family Medicine" />
-                <span class="blog-category">{{package.category }}</span>
-              </div>
-              <div class="blog-card-body">
-                <div class="blog-meta">
-                  <span class="blog-meta-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    {{ package.published_at }}
-                  </span>
-                  <span class="blog-meta-item">
-                    <i class="fas fa-user"></i>
-                     {{ package.published_by }}
-                  </span>
-                </div>
-                <h3 class="blog-card-title">
-                  <a href="{% url 'userapp:insurance_detail' package.slug %}">{{ package.title }}</a>
-                </h3>
-                <p class="blog-card-excerpt">
-                  {{ package.short_description|truncatewords:20 }}
-                </p>
-                <a
-                  href="{% url 'userapp:insurance_detail' package.slug %}"
-                  class="blog-read-more"
-                >
-                  Read More <i class="fas fa-arrow-right"></i>
-                </a>
-              </div>
-            </article>
-          </div>
+<section class="priv-section">
 
-          {% endfor %}
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination-wrapper">
-          <nav aria-label="Blog pagination">
-            <ul class="pagination">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <i class="fas fa-chevron-left"></i>
-                </a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <i class="fas fa-chevron-right"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+  <div class="card-img-wrap">
+    <div class="card-visual-2"></div>
+    <div class="card-visual">
+      <div class="card-logo-row">
+        <div class="card-logo-circle"></div>
+        <div class="card-logo-text">elister<br><span>med</span></div>
       </div>
-
-      <!-- Sidebar -->
-      <div class="col-lg-4">
-        <div class="blog-sidebar">
-          <!-- Search Widget -->
-          <div class="sidebar-widget">
-            <h5>Search Articles</h5>
-            <form class="search-form">
-              <input type="text" placeholder="Search for articles..." />
-              <button type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-            </form>
-          </div>
-
-          <!-- Newsletter Widget -->
-          <div class="sidebar-widget newsletter-widget">
-            <h5>Subscribe to Updates</h5>
-            <p>
-              Get the latest health tips and medical updates delivered to your
-              inbox.
-            </p>
-            <input type="email" placeholder="Enter your email" />
-            <button>Subscribe</button>
-          </div>
-
-          <!-- Categories Widget -->
-          <div class="sidebar-widget">
-            <h5>Categories</h5>
-              {% for cat in categories %}
-            <div class="category-item">
-              <a href="#"> {{ cat.category__name }}</a>
-              <span class="category-count"> {{ cat.total }} </span>
-            </div>
-                {% endfor %}
-          </div>
-
-          <!-- Recent Posts Widget -->
-          <div class="sidebar-widget">
-            <h5>Recent Articles</h5>
-             {% for post in recent_posts %}
-            <div class="recent-post">
-             
-
-               {% if post.featured_image %}
-        <img src="{{ post.featured_image.url }}" width="80" class=" recent-post-image me-2">
-        {% endif %}
-              <div class="recent-post-content">
-                <h6>
-                  <a href="#"> {{ post.title }}</a>
-                </h6>
-                <div class="recent-post-date">
-                  <i class="fas fa-calendar-alt"></i>  {{ post.published_at|date:"d M Y" }}
-                </div>
-              </div>
-            </div>
-                {% endfor %}
-           
-          </div>
-
-          <!-- Tags Widget -->
-          <div class="sidebar-widget">
-            <h5>Popular Tags</h5>
-             {% for tag in tags %}
-            <div class="tags-cloud">
-              <a href="#" class="tag"> {{ tag.name }}</a> <br>
-             
-            </div>
-
-              {% endfor %}
-          </div>
-        </div>
-      </div>
+      <div class="card-gold-strip"></div>
+      <div class="card-label">Privilege Card</div>
     </div>
   </div>
+
+  <div class="priv-content">
+    <p class="priv-eyebrow">Elister Privilege Card</p>
+    <h2 class="priv-title">
+      Special Access For New Immigrants<br>
+      No Insurance? No Problem.
+    </h2>
+    <p class="priv-desc">
+      Starting a new life in the UAE can be challenging—accessing quality 
+      healthcare shouldn't be. The Elister Privilege Card is a unique initiative 
+      designed exclusively for new immigrants, offering affordable, accessible 
+      care even without insurance coverage.
+    </p>
+  </div>
+
+  <div class="priv-cta">
+    <a href="#" class="priv-btn">
+      Enquire Now →
+    </a>
+  </div>
+
 </section>
+
+<style>
+
+
+.insurance-logo {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    height: 100%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.3s;
+}
+
+.insurance-logo img {
+    
+    object-fit: contain;
+    filter: grayscale(0%);
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+/* Hover Effect */
+.insurance-logo:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.insurance-logo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+
+/* ===== ELISTER PRIVILEGE CARD SECTION ===== */
+/* ===== ELISTER PRIVILEGE CARD SECTION ===== */
+
+.priv-section {
+  background: #3d4db7;
+  border-radius: 16px;
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.priv-section::before {
+  content: '';
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.priv-section::after {
+  content: '';
+  position: absolute;
+  left: 60px;
+  bottom: -80px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ===== CARD IMAGE ===== */
+
+.card-img-wrap {
+  width: 130px;
+  height: 90px;
+  position: relative;
+  margin: 0 auto 28px;
+}
+
+.card-visual {
+  width: 120px;
+  height: 75px;
+
+  background: #1a1a2e;
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 12px 8px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: rotate(-8deg);
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.card-visual-2 {
+  width: 120px;
+  height: 75px;
+  border-radius: 10px;
+  background: #14213d;
+  border: 1px solid #2a2a4a;
+  position: absolute;
+  top: 0;
+  left: 8px;
+  transform: rotate(-2deg);
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.card-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-logo-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #e63946;
+}
+
+.card-logo-text {
+  font-size: 9px;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.card-logo-text span {
+  color: #e63946;
+}
+
+.card-gold-strip {
+  height: 8px;
+  background: linear-gradient(90deg, #c9a84c, #f0d060, #c9a84c);
+  border-radius: 2px;
+}
+
+.card-label {
+  font-size: 7px;
+  color: #aaa;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ===== CONTENT ===== */
+
+.priv-eyebrow {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 10px;
+}
+
+.priv-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.priv-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto 28px;
+}
+
+/* ===== CTA BUTTON ===== */
+
+.priv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1aaf8b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 13px 28px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.priv-btn:hover {
+  background: #159e7d;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  .priv-section {
+    padding: 36px 20px;
+  }
+
+  .priv-title {
+    font-size: 20px;
+  }
+}
+</style>
 
 {% endblock %}
