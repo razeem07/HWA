@@ -265,38 +265,39 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
     // ================= LOAD SLOTS =================
-    function loadSlots(){
+function loadSlots(){
 
-        let doctorId = doctor.value;
-        let selectedDate = date.value;
+    let doctorId = doctor.value;
+    let selectedDate = date.value;
 
-        if(!doctorId || !selectedDate) return;
+    if(!doctorId || !selectedDate) return;
 
-        time.innerHTML = '<option>Loading...</option>';
-        time.disabled = true;
+    time.innerHTML = '<option>Loading...</option>';
+    time.disabled = true;
 
-        fetch(`/appointment/load-slots/?doctor=${doctorId}&date=${selectedDate}`)
-        .then(res => res.json())
-        .then(data => {
+    fetch(`/appointment/load-slots/?doctor=${doctorId}&date=${selectedDate}`)
+    .then(res => res.json())
+    .then(data => {
 
-            time.innerHTML = '';
+        time.innerHTML = '';
 
-            if(data.length === 0){
-                time.innerHTML = '<option>No slots available</option>';
-                time.disabled = true;
-                return;
-            }
+        if(data.length === 0){
+            time.innerHTML = '<option>No slots available</option>';
+            time.disabled = true;
+            return;
+        }
 
-            time.innerHTML = '<option value="">Select Time</option>';
+        time.innerHTML = '<option value="">Select Time</option>';
 
-            data.forEach(function(slot){
-                time.innerHTML += `<option value="${slot}">${slot}</option>`;
-            });
-
-            time.disabled = false;
+        // ✅ FIX HERE
+        data.forEach(function(slot){
+            time.innerHTML += `<option value="${slot.value}">${slot.label}</option>`;
         });
 
-    }
+        time.disabled = false;
+    });
+
+}
 
 });
 </script>

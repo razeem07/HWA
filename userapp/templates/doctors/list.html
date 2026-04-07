@@ -97,13 +97,14 @@ Elister Med{% endblock %} {% block content %}
                      
                      
                          
-                        {% for exp in doctor.expertise.all %}
+                      
                         <div class="expertise-tags">
+                              {% for exp in doctor.expertise.all %}
                             <span class="tag">{{ exp.title }}</span>
-                           
+                             {% endfor %}
                         </div>
 
-                        {% endfor %}
+                       
 
                        <div class="action-buttons">
                            <a href="{% url 'userapp:doctor_detail' doctor.slug %}" 
@@ -119,6 +120,37 @@ Elister Med{% endblock %} {% block content %}
             </div>
 
               {% endfor %}
+
+               <div class="row g-4 mt-4">
+      {% for doctor in doctors %}
+      <div class="col-lg-4">
+        <div class="doctor-card card">
+          {% if doctor.profile_image %}
+          <img src="{{ doctor.profile_image.url }}" class="doctor-img" />
+          {% endif %}
+
+          <div class="card-body text-center">
+            <h5>
+              Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}
+            </h5>
+            <p class="text-muted small">{{ doctor.designation }}</p>
+            <p class="small">
+              {{ doctor.specialized_in }} • {{ doctor.years_of_experience }}+
+              Years Experience
+            </p>
+            <a
+              href="{% url 'userapp:doctor_detail' doctor.slug %}"
+              class="btn-details"
+            >
+              View Profile
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
 
         </div>
     </section>

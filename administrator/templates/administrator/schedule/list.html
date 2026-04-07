@@ -23,7 +23,7 @@
     <thead>
         <tr>
             <th>Doctor</th>
-            <th>Specialization</th>
+            
             <th>Actions</th>
         </tr>
     </thead>
@@ -33,7 +33,7 @@
         {% for schedule in schedules %}
         <tr>
             <td>{{ schedule.doctor }}</td>
-            <td>{{ schedule.specialization }}</td>
+         
 
             <td>
                 <a href="{% url 'administrator:schedule_update' schedule.id %}" class="btn btn-primary btn-sm">Edit</a>

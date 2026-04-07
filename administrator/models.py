@@ -491,7 +491,7 @@ class Doctor(SEOModel):
     
 
     def __str__(self):
-        return f"Dr. {self.user.first_name} {self.user.last_name}"
+          return f"{self.user.get_full_name()} — {self.specialization.name}"
 
 
 class DoctorEducation(models.Model):
@@ -1287,11 +1287,7 @@ class DoctorSchedule(models.Model):
         related_name="schedules"
     )
 
-    specialization = models.ForeignKey(
-        "Specialization",
-        on_delete=models.CASCADE
-    )
-
+ 
     is_active = models.BooleanField(default=True)
 
     def __str__(self):

@@ -177,6 +177,7 @@ def load_slots(request):
             filtered_slots = []
 
             for slot in available_slots:
+                
 
                 slot_time = datetime.strptime(slot, "%H:%M").time()
 
@@ -186,4 +187,15 @@ def load_slots(request):
 
             available_slots = filtered_slots
 
-    return JsonResponse(available_slots, safe=False)
+            formatted_slots = []
+
+            for slot in available_slots:
+              time_obj = datetime.strptime(slot, "%H:%M")
+
+              formatted_slots.append({
+                 "value": slot,  # backend use
+                 "label": time_obj.strftime("%I:%M %p")  # display
+                })
+
+    return JsonResponse(formatted_slots, safe=False)
+

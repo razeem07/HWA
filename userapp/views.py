@@ -9,7 +9,9 @@ from django.http import HttpResponse
 from utils.pages import get_listing_page
 from django.db.models import Count
 from django.template.loader import render_to_string
-import re
+from django.core.paginator import Paginator
+from django.db.models import Q
+
 
 
 # Create your views here.
@@ -146,7 +148,25 @@ def blog_list(request):
         is_active=True
     ).order_by('-published_at')
 
+    query = request.GET.get("q")
+    category = request.GET.get("category")
+    tag = request.GET.get("tag")
 
+      # 🔥 SEARCH LOGIC
+    if query:
+        blogs = blogs.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query)
+        )
+
+    
+    # 📂 CATEGORY FILTER
+    if category:
+        blogs = blogs.filter(category_id=category)
+
+# 🏷 TAG FILTER
+    if tag:
+          blogs = blogs.filter(tags__id=tag)
     
       # 🔥 Dynamic categories with count
     categories = (
@@ -170,6 +190,7 @@ def blog_list(request):
         .order_by('-total')
     )
 
+
       # ✅ RECENT POSTS
     recent_posts = Content.objects.filter(
         content_type='blog',
@@ -179,6 +200,12 @@ def blog_list(request):
     breadcrumbs = [
         {"name": "blogs", "url": ""}
     ]
+
+      # 🔥 PAGINATION
+    paginator = Paginator(blogs, 10)  # 20 per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
 
     return render(
         request,
@@ -191,7 +218,12 @@ def blog_list(request):
                "page_title": page.banner_title if about else "About Us",
                   "page_description": page.banner_description,
                   "banner_image": page.banner_image if about else None,
-                   "breadcrumbs": breadcrumbs
+                   "breadcrumbs": breadcrumbs,
+                   "page_obj":page_obj,
+                    "query": query,
+                      "category": category,
+                        "tag": tag,
+                    
           }
     )
 

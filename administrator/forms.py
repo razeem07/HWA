@@ -3,6 +3,8 @@ from django.forms import inlineformset_factory
 from .models import Branch,Specialization,Doctor,ListingPage,Content,ContentCategory,AboutPage,DoctorEducation,DoctorCertification,DoctorExpertise,DoctorMembership,SpecializationFAQ,TeamMember,Testimonial,ContactPage,Service,ServiceFAQ,Packages,PackageFeature,Insurance,LegalPage,GlobalSettings,SocialLink,MenuGroup,MenuItem,HomePage,HomeBanner,HomeFeature,WhyChooseItem,HomeFAQ,HighlightItem,DoctorSchedule,DoctorScheduleTime,DoctorLeave,Gallery,GalleryImage
 from django.forms.widgets import ClearableFileInput
 from django.contrib.auth import get_user_model
+from utils.timechoice import TIME_CHOICES
+from datetime import datetime
 
 User = get_user_model()
 
@@ -837,38 +839,75 @@ class DoctorScheduleForm(forms.ModelForm):
 
     class Meta:
         model = DoctorSchedule
-        fields = ["specialization", "doctor"]
+        fields = ["doctor"]
 
         widgets = {
-            "specialization": forms.Select(attrs={"class": "form-control"}),
+          
             "doctor": forms.Select(attrs={"class": "form-control"}),
         }
+
 
 
 class DoctorScheduleTimeForm(forms.ModelForm):
 
+    start_time = forms.ChoiceField(
+        choices=TIME_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    end_time = forms.ChoiceField(
+        choices=TIME_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = DoctorScheduleTime
-        fields = ["day_of_week", "start_time", "end_time", "slot_duration", "is_active"]
+        fields = '__all__'
 
         widgets = {
-            "day_of_week": forms.Select(attrs={"class": "form-control"}),
-            "start_time": forms.TimeInput(attrs={"type": "time", "class": "form-control"}),
-            "end_time": forms.TimeInput(attrs={"type": "time", "class": "form-control"}),
-            "slot_duration": forms.NumberInput(attrs={"class": "form-control"}),
-            "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-        }
-
-class DoctorScheduleForm(forms.ModelForm):
-
-    class Meta:
-        model = DoctorSchedule
-        fields = ["specialization", "doctor"]
-
-        widgets = {
-            "specialization": forms.Select(attrs={"class": "form-control"}),
+          
             "doctor": forms.Select(attrs={"class": "form-control"}),
+            "day_of_week":forms.Select(attrs={"class": "form-control"}),
+            "slot_duration":forms.TextInput(attrs={"class": "form-control"})
         }
+
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # 🔥 Fix binding issue
+        if self.instance and self.instance.pk:
+
+            if self.instance.start_time:
+                self.initial['start_time'] = self.instance.start_time.strftime("%H:%M")
+
+            if self.instance.end_time:
+                self.initial['end_time'] = self.instance.end_time.strftime("%H:%M")
+
+
+    # 🔥 STEP 3 → Convert string → time
+    def clean_start_time(self):
+        value = self.cleaned_data['start_time']
+        return datetime.strptime(value, "%H:%M").time()
+
+    def clean_end_time(self):
+        value = self.cleaned_data['end_time']
+        return datetime.strptime(value, "%H:%M").time()
+
+    # 🔥 STEP 2 → Validation
+    def clean(self):
+        cleaned_data = super().clean()
+
+        start = cleaned_data.get("start_time")
+        end = cleaned_data.get("end_time")
+
+        if start and end:
+            if start >= end:
+                raise forms.ValidationError("End time must be after start time")
+
+        return cleaned_data
+
+
 
 DoctorScheduleTimeFormSet = inlineformset_factory(
     DoctorSchedule,
@@ -882,6 +921,18 @@ DoctorScheduleTimeFormSet = inlineformset_factory(
 
 class DoctorLeaveForm(forms.ModelForm):
 
+    start_time = forms.ChoiceField(
+        choices=TIME_CHOICES,
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    end_time = forms.ChoiceField(
+        choices=TIME_CHOICES,
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = DoctorLeave
         fields = "__all__"
@@ -889,28 +940,57 @@ class DoctorLeaveForm(forms.ModelForm):
         widgets = {
             "doctor": forms.Select(attrs={"class": "form-control"}),
             "date": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
-            "start_time": forms.TimeInput(attrs={"type": "time", "class": "form-control"}),
-            "end_time": forms.TimeInput(attrs={"type": "time", "class": "form-control"}),
+        
             "is_full_day": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "reason": forms.TextInput(attrs={"class": "form-control"}),
         }
+
+      # 🔥 FIX BINDING (EDIT MODE)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance and self.instance.pk:
+
+            if self.instance.start_time:
+                self.initial['start_time'] = self.instance.start_time.strftime("%H:%M")
+
+            if self.instance.end_time:
+                self.initial['end_time'] = self.instance.end_time.strftime("%H:%M")
+
+      # 🔥 CONVERT STRING → TIME
+    def clean_start_time(self):
+        value = self.cleaned_data.get('start_time')
+        if value:
+            return datetime.strptime(value, "%H:%M").time()
+        return None
     
+    def clean_end_time(self):
+        value = self.cleaned_data.get('end_time')
+        if value:
+            return datetime.strptime(value, "%H:%M").time()
+        return None
+    
+        # 🔥 VALIDATION
     def clean(self):
-       cleaned_data = super().clean()
+        cleaned_data = super().clean()
 
-       is_full_day = cleaned_data.get("is_full_day")
-       start = cleaned_data.get("start_time")
-       end = cleaned_data.get("end_time")
+        is_full_day = cleaned_data.get("is_full_day")
+        start = cleaned_data.get("start_time")
+        end = cleaned_data.get("end_time")
 
-       if not is_full_day:
-        if not start or not end:
-            raise forms.ValidationError("Start and End time required for partial leave")
+        # Full day → ignore time
+        if is_full_day:
+            cleaned_data['start_time'] = None
+            cleaned_data['end_time'] = None
 
-        if start >= end:
-            raise forms.ValidationError("End time must be greater than start time")
+        else:
+            if not start or not end:
+                raise forms.ValidationError("Start and End time required for partial leave")
 
-       return cleaned_data
-    
+            if start >= end:
+                raise forms.ValidationError("End time must be after start time")
+
+        return cleaned_data
 
 # ✅ Custom Widget
 class MultipleFileInput(ClearableFileInput):

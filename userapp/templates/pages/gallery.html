@@ -10,36 +10,92 @@ Elister Med{% endblock %} {% block content %}
 <section class="py-5">
     <div class="container">
 
-        <div class="row g-4">
+              <div class="row g-4">
+            <div class="text-center mb-4">
 
-            {% for gallery in galleries %}
+                <button class="btn btn-primary filter-btn active" data-filter="image">
+                   Images
+                </button>
 
-                <!-- IMAGE -->
-                {% if gallery.media_type == "image" %}
-                    {% for img in gallery.images.all %}
-                        <div class="col-md-3">
-                            <img src="{{ img.image.url }}" class="img-fluid">
-                        </div>
-                    {% endfor %}
-                {% endif %}
+                   <button class="btn btn-outline-primary filter-btn" data-filter="video">
+                    Videos
+                 </button>
 
-                <!-- VIDEO -->
-                {% if gallery.media_type == "video" and gallery.video_url %}
-                <div class="col-md-4">
+             </div>
+             </div>
 
-                    {{ gallery.video_url |safe }}
-                      
+      <div class="row g-4" id="gallery-container">
 
+    {% for gallery in galleries %}
+
+        <!-- IMAGE -->
+        {% if gallery.media_type == "image" %}
+            {% for img in gallery.images.all %}
+                <div class="col-md-3 gallery-item" data-type="image">
+                    <img src="{{ img.image.url }}" class="img-fluid rounded">
                 </div>
-                {% endif %}
-
             {% endfor %}
+        {% endif %}
 
-        </div>
+        <!-- VIDEO -->
+        {% if gallery.media_type == "video" and gallery.video_url %}
+            <div class="col-md-4 gallery-item" data-type="video">
+                <div class="video-wrapper">
+                    {{ gallery.video_url|safe }}
+                </div>
+            </div>
+        {% endif %}
+
+    {% endfor %}
+
+</div>
 
     </div>
 </section>
 
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const buttons = document.querySelectorAll(".filter-btn");
+    const items = document.querySelectorAll(".gallery-item");
+
+    function filterGallery(type) {
+        items.forEach(item => {
+            if (item.dataset.type === type) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    }
+
+    // Default → show images
+    filterGallery("image");
+
+    buttons.forEach(btn => {
+        btn.addEventListener("click", function () {
+
+            // Remove active
+            buttons.forEach(b => {
+                b.classList.remove("active", "btn-primary");
+                b.classList.add("btn-outline-primary");
+            });
+
+            // Add active
+            this.classList.add("active", "btn-primary");
+            this.classList.remove("btn-outline-primary");
+
+            // Filter
+            const type = this.dataset.filter;
+            filterGallery(type);
+
+        });
+    });
+
+});
+</script>
 
 <style>
 
@@ -61,8 +117,24 @@ Elister Med{% endblock %} {% block content %}
     transform: scale(1.03);
 }
 
-</style>
+.gallery-item:hover {
+    transform: scale(1.03);
+}
 
+.filter-btn {
+    margin: 5px;
+}
+
+.gallery-item {
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.gallery-item[style*="block"] {
+    opacity: 1;
+}
+
+</style>
 
 
 

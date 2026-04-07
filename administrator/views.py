@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from booking.models import Appointment
 from datetime import date
 from utils.sendmessage import send_whatsapp_message
+from django.core.paginator import Paginator
 
 
 
@@ -1326,7 +1327,7 @@ class DoctorScheduleCreateView(CreateView):
     model = DoctorSchedule
     form_class = DoctorScheduleForm
     template_name = "administrator/schedule/form.html"
-    success_url = reverse_lazy("administrator:schedule-list")
+    success_url = reverse_lazy("administrator:schedule_list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1421,6 +1422,13 @@ class DoctorScheduleUpdateView(UpdateView):
 
         return self.form_invalid(form)
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+
+        form.fields['doctor'].disabled = True
+
+        return form
+
 
 class DoctorScheduleDeleteView(DeleteView):
 
@@ -1436,7 +1444,7 @@ class DoctorLeaveCreateView(CreateView):
     model = DoctorLeave
     form_class = DoctorLeaveForm
     template_name = "administrator/leave/form.html"
-    success_url = reverse_lazy("administrator:leave_create")
+    success_url = reverse_lazy("administrator:leave_list")
 
 class DoctorLeaveListView(ListView):
 
@@ -1456,6 +1464,13 @@ class DoctorLeaveUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy("administrator:leave_list")
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+
+        form.fields['doctor'].disabled = True
+
+        return form
     
 
 class DoctorLeaveDeleteView(DeleteView):
@@ -1470,29 +1485,59 @@ class DoctorLeaveDeleteView(DeleteView):
 def booking_list(request):
 
     today = date.today()
+    tab = request.GET.get("tab", "today")
 
     from_date = request.GET.get("from_date")
     to_date = request.GET.get("to_date")
+    status = request.GET.get("status")
 
     # 🔥 BASE QUERY
     bookings = Appointment.objects.all().select_related("doctor")
 
-    # ✅ IF NO FILTER → SHOW TODAY ONLY
-    if not from_date and not to_date:
+
+     # ================= TAB FILTER =================
+    if tab == "today":
         bookings = bookings.filter(date=today)
 
-    else:
-        if from_date:
-            bookings = bookings.filter(date__gte=from_date)
+    elif tab == "upcoming":
+        bookings = bookings.filter(date__gt=today)
 
-        if to_date:
-            bookings = bookings.filter(date__lte=to_date)
+    elif tab == "past":
+        bookings = bookings.filter(date__lt=today)
+
+    elif tab == "all":
+        pass  # no filter
+
+       # ================= DATE FILTER =================
+    if from_date:
+        bookings = bookings.filter(date__gte=from_date)
+
+    if to_date:
+        bookings = bookings.filter(date__lte=to_date)
+
+    # ================= STATUS FILTER =================
+    if status:
+        bookings = bookings.filter(status=status)
+
+    # ================= ORDER =================
+    if tab == "past":
+        bookings = bookings.order_by("-date", "-time")
+    else:
+        bookings = bookings.order_by("date", "time")
+
+     # 🔥 PAGINATION
+    paginator = Paginator(bookings, 20)  # 20 per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     context = {
         "bookings": bookings.order_by("-date", "-time"),
-        "today": today,
+         "tab": tab,
         "from_date": from_date,
         "to_date": to_date,
+         "status": status,
+         "page_obj":page_obj,
+
     }
 
 
