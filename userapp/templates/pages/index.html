@@ -9,11 +9,21 @@
 <section id="heroCarousel" class="carousel slide" data-bs-touch="true" data-bs-interval="4500"
         data-bs-ride="carousel" data-bs-pause="false">
 
-    <div class="carousel-indicators">
+    <!-- <div class="carousel-indicators">
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
-    </div>
+    </div> -->
+
+    <div class="carousel-indicators">
+    {% for banner in banners %}
+        <button type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide-to="{{ forloop.counter0 }}"
+                class="{% if forloop.first %}active{% endif %}">
+        </button>
+    {% endfor %}
+</div>
 
 
     <div class="carousel-inner">
@@ -45,7 +55,7 @@
                         <p class="lead my-4">{{ banner.description }}</p>
                     {% endif %}
 
-                    <a href="#" class="btn btn-custom">Book Now</a>
+                    <a href="{% url 'booking:book_appointment'%}" class="btn btn-custom">Book Appointment</a>
 
                 </div>
 
@@ -76,7 +86,7 @@
           <div class="container">
             <div class="row g-4">
                {% for feature in features %}
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="service-card p-5  reveal reveal-left">
                         <img src="{{ feature.image.url }}"  alt="{{ feature.title }}">
                         <h5 class="text-blue-dark p-2 ">{{ feature.title }}</h5>
@@ -259,6 +269,10 @@
                 </button>
             </div>
         </div>
+
+         <div class="col-md-6 text-md-end mt-3  reveal reveal-right">
+                    <a href="{% url 'userapp:doctor_list'%}" class="btn btn-view-more  mobile-hide-element">View All &rsaquo;</a>
+                </div>
     </section>
 
       <!-- Section 6 -->
@@ -394,5 +408,9 @@
             </div>
         </div>
     </section>
+
+ 
+
+
 
 {% endblock %}

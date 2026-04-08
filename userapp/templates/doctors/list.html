@@ -9,6 +9,7 @@ Elister Med{% endblock %} {% block content %}
 
      <!-- SEARCH & FILTER -->
     <section class="container mb-5">
+        <form method="get">
         <div class="search-filter-section">
             <div class="row g-3 align-items-end">
                 <div class="col-md-4">
@@ -17,13 +18,13 @@ Elister Med{% endblock %} {% block content %}
                         <span class="input-group-text bg-white border-end-0">
                             <i class="bi bi-search text-muted"></i>
                         </span>
-                        <input type="text" class="form-control border-start-0"
+                        <input type="text" class="form-control border-start-0" name="q"  value="{{ query|default:'' }}"
                             placeholder="Search by name or specialty...">
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label fw-semibold small text-uppercase text-muted mb-2">Specialty</label>
-                    <select class="form-select">
+                    <!-- <select class="form-select">
                         <option selected>All Specialties</option>
                         <option>Cardiology</option>
                         <option>Orthopedics</option>
@@ -33,93 +34,39 @@ Elister Med{% endblock %} {% block content %}
                         <option>General Medicine</option>
                         <option>Neurology</option>
                         <option>ENT</option>
+                    </select> -->
+
+                       <select name="specialization" class="form-select">
+
+                        <option value="">All Specialties</option>
+
+                        {% for spec in specializations %}
+                        <option value="{{ spec.id }}"
+                            {% if specialization == spec.id|stringformat:'s' %}selected{% endif %}>
+                            {{ spec.name }}
+                        </option>
+                        {% endfor %}
+
                     </select>
                 </div>
+              
                 <div class="col-md-3">
-                    <label class="form-label fw-semibold small text-uppercase text-muted mb-2">Experience</label>
-                    <select class="form-select">
-                        <option selected>All Experience</option>
-                        <option>10+ Years</option>
-                        <option>15+ Years</option>
-                        <option>20+ Years</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
                     <button class="btn btn-primary-custom w-100">
                         <i class="bi bi-funnel me-2"></i>Filter
                     </button>
                 </div>
             </div>
         </div>
+
+        </form>
     </section>
 
     <!-- DOCTORS GRID -->
     <section id="doctors" class="container pb-5">
-        <div class="text-center mb-5">
-            <h2 class="section-title">Our Doctors</h2>
-            <p class="section-subtitle">Highly skilled specialists dedicated to your complete healthcare</p>
+       
 
-        </div>
-
-        <div class="row g-4">
-                {% for doctor in doctors %}
-            <!-- Doctor Card 1 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="doctor-card">
-                    <div class="doctor-image-wrapper">
-                        <img src="{{ doctor.profile_image.url }}" alt="{{ doctor.profile_image_alt }}" class="doctor-image">
-                        <div class="doctor-badge">
-                            <i class="bi bi-star-fill"></i> {{ doctor.specialization}}
-                        </div>
-                    </div>
-                    <div class="doctor-info">
-                        <a href="personal-details.html">
-                            <h3 class="doctor-name">{{ doctor.user.first_name }} {{ doctor.user.last_name }}</h3>
-                        </a>
-                        <div class="doctor-specialty"> {{ doctor.designation}}</div>
-                        <p class="doctor-credentials">
-                          <br>
-                         {{ doctor.specialized_in}}
-                        </p>
-
-                        <div class="doctor-stats">
-                            <div class="stat-item">
-                                <i class="bi bi-clock-history"></i>
-                                <span>  {{ doctor.years_of_experience}} + Years</span>
-                            </div>
-                            <div class="stat-item">
-                                <i class="bi bi-heart-pulse"></i>
-                                <span>{{doctor.patients_treated}} cases treated</span>
-                            </div>
-                        </div>
-
-                      
-                     
-                     
-                         
-                      
-                        <div class="expertise-tags">
-                              {% for exp in doctor.expertise.all %}
-                            <span class="tag">{{ exp.title }}</span>
-                             {% endfor %}
-                        </div>
-
-                       
-
-                       <div class="action-buttons">
-                           <a href="{% url 'userapp:doctor_detail' doctor.slug %}" 
-                             class="btn btn-primary-custom flex-grow-1">
-
-                           <i class="bi bi-calendar-check me-2"></i>
-                                 Book Appointment
-
-                          </a>
-                       </div>
-                    </div>
-                </div>
-            </div>
-
-              {% endfor %}
+      
+              
 
                <div class="row g-4 mt-4">
       {% for doctor in doctors %}
@@ -156,21 +103,9 @@ Elister Med{% endblock %} {% block content %}
     </section>
 
     <!-- CTA SECTION -->
-    <section class="bg-primary-custom text-white py-5 mt-5">
-        <div class="container text-center py-4">
-            <h2 class="fw-bold mb-3">Need Expert Medical Consultation?</h2>
-            <p class="lead mb-4 opacity-90">Schedule a consultation with our experienced doctors today</p>
+  
 
-            <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="#" class="btn btn-light btn-lg text-primary-custom rounded-pill px-5">
-                    <i class="bi bi-telephone-fill me-2"></i>Call +91 833 833 5244
-                </a>
-                <a href="#" class="btn btn-outline-light btn-lg rounded-pill px-5">
-                    <i class="bi bi-calendar-check me-2"></i>Book Online Appointment
-                </a>
-            </div>
-        </div>
-    </section>
+    {% include "partials/cta.html" with footer_title=footer_title footer_description=footer_description page_cta=page_cta %}
 
 
 

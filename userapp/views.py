@@ -11,6 +11,11 @@ from django.db.models import Count
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.db.models.functions import Concat
+from django.db.models import Value
+from django.contrib import messages
+from .models import NewsletterSubscriber
+
 
 
 
@@ -263,6 +268,21 @@ def blog_detail(request,slug):
 
     related_blogs = related_blogs.order_by('-published_at')[:3]
 
+         # ✅ TAGS WITH COUNT 🔥
+    tags = (
+        Tag.objects.filter(
+            is_active=True,
+            contents__content_type='blog',
+            contents__is_active=True
+        )
+        .annotate(total=Count('contents'))
+        .order_by('-total')
+    )
+
+    
+ 
+    
+
     breadcrumbs = [
     {
         "name": "Blogs",
@@ -272,7 +292,31 @@ def blog_detail(request,slug):
         "name": blog.title,
         "url": ""
     }
-]
+   ]
+
+    query = request.GET.get("q")
+    category = request.GET.get("category")
+    tag = request.GET.get("tag")
+
+    recent_posts = Content.objects.filter(
+    content_type='blog',
+    is_active=True
+    ).exclude(id=blog.id).order_by('-published_at')[:5]
+
+
+      # Previous blog (older)
+    previous_blog = Content.objects.filter(
+    content_type='blog',
+    is_active=True,
+    published_at__lt=blog.published_at
+    ).order_by('-published_at').first()
+
+# Next blog (newer)
+    next_blog = Content.objects.filter(
+    content_type='blog',
+    is_active=True,
+    published_at__gt=blog.published_at
+     ).order_by('published_at').first()
 
     return render(
         request,
@@ -280,7 +324,16 @@ def blog_detail(request,slug):
         {"blog": blog,
         "related_blogs": related_blogs,
          "categories": categories,
-         "breadcrumbs": breadcrumbs
+         "breadcrumbs": breadcrumbs,
+
+          "recent_posts": recent_posts,
+        "query": query,
+        "category": category,
+        "tag": tag,
+
+        "previous_blog": previous_blog,
+        "next_blog": next_blog,
+      
         }
     )
 
@@ -311,6 +364,9 @@ def specialization_list(request):
           "page_description": page.banner_description,
            "banner_image": page.banner_image if about else None,
           "breadcrumbs": breadcrumbs,
+            "footer_title" :page.footer_title,
+           "footer_description" :page.footer_description,
+            "page_cta" :page.page_cta,
          }
     )
 
@@ -360,7 +416,9 @@ def specialization_detail(request, slug):
         "name": specialization.name,
         "url": ""
     }
-]
+   ]
+    
+    page = get_listing_page("specializations")
 
     schema = specialization_schema(specialization)
 
@@ -371,7 +429,10 @@ def specialization_detail(request, slug):
         "doctors": doctors,
         "breadcrumbs": breadcrumbs,
         "services":services,
-        "service_count": services.count()
+        "service_count": services.count(),
+        "footer_title" :page.footer_title,
+           "footer_description" :page.footer_description,
+            "page_cta" :page.page_cta,
         
     })
 
@@ -405,12 +466,17 @@ def service_detail(request, slug):
             )
 
         raise
+
+    page = get_listing_page("services")
   
   
     return render(request, "service/detail.html", {
         "service": service,
         "seo": service,
-        "testimonials":testimonials
+        "testimonials":testimonials,
+         "footer_title" :page.footer_title,
+           "footer_description" :page.footer_description,
+            "page_cta" :page.page_cta,
     })
 
 
@@ -441,6 +507,7 @@ def doctor_detail(request, slug):
             )
 
         raise
+    page = get_listing_page("doctors")
     
     breadcrumbs = [
     {
@@ -459,22 +526,43 @@ def doctor_detail(request, slug):
         {"doctor": doctor,
           "seo" :doctor,
           "schema": schema,
-           "breadcrumbs": breadcrumbs
+           "breadcrumbs": breadcrumbs,
+           "footer_title" :page.footer_title,
+           "footer_description" :page.footer_description,
+            "page_cta" :page.page_cta,
           
           }
     )
 
 def doctor_list(request):
 
+    query = request.GET.get("q")
+    specialization = request.GET.get("specialization")
+
     page = get_listing_page("doctors")
 
     doctors = Doctor.objects.filter(
         is_active=True
     ).select_related("user","specialization","branch")
+    
 
+    if query:
+        doctors = doctors.annotate(
+        full_name=Concat('user__first_name', Value(' '), 'user__last_name')
+    ).filter(
+        Q(user__first_name__icontains=query) |
+        Q(user__last_name__icontains=query) |
+        Q(full_name__icontains=query) |   # 🔥 THIS FIXES IT
+        Q(specialization__name__icontains=query)
+    )
+    # 📂 SPECIALIZATION FILTER
+    if specialization:
+        doctors = doctors.filter(specialization_id=specialization)
+
+    
 
     breadcrumbs = [
-        {"name": "Specializations", "url": ""}
+        {"name": "Doctor", "url": ""}
     ]
     return render(
         request,
@@ -483,7 +571,15 @@ def doctor_list(request):
           "page_title": page.banner_title if about else "Specializations",
           "page_description": page.banner_description,
            "banner_image": page.banner_image if about else None,
-          "breadcrumbs": breadcrumbs}
+           "footer_title" :page.footer_title,
+           "footer_description" :page.footer_description,
+            "page_cta" :page.page_cta,
+          "breadcrumbs": breadcrumbs,
+            "specialization": specialization,
+        "specializations": Specialization.objects.all(),
+          "query":query,
+          
+          }
     )
 
 
@@ -530,6 +626,9 @@ def package_list(request):
         "packages_with_palette": packages_with_palette,
          "page_title": page.banner_title if about else "Specializations",
           "page_description": page.banner_description,
+           "footer_title" :page.footer_title,
+           "footer_description" :page.footer_description,
+            "page_cta" :page.page_cta,
            "banner_image": page.banner_image if about else None,
           "breadcrumbs": breadcrumbs
     })
@@ -577,7 +676,10 @@ def insurance_list(request):
         "page_title": page.banner_title if about else "Specializations",
           "page_description": page.banner_description,
            "banner_image": page.banner_image if about else None,
-          "breadcrumbs": breadcrumbs
+          "breadcrumbs": breadcrumbs,
+           "footer_title" :page.footer_title,
+           "footer_description" :page.footer_description,
+            "page_cta" :page.page_cta,
     })
 
 
@@ -620,12 +722,48 @@ def articles_detail(request,slug):
 
     related_blogs = related_blogs.order_by('-published_at')[:3]
 
+    breadcrumbs = [
+    {
+        "name": "Article",
+        "url": reverse("userapp:articles_list")
+    },
+    {
+        "name": article.title,
+        "url": ""
+    }
+   ]
+
+   
+    query = request.GET.get("q")
+    category = request.GET.get("category")
+    tag = request.GET.get("tag")
+    
+         # Previous blog (older)
+    previous_blog = Content.objects.filter(
+    content_type='article',
+    is_active=True,
+    published_at__lt=article.published_at
+    ).order_by('-published_at').first()
+
+# Next blog (newer)
+    next_blog = Content.objects.filter(
+    content_type='blog',
+    is_active=True,
+    published_at__gt=article.published_at
+     ).order_by('published_at').first()
+
     return render(
         request,
         "articles/detail.html",
         {"article": article,
         "related_blogs": related_blogs,
-         "categories": categories
+         "categories": categories,
+         "breadcrumbs" :breadcrumbs,
+         "query":query,
+         "category":category,
+         "tag":tag,
+         "previous_blog": previous_blog,
+        "next_blog": next_blog,
         }
     )
 
@@ -639,6 +777,11 @@ def articles_list(request):
         content_type='article',
         is_active=True
     ).order_by('-published_at')
+     
+    breadcrumbs = [
+        {"name": "articles", "url": ""}
+    ]
+    
 
 
     
@@ -670,6 +813,16 @@ def articles_list(request):
         is_active=True
     ).order_by('-published_at')[:3]
 
+     
+      # 🔥 PAGINATION
+    paginator = Paginator(articles, 10)  # 20 per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    query = request.GET.get("q")
+    category = request.GET.get("category")
+    tag = request.GET.get("tag")
+
     
 
     return render(
@@ -678,7 +831,13 @@ def articles_list(request):
         {"articles": articles,
            "categories": categories,
              "tags": tags,
-              "recent_posts": recent_posts}
+              "recent_posts": recent_posts,
+              "page_obj":page_obj,
+               "breadcrumbs" :breadcrumbs,
+               "query":query,
+               "category":category,
+               "tag":tag,
+              }
     )
 
 
@@ -701,3 +860,22 @@ def gallery_page(request):
     return render(request, "pages/gallery.html", {
         "galleries": galleries
     })
+
+
+
+
+def subscribe_newsletter(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        if not email:
+            messages.error(request, "Please enter an email")
+            return redirect(request.META.get("HTTP_REFERER"))
+
+        if NewsletterSubscriber.objects.filter(email=email).exists():
+            messages.warning(request, "Already subscribed")
+        else:
+            NewsletterSubscriber.objects.create(email=email)
+            messages.success(request, "Subscribed successfully!")
+
+    return redirect(request.META.get("HTTP_REFERER"))

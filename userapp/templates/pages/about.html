@@ -286,15 +286,9 @@ Elister Med{% endblock %} {% block content %}
 </section> -->
 
 <!-- CTA Section -->
-<section class="section-padding">
-  <div class="cta-section">
-    <h2>{{ page.footer_title }}  </h2>
-    <p>
-        {{ page.footer_description }}
-    </p>
-    <a href="{% url 'booking:book_appointment'%}" class="btn btn-light-custom">{{page.page_cta}}</a>
-  </div>
-</section>
+
+
+{% include "partials/cta.html" with footer_title=page.footer_title footer_description=page.footer_description page_cta=page.page_cta %}
 
 <!-- Section 8
     <section style="position: relative; width: 100%; overflow: hidden;">

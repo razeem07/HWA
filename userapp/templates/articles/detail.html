@@ -1,19 +1,33 @@
 {% extends "shared/base.html" %} {% load static %} {% block title %}Home |
 Elister Med{% endblock %} {% block content %}
 
-<!-- Hero Section -->
-<section class="about-hero">
-  <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb breadcrumb-custom">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">About Us</li>
-      </ol>
-    </nav>
-    <h1>About Eleister Med</h1>
-    <p class="lead">Bringing Excellence in Healthcare from India to Dubai</p>
-  </div>
-</section>
+    <!-- Hero Section -->
+    <section class="about-hero" 
+     {% if blog.hero_banner %}
+        style="background-image: linear-gradient(rgba(0, 143, 179, 0.644), rgba(0, 108, 138, 0.578)),url('{{ article.hero_banner.url}}'); background-size: cover; background-position: center;"
+    {% endif %}>
+        <div class="container">
+             <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-custom">
+                    <li class="breadcrumb-item"> <a href="{% url 'userapp:home' %}">Home</a></li>
+
+                      {% for item in breadcrumbs %}
+                          {% if not forloop.last %}
+                             <li class="breadcrumb-item">
+                                 <a href="{{ item.url }}">{{ item.name }}</a>
+                              </li>
+                         {% else %}
+                             <li class="breadcrumb-item active" aria-current="page">
+                                {{ item.name }}
+                            </li>
+                         {% endif %}
+                     {% endfor %}
+                </ol>
+            </nav>
+            <h1>{{article.title}}</h1>
+            <p class="lead">{{article.short_description}}</p>
+        </div>
+    </section>
 
 <!-- Main Content -->
 <section class="blog-content-section">
@@ -21,11 +35,7 @@ Elister Med{% endblock %} {% block content %}
     <div class="row">
       <div class="col-lg-8">
         <article class="blog-main">
-          <img
-            src="../assets/images/family-medicine.jpg"
-            alt="Family Medicine Doctor"
-            class="blog-post-image"
-          />
+          
           <div class="blog-hero-content">
             <h1>
              {{ article.title }}
@@ -54,39 +64,40 @@ Elister Med{% endblock %} {% block content %}
           </div>
 
           <!-- Share Section -->
+             <!-- Share Section -->
           <div class="blog-share-section">
             <div class="share-title">Share This Article</div>
             <div class="share-buttons">
               <a
-                href="#"
+                href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank"
                 class="share-btn share-btn-facebook"
                 title="Share on Facebook"
               >
                 <i class="fab fa-facebook-f"></i>
               </a>
               <a
-                href="#"
+                href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ blog.title }}" target="_blank"
                 class="share-btn share-btn-twitter"
                 title="Share on Twitter"
               >
                 <i class="fab fa-twitter"></i>
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank"
                 class="share-btn share-btn-linkedin"
                 title="Share on LinkedIn"
               >
                 <i class="fab fa-linkedin-in"></i>
               </a>
               <a
-                href="#"
+                href="https://wa.me/?text={{ blog.title }} {{ request.build_absolute_uri }}" target="_blank"
                 class="share-btn share-btn-whatsapp"
                 title="Share on WhatsApp"
               >
                 <i class="fab fa-whatsapp"></i>
               </a>
               <a
-                href="#"
+                href="mailto:?subject={{ blog.title }}&body={{ request.build_absolute_uri }}"
                 class="share-btn share-btn-email"
                 title="Share via Email"
               >
@@ -96,77 +107,31 @@ Elister Med{% endblock %} {% block content %}
           </div>
 
           <!-- Navigation -->
+        
           <div class="blog-nav">
-            <a href="#" class="blog-nav-link blog-nav-link-prev">
-              <i class="fas fa-chevron-left"></i>
-              <span>Previous Post</span>
-            </a>
-            <a href="#" class="blog-nav-link blog-nav-link-next">
-              <span>Next Post</span>
-              <i class="fas fa-chevron-right"></i>
-            </a>
-          </div>
+
+  {% if previous_blog %}
+  <a href="{% url 'userapp:blog-detail' previous_blog.slug %}" 
+     class="blog-nav-link blog-nav-link-prev">
+    <i class="fas fa-chevron-left"></i>
+    <span>{{ previous_blog.title|truncatewords:3 }}</span>
+  </a>
+  {% endif %}
+
+  {% if next_blog %}
+  <a href="{% url 'userapp:blog-detail' next_blog.slug %}" 
+     class="blog-nav-link blog-nav-link-next">
+    <span>{{ next_blog.title|truncatewords:3 }}</span>
+    <i class="fas fa-chevron-right"></i>
+  </a>
+  {% endif %}
+
+</div>
         </article>
       </div>
 
       <!-- Sidebar -->
-      <div class="col-lg-4">
-        <div class="blog-sidebar">
-          <!-- Newsletter Widget -->
-          <div class="sidebar-widget newsletter-widget">
-            <h5>Subscribe to Updates</h5>
-            <p>
-              Get the latest health tips and medical updates delivered to your
-              inbox.
-            </p>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              class="form-control"
-            />
-            <button class="btn btn-primary w-100">Subscribe</button>
-          </div>
-
-          <!-- Related Posts Widget -->
-         
-            <div class="sidebar-widget">
-            <h5>Related Blogs</h5>
-
-             {% for item in related_blogs %}
-            <div class="related-post">
-              <a href="#"
-                >  {{ item.title }}</a
-              >
-              <div class="related-post-meta">
-                <i class="fas fa-calendar-alt"></i> {{item.published_at}}
-              </div>
-            </div>
-          
-             {% endfor %}
-          
-          </div>
-
-          <!-- Categories Widget -->
-         
-          <!-- Categories Widget -->
-          <div class="sidebar-widget">
-            <h5>Categories</h5>
-
-             {% for cat in categories %}
-             <div class="related-post">
-                <a href="#">
-               {{ cat.category__name }}
-             </a>
-               <div class="related-post-meta">
-            {{ cat.total }} Posts
-        </div>
-    </div>
-    {% endfor %}
-
-
-        </div>
-      </div>
-    </div>
+       {% include "partials/article_sidebar.html" %}
   </div>
 </section>
 

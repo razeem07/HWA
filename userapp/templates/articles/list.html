@@ -3,18 +3,8 @@ Elister Med{% endblock %} {% block content %}
 
 
    <!-- Hero Section -->
-    <section class="about-hero">
-        <div class="container">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb breadcrumb-custom">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">About Us</li>
-                </ol>
-            </nav>
-            <h1>About Eleister Med</h1>
-            <p class="lead">Bringing Excellence in Healthcare from India to Dubai</p>
-        </div>
-    </section>
+  {% include "shared/hero.html" %}
+
 
 <!-- Blog Section -->
 <section class="blog-section">
@@ -43,7 +33,7 @@ Elister Med{% endblock %} {% block content %}
                   </span>
                 </div>
                 <h3 class="blog-card-title">
-                  <a href="{% url 'userapp:articles_detail' article.slug %}">{{ blog.title }}</a>
+                  <a href="{% url 'userapp:articles_detail' article.slug %}">{{ article.title }}</a>
                 </h3>
                 <p class="blog-card-excerpt">
                   {{ blog.short_description|truncatewords:20 }}
@@ -62,103 +52,65 @@ Elister Med{% endblock %} {% block content %}
         </div>
 
         <!-- Pagination -->
-        <div class="pagination-wrapper">
-          <nav aria-label="Blog pagination">
-            <ul class="pagination">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <i class="fas fa-chevron-left"></i>
-                </a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <i class="fas fa-chevron-right"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        
+
+        
+       <div class="pagination-wrapper">
+  <nav>
+    <ul class="pagination">
+
+      <!-- PREVIOUS -->
+      <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+        {% if page_obj.has_previous %}
+          <a class="page-link"
+             href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category }}{% endif %}{% if tag %}&tag={{ tag }}{% endif %}">
+            <i class="fas fa-chevron-left"></i>
+          </a>
+        {% else %}
+          <span class="page-link"><i class="fas fa-chevron-left"></i></span>
+        {% endif %}
+      </li>
+
+      <!-- PAGE NUMBERS -->
+      {% for num in page_obj.paginator.page_range %}
+
+        {% if num == page_obj.number %}
+          <li class="page-item active">
+            <span class="page-link">{{ num }}</span>
+          </li>
+
+        {% elif num >= page_obj.number|add:-2 and num <= page_obj.number|add:2 %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category }}{% endif %}
+                 {% if tag %}&tag={{ tag }}{% endif %}">{{ num }}</a>
+          </li>
+        {% endif %}
+
+      {% endfor %}
+
+      <!-- NEXT -->
+      <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+        {% if page_obj.has_next %}
+          <a class="page-link"
+             href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category }}{% endif %}{% if tag %}&tag={{ tag }}{% endif %}">
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        {% else %}
+          <span class="page-link"><i class="fas fa-chevron-right"></i></span>
+        {% endif %}
+      </li>
+
+    </ul>
+  </nav>
+</div>
+
+
       </div>
 
       <!-- Sidebar -->
-      <div class="col-lg-4">
-        <div class="blog-sidebar">
-          <!-- Search Widget -->
-          <div class="sidebar-widget">
-            <h5>Search Articles</h5>
-            <form class="search-form">
-              <input type="text" placeholder="Search for articles..." />
-              <button type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-            </form>
-          </div>
 
-          <!-- Newsletter Widget -->
-          <div class="sidebar-widget newsletter-widget">
-            <h5>Subscribe to Updates</h5>
-            <p>
-              Get the latest health tips and medical updates delivered to your
-              inbox.
-            </p>
-            <input type="email" placeholder="Enter your email" />
-            <button>Subscribe</button>
-          </div>
-
-            <!-- Categories Widget -->
-          <div class="sidebar-widget">
-            <h5>Categories</h5>
-              {% for cat in categories %}
-            <div class="category-item">
-              <a href="#"> {{ cat.category__name }}</a>
-              <span class="category-count"> {{ cat.total }} </span>
-            </div>
-                {% endfor %}
-          </div>
-
-          <!-- Recent Posts Widget -->
+  {% include "partials/article_sidebar.html" %}
         
-          <!-- Recent Posts Widget -->
-          <div class="sidebar-widget">
-            <h5>Recent Articles</h5>
-             {% for post in recent_posts %}
-            <div class="recent-post">
-             
-
-               {% if post.featured_image %}
-        <img src="{{ post.featured_image.url }}" width="80" class=" recent-post-image me-2">
-        {% endif %}
-              <div class="recent-post-content">
-                <h6>
-                  <a href="{% url 'userapp:blog-detail' post.slug %}"> {{ post.title }}</a>
-                </h6>
-                <div class="recent-post-date">
-                  <i class="fas fa-calendar-alt"></i>  {{ post.published_at|date:"d M Y" }}
-                </div>
-              </div>
-            </div>
-                {% endfor %}
-           
-          </div>
-
-          <!-- Tags Widget -->
-          <div class="sidebar-widget">
-            <h5>Popular Tags</h5>
-             {% for tag in tags %}
-            <div class="tags-cloud">
-              <a href="#" class="tag"> {{ tag.name }}</a> <br>
-             
-            </div>
-
-              {% endfor %}
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>

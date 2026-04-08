@@ -1,0 +1,64 @@
+ <div class="col-lg-4">
+        <div class="blog-sidebar">
+          <!-- Search Widget -->
+          <div class="sidebar-widget">
+            <h5>Search Articles</h5>
+            <form class="search-form" method="get" action="">
+              <input type="text" placeholder="Search for articles..."  name="q" value="{{query|default:''}}"/>
+              <button type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Newsletter Widget -->
+          {% include "partials/newsletter.html" %}
+
+          <!-- Categories Widget -->
+          <div class="sidebar-widget">
+            <h5>Categories</h5>
+              {% for cat in categories %}
+            <div class="category-item">
+              <a href="?category={{ cat.category__id }}{% if query %}&q={{ query }}{% endif %}" class="{% if category == cat.category__id|stringformat:'s' %}active{% endif %}"> {{ cat.category__name }}</a>
+              <span class="category-count"> {{ cat.total }} </span>
+            </div>
+                {% endfor %}
+          </div>
+
+          <!-- Recent Posts Widget -->
+          <div class="sidebar-widget">
+            <h5>Recent Articles</h5>
+             {% for post in recent_posts %}
+            <div class="recent-post">
+             
+
+               {% if post.featured_image %}
+        <img src="{{ post.featured_image.url }}" width="80" class=" recent-post-image me-2">
+        {% endif %}
+              <div class="recent-post-content">
+                <h6>
+                  <a href="{% url 'userapp:blog-detail' post.slug %}"> {{ post.title }}</a>
+                </h6>
+                <div class="recent-post-date">
+                  <i class="fas fa-calendar-alt"></i>  {{ post.published_at|date:"d M Y" }}
+                </div>
+              </div>
+            </div>
+                {% endfor %}
+           
+          </div>
+
+          <!-- Tags Widget -->
+          <div class="sidebar-widget">
+            <h5>Popular Tags</h5>
+             
+            <div class="tags-cloud">
+              {% for tag in tags %}
+              <a href="?tag={{ tag.id }}{% if query %}&q={{ query }}{% endif %}" class="tag"> {{ tag.name }}</a> <br>
+               {% endfor %}
+            </div>
+
+            
+          </div>
+        </div>
+      </div>

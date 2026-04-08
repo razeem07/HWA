@@ -48,21 +48,21 @@ Elister Med{% endblock %} {% block content %}
   <div class="priv-content">
     <p class="priv-eyebrow">Elister Privilege Card</p>
     <h2 class="priv-title">
-      Special Access For New Immigrants<br>
-      No Insurance? No Problem.
+      {{footer_title}}
+    
     </h2>
     <p class="priv-desc">
-      Starting a new life in the UAE can be challenging—accessing quality 
-      healthcare shouldn't be. The Elister Privilege Card is a unique initiative 
-      designed exclusively for new immigrants, offering affordable, accessible 
-      care even without insurance coverage.
+       {{footer_description}}
     </p>
   </div>
 
   <div class="priv-cta">
-    <a href="#" class="priv-btn">
-      Enquire Now →
-    </a>
+  
+    <a href="https://api.whatsapp.com/send/?phone={{ global_settings.whatsapp_number }}&text=&type=phone_number&app_absent=0"
+   target="_blank"
+   class="priv-btn">
+    {{page_cta}} →
+</a>
   </div>
 
 </section>
@@ -109,7 +109,7 @@ Elister Med{% endblock %} {% block content %}
 
 .priv-section {
   background: #3d4db7;
-  border-radius: 16px;
+ 
   padding: 56px 48px;
   display: flex;
   flex-direction: column;

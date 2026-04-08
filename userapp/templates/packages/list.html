@@ -50,14 +50,9 @@ Elister Med{% endblock %} {% block content %}
 
 
    <!-- CTA Section -->
-    <section class="section-padding">
-        <div class="cta-section">
-            <h2>  {{page.footer_title}}</h2>
-            <p>{{page.footer_description}}</p>
-            <a href="#" class="btn btn-light-custom">{{page.page_cta}}</a>
-        </div>
+    
 
-    </section>
+        {% include "partials/cta.html" with footer_title=footer_title footer_description=footer_description page_cta=page_cta %}
 
 <script>
 document.querySelectorAll(".filter-link").forEach(link => {

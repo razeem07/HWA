@@ -18,109 +18,15 @@
   </div>
 </section>
 
-   <!-- BOOKING SECTION -->
-    <section class="booking-section">
-        <div class="container">
-
-            <div class="booking-card">
-
-                <!-- Location -->
-                <h5 class="section-title">Select Location</h5>
-
-                <select class="form-select mb-4">
-                    <option>Main Medical Center</option>
-                    <option>City Clinic Branch</option>
-                </select>
-
-
-                <!-- Date -->
-                <h5 class="section-title">Select Date</h5>
-
-                <div class="d-flex flex-wrap gap-2 mb-4">
-                    <div class="date-btn active">Mon 10</div>
-                    <div class="date-btn">Tue 11</div>
-                    <div class="date-btn">Wed 12</div>
-                    <div class="date-btn">Thu 13</div>
-                    <div class="date-btn">Fri 14</div>
-                </div>
-
-
-                <!-- Time -->
-                <h5 class="section-title">Available Time</h5>
-
-                <div class="mb-4">
-                    <span class="time-slot active">09:00 AM</span>
-                    <span class="time-slot">09:30 AM</span>
-                    <span class="time-slot">10:00 AM</span>
-                    <span class="time-slot">10:30 AM</span>
-                    <span class="time-slot">11:00 AM</span>
-                    <span class="time-slot">02:00 PM</span>
-                    <span class="time-slot">03:00 PM</span>
-                </div>
-
-
-                <!-- Patient Info -->
-                <h5 class="section-title">Patient Details</h5>
-
-                <div class="row g-3">
-
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Patient Name">
-                    </div>
-
-                    <div class="col-md-6">
-                        <input type="tel" class="form-control" placeholder="Phone Number">
-                    </div>
-
-                    <div class="col-md-6">
-                        <input type="email" class="form-control" placeholder="Email">
-                    </div>
-
-                    <div class="col-md-6">
-                        <input type="number" class="form-control" placeholder="Age">
-                    </div>
-
-                    <div class="col-12">
-                        <textarea class="form-control" rows="3" placeholder="Notes (Optional)"></textarea>
-                    </div>
-
-                </div>
-
-                <!-- Button -->
-                <div class="mt-4">
-                    <button class="btn btn-book w-100">
-                        Confirm Appointment
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-    <div class="container">
-        <hr class="my-5" style="border-top: 2px solid #e0f7fa; opacity: 1;">
-        <div class="instruction-box mt-4">
-
-            <div class="instruction-header">
-                <i class="fa-solid fa-circle-info"></i>
-                <h6>Important Instructions</h6>
-            </div>
-
-            <ul>
-                <li>Please arrive 15 minutes before appointment.</li>
-                <li>Carry previous medical reports.</li>
-                <li>Appointment can be rescheduled 24 hours before.</li>
-            </ul>
-
-        </div>
-    </div>
+   
+   
 
 
     <form method="post">
 {% csrf_token %}
 
 <!-- BOOKING SECTION -->
-<section class="booking-section">
+<section class="booking-section mt-3 mb-3">
     <div class="container">
 
         <div class="booking-card">
@@ -192,6 +98,24 @@
 
     </div>
 </section>
+
+ <div class="container mb-3">
+        <hr class="my-5" style="border-top: 2px solid #e0f7fa; opacity: 1;">
+        <div class="instruction-box mt-4">
+
+            <div class="instruction-header">
+                <i class="fa-solid fa-circle-info"></i>
+                <h6>Important Instructions</h6>
+            </div>
+
+            <ul>
+                <li>Please arrive 15 minutes before appointment.</li>
+                <li>Carry previous medical reports.</li>
+                <li>Appointment can be rescheduled 24 hours before.</li>
+            </ul>
+
+        </div>
+    </div>
 
 
 {% if success %}

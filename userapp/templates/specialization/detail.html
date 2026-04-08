@@ -210,6 +210,9 @@ Elister Med{% endblock %} {% block content %}
   </div>
 </section>
 
+
+{% include "partials/cta.html" with footer_title=footer_title footer_description=footer_description page_cta=page_cta %}
+
  <script>
   document.addEventListener("DOMContentLoaded", function () {
     new Swiper(".servicesSwiper", {

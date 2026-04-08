@@ -67,35 +67,35 @@ Elister Med{% endblock %} {% block content %}
             <div class="share-title">Share This Article</div>
             <div class="share-buttons">
               <a
-                href="#"
+                href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank"
                 class="share-btn share-btn-facebook"
                 title="Share on Facebook"
               >
                 <i class="fab fa-facebook-f"></i>
               </a>
               <a
-                href="#"
+                href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ blog.title }}" target="_blank"
                 class="share-btn share-btn-twitter"
                 title="Share on Twitter"
               >
                 <i class="fab fa-twitter"></i>
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank"
                 class="share-btn share-btn-linkedin"
                 title="Share on LinkedIn"
               >
                 <i class="fab fa-linkedin-in"></i>
               </a>
               <a
-                href="#"
+                href="https://wa.me/?text={{ blog.title }} {{ request.build_absolute_uri }}" target="_blank"
                 class="share-btn share-btn-whatsapp"
                 title="Share on WhatsApp"
               >
                 <i class="fab fa-whatsapp"></i>
               </a>
               <a
-                href="#"
+                href="mailto:?subject={{ blog.title }}&body={{ request.build_absolute_uri }}"
                 class="share-btn share-btn-email"
                 title="Share via Email"
               >
@@ -105,7 +105,7 @@ Elister Med{% endblock %} {% block content %}
           </div>
 
           <!-- Navigation -->
-          <div class="blog-nav">
+          <!-- <div class="blog-nav">
             <a href="#" class="blog-nav-link blog-nav-link-prev">
               <i class="fas fa-chevron-left"></i>
               <span>Previous Post</span>
@@ -114,105 +114,33 @@ Elister Med{% endblock %} {% block content %}
               <span>Next Post</span>
               <i class="fas fa-chevron-right"></i>
             </a>
-          </div>
+          </div> -->
+
+          <div class="blog-nav">
+
+  {% if previous_blog %}
+  <a href="{% url 'userapp:blog-detail' previous_blog.slug %}" 
+     class="blog-nav-link blog-nav-link-prev">
+    <i class="fas fa-chevron-left"></i>
+    <span>{{ previous_blog.title|truncatewords:3 }}</span>
+  </a>
+  {% endif %}
+
+  {% if next_blog %}
+  <a href="{% url 'userapp:blog-detail' next_blog.slug %}" 
+     class="blog-nav-link blog-nav-link-next">
+    <span>{{ next_blog.title|truncatewords:3 }}</span>
+    <i class="fas fa-chevron-right"></i>
+  </a>
+  {% endif %}
+
+</div>
         </article>
       </div>
 
-      <!-- Sidebar -->
-      <div class="col-lg-4">
-        <div class="blog-sidebar">
-          <!-- Newsletter Widget -->
-          <div class="sidebar-widget newsletter-widget">
-            <h5>Subscribe to Updates</h5>
-            <p>
-              Get the latest health tips and medical updates delivered to your
-              inbox.
-            </p>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              class="form-control"
-            />
-            <button class="btn btn-primary w-100">Subscribe</button>
-          </div>
-
-          <!-- Related Posts Widget -->
-          <div class="sidebar-widget">
-            <h5>Related Blogs</h5>
-
-             {% for item in related_blogs %}
-            <div class="related-post">
-              <a href="#"
-                >  {{ item.title }}</a
-              >
-              <div class="related-post-meta">
-                <i class="fas fa-calendar-alt"></i> {{item.published_at}}
-              </div>
-            </div>
-            <!-- <div class="related-post">
-              <a href="#"
-                >Benefits of Regular Health Screening and Early Disease
-                Detection</a
-              >
-              <div class="related-post-meta">
-                <i class="fas fa-calendar-alt"></i> Jan 28, 2026
-              </div>
-            </div>
-            <div class="related-post">
-              <a href="#"
-                >How to Maintain a Healthy Work-Life Balance for Better
-                Health</a
-              >
-              <div class="related-post-meta">
-                <i class="fas fa-calendar-alt"></i> Jan 22, 2026
-              </div>
-            </div>
-            <div class="related-post">
-              <a href="#"
-                >Understanding Blood Pressure: Normal Ranges and Management
-                Tips</a
-              >
-              <div class="related-post-meta">
-                <i class="fas fa-calendar-alt"></i> Jan 15, 2026
-              </div>
-            </div> -->
-             {% endfor %}
-          
-          </div>
-
-          <!-- Categories Widget -->
-          <div class="sidebar-widget">
-            <h5>Categories</h5>
-
-             {% for cat in categories %}
-             <div class="related-post">
-                <a href="#">
-               {{ cat.category__name }}
-             </a>
-               <div class="related-post-meta">
-            {{ cat.total }} Posts
-        </div>
-    </div>
-    {% endfor %}
-            <!-- <div class="related-post">
-              <a href="#">General Medicine</a>
-              <div class="related-post-meta">12 Articles</div>
-            </div>
-            <div class="related-post">
-              <a href="#">Health Tips</a>
-              <div class="related-post-meta">8 Articles</div>
-            </div>
-            <div class="related-post">
-              <a href="#">Disease Prevention</a>
-              <div class="related-post-meta">15 Articles</div>
-            </div>
-            <div class="related-post">
-              <a href="#">Wellness</a>
-              <div class="related-post-meta">10 Articles</div>
-            </div> -->
-          </div>
-        </div>
-      </div>
+    
+         <!-- Sidebar -->
+     {% include "partials/content_sidebar.html" %}
     </div>
   </div>
 </section>

@@ -14,6 +14,7 @@ from booking.models import Appointment
 from datetime import date
 from utils.sendmessage import send_whatsapp_message
 from django.core.paginator import Paginator
+from userapp.models import NewsletterSubscriber
 
 
 
@@ -1680,3 +1681,17 @@ def gallery_image_delete(request, pk):
     image.delete()
 
     return redirect('administrator:gallery_edit', pk=gallery_id)
+
+
+def newsletter_list(request):
+    subscribers = NewsletterSubscriber.objects.all().order_by('-created_at')
+
+    return render(request, "administrator/newsletter/list.html", {
+        "subscribers": subscribers
+    })
+
+
+def delete_subscriber(request, id):
+    subscriber = get_object_or_404(NewsletterSubscriber, id=id)
+    subscriber.delete()
+    return redirect("administrator:newsletter_list")

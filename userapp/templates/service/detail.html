@@ -60,10 +60,17 @@ Elister Med{% endblock %} {% block content %}
 <section class="py-5">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-12">{{service.long_description_primary |safe}}</div>
+      <div class="col-lg-12">
+        
+         <div class="section-cms">
+             {{service.long_description_primary |safe}}
+          </div>
+       </div>
     </div>
   </div>
 </section>
+
+
 
 
 
@@ -113,8 +120,16 @@ Elister Med{% endblock %} {% block content %}
 <section class="py-5 ">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-12">{{service.long_description_secondary |safe}}</div>
+      <div class="col-lg-12">
+
+
+           <div class="section-cms">
+                 {{service.long_description_secondary |safe}}
+          </div>
+      </div>
     </div>
+
+    
   </div>
 </section>
 
@@ -149,6 +164,8 @@ Elister Med{% endblock %} {% block content %}
     </div>
   </div>
 </section>
+
+    {% include "partials/cta.html" with footer_title=footer_title footer_description=footer_description page_cta=page_cta %}
 
 <style>
   /* ===== TESTIMONIAL SECTION ===== */
