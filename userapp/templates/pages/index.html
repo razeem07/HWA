@@ -336,52 +336,48 @@
                 </div>
             </div>
 
-            <div class="row g-4">
-                      {% for blog in blogs %}
-                <div class="col-md-4  reveal reveal-left">
-                    <div class="blog-card">
-                        <div class="blog-img-wrapper">
-                             <img src="{{ blog.featured_image.url }}" alt="Sleep and Health"
-                                class="img-fluid"> 
+          
 
-                                
-                        </div>
-                        <div class="blog-content mt-3">
-                            <h5 class="blog-title text-center">{{ blog.title }}</h5>
-                            <p class="blog-date text-center">{{ blog.published_at}}</p>
-                        </div>
-                    </div>
+              <div class="row g-4">
+          <!-- Blog Card 1 -->
+          {% for blog in blogs %}
+          <div class="col-md-4">
+            <article class="blog-card">
+              <div class="blog-card-image">
+                <img src="{{ blog.featured_image.url }}" alt="Family Medicine" />
+                <span class="blog-category">{{ blog.category }}</span>
+              </div>
+              <div class="blog-card-body">
+                <div class="blog-meta">
+                  <span class="blog-meta-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ blog.published_at }}
+                  </span>
+                  <span class="blog-meta-item">
+                    <i class="fas fa-user"></i>
+                     {{ blog.published_by }}
+                  </span>
                 </div>
+                <h3 class="blog-card-title">
+                  <a href="{% url 'userapp:blog-detail' blog.slug %}">{{ blog.title }}</a>
+                </h3>
+                <p class="blog-card-excerpt">
+                  {{ blog.short_description|truncatewords:20 }}
+                </p>
+                <a
+                  href="{% url 'userapp:blog-detail' blog.slug %}"
+                  class="blog-read-more"
+                >
+                  Read More <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </article>
+          </div>
 
-                   {% endfor %}
-
-                <!-- <div class="col-md-4  reveal reveal-left">
-                    <div class="blog-card">
-                        <div class="blog-img-wrapper">
-                            <img src="./assets/images/elister page 8 image 2.png" alt="Pediatric Checkups"
-                                class="img-fluid">
-                        </div>
-                        <div class="blog-content mt-3">
-                            <h5 class="blog-title">Why Pediatric Checkups Are Essential for Baby's Growth</h5>
-                            <p class="blog-date">2025-07-11</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4  reveal reveal-left">
-                    <div class="blog-card">
-                        <div class="blog-img-wrapper">
-                            <img src="./assets/images/elister page 8 image 3.png" alt="Vaccination" class="img-fluid">
-                        </div>
-                        <div class="blog-content mt-3">
-                            <h5 class="blog-title">Importance of Vaccination for All Ages</h5>
-                            <p class="blog-date">2025-12-11</p>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
+          {% endfor %}
+        </div>
             <div class="text-center desktop-hide-element  reveal reveal-left">
-                <a href="#" class="btn btn-view-more ">View More &rsaquo;</a>
+                <a href="{% url 'userapp:blog_list'%}" class="btn btn-view-more ">View More &rsaquo;</a>
             </div>
         </div>
     </section>

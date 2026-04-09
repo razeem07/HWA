@@ -122,14 +122,14 @@ Elister Med{% endblock %} {% block content %}
   <a href="{% url 'userapp:blog-detail' previous_blog.slug %}" 
      class="blog-nav-link blog-nav-link-prev">
     <i class="fas fa-chevron-left"></i>
-    <span>{{ previous_blog.title|truncatewords:3 }}</span>
+    <span>Previous Blog</span>
   </a>
   {% endif %}
 
   {% if next_blog %}
   <a href="{% url 'userapp:blog-detail' next_blog.slug %}" 
      class="blog-nav-link blog-nav-link-next">
-    <span>{{ next_blog.title|truncatewords:3 }}</span>
+    <span>Next Blog</span>
     <i class="fas fa-chevron-right"></i>
   </a>
   {% endif %}

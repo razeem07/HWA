@@ -207,7 +207,7 @@ def blog_list(request):
     ]
 
       # 🔥 PAGINATION
-    paginator = Paginator(blogs, 10)  # 20 per page
+    paginator = Paginator(blogs, 20)  # 20 per page
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 

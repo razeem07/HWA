@@ -618,6 +618,11 @@ class ContentCreateView(CreateView):
 
     success_url = reverse_lazy("administrator:content-list")
 
+    def form_invalid(self, form):
+        print("=== FORM ERRORS ===", form.errors)
+        print("=== FILES ===", self.request.FILES)
+        return super().form_invalid(form)
+
 @method_decorator(admin_required, name='dispatch')
 class ContentUpdateView(UpdateView):
 
@@ -628,6 +633,11 @@ class ContentUpdateView(UpdateView):
     template_name = "administrator/content/form.html"
 
     success_url = reverse_lazy("administrator:content-list")
+
+    def form_invalid(self, form):
+        print("=== FORM ERRORS ===", form.errors)
+        print("=== FILES ===", self.request.FILES)
+        return super().form_invalid(form)
 
 @method_decorator(admin_required, name='dispatch')
 class ContentDeleteView(DeleteView):
