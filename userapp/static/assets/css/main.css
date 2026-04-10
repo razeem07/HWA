@@ -720,12 +720,12 @@ body {
 }
 .breadcrumb { margin: 0; }
 .breadcrumb-item a {
-    color: var(--primary-color);
+    color: #fff;
     text-decoration: none;
     transition: all 0.3s ease;
 }
 .breadcrumb-item a:hover { text-decoration: underline; }
-.breadcrumb-item.active { color: #666; }
+.breadcrumb-item.active { color: #0c447c; }
 
 
 /* ============================================================
@@ -1811,10 +1811,10 @@ textarea.form-control {
    23. ABOUT PAGE
    ============================================================ */
 .about-content {
-    background: white;
+   /* background: white;*/
     border-radius: 20px;
     padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);*/
 }
 .about-content h6,
 .mission-content h6 {

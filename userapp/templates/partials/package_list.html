@@ -17,10 +17,10 @@
             <h5>{{ pkg.name }}</h5>
 
             <div class="price">
-                <strong>₹{{ pkg.offer_price|default:pkg.actual_price }}</strong>
+                <strong>AED {{ pkg.offer_price|default:pkg.actual_price }}</strong>
 
                 {% if pkg.offer_price %}
-                <span class="old">₹{{ pkg.actual_price }}</span>
+                <span class="old">AED {{ pkg.actual_price }}</span>
                 {% endif %}
             </div>
 
@@ -38,7 +38,7 @@
                 {% endfor %}
             </ul>
 
-            <a href="#" class="book-btn"
+            <a href="https://api.whatsapp.com/send/?phone={{ global_settings.whatsapp_number }}&text=&type=phone_number&app_absent=0" class="book-btn" target="_blank"
                style="background: {{ palette.btn }};">
                 Book Now
             </a>
