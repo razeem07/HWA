@@ -187,9 +187,9 @@ def load_slots(request):
 
             available_slots = filtered_slots
 
-            formatted_slots = []
+    formatted_slots = []
 
-            for slot in available_slots:
+    for slot in available_slots:
               time_obj = datetime.strptime(slot, "%H:%M")
 
               formatted_slots.append({
