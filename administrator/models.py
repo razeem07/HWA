@@ -33,11 +33,7 @@ class SEOModel(models.Model):
         """
         return self.slug
 
-    def generate_slug(self):
-        """
-        Override this method in child models
-        """
-        return self.slug
+   
 
     def save(self, *args, **kwargs):
 
