@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=elister_db
+      - POSTGRES_USER=elister_user
+      - POSTGRES_PASSWORD=elister_pass
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - uploads_data:/app/uploads
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=your-secret-key-here
+      - DATABASE_URL=postgres://elister_user:elister_pass@db:5432/elister_db
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+  uploads_data:

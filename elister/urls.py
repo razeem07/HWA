@@ -15,9 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,16 @@ urlpatterns = [
     path('accounts/', include('accounts.urls',namespace='accounts')),
     path('appointment/', include('booking.urls',namespace='appointment')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Append media file routing for local development
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Fallback routing to force Gunicorn to serve static assets when running inside Podman
+if not settings.DEBUG:
+    urlpatterns += [
+        re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+    ]
+else:
+    # If DEBUG=True but running under Gunicorn, this catches the standard static prefix
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
