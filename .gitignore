@@ -1,4 +1,14 @@
 # Environment variables
 .env
+
+# Django
 staticfiles
+db.sqlite3
+__pycache__/
+*.pyc
+
+# Docker
+dockerignore
+
+# Data fixtures (contain sensitive/local data)
 data.json

@@ -12,6 +12,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy entrypoint script OUTSIDE of /app to protect it from volume mounts
@@ -35,4 +36,4 @@ EXPOSE 8000
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # We use a shell form to allow environment variable expansion if needed
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--pythonpath", "/app", "elister.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--pythonpath", "/app", "--workers", "2", "--timeout", "120", "elister.wsgi:application"]

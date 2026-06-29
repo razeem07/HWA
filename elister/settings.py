@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'booking',
     'ckeditor',
     'ckeditor_uploader',
+     'storages',
    
 ]
 
@@ -144,11 +145,32 @@ STATIC_ROOT =   BASE_DIR / "staticfiles"
 
 MEDIA_URL = '/uploads/'
 
-MEDIA_ROOT = BASE_DIR / "uploads"
+MEDIA_ROOT = BASE_DIR / ""
 
 STATICFILES_DIRS = [
     # BASE_DIR / "static"
 ]
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "access_key": os.environ.get("AWS_ACCESS_KEY_ID"),
+            "secret_key": os.environ.get("AWS_SECRET_ACCESS_KEY"),
+            "bucket_name": os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+            "region_name": os.environ.get("AWS_S3_REGION_NAME"),
+            "querystring_auth": False, 
+            "file_overwrite": False,
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+MEDIA_URL = f'https://{os.environ.get("AWS_STORAGE_BUCKET_NAME")}.s3.amazonaws.com/uploads/'
+
+
 
 
 AUTH_USER_MODEL = 'accounts.User'
