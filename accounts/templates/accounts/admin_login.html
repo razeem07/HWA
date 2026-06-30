@@ -1,40 +1,192 @@
 {% extends 'accounts/shared/base.html' %}
-{% block title %}Admin Login{% endblock %}
+{% block title %}Admin Login — Elister Med{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="card border-danger shadow-sm">
-                <div class="card-body">
+<style>
+    * { font-family: 'Gotham Bold', 'Segoe UI', sans-serif; }
 
-                    <h4 class="text-center mb-4 text-danger">Admin Login</h4>
+    body {
+        background: linear-gradient(135deg, #0a488b 0%, #0056b3 50%, #2a90b8 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error }}</div>
-                    {% endif %}
+    .login-wrapper {
+        width: 100%;
+        max-width: 460px;
+        padding: 20px;
+    }
 
-                    <form method="post">
-                        {% csrf_token %}
+    .login-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+    }
 
-                        <div class="mb-3">
-                            <label class="form-label">Email or Username</label>
-                            <input type="text" name="username" class="form-control" required>
-                        </div>
+    .login-header {
+        background: linear-gradient(135deg, #0a488b, #0056b3);
+        padding: 36px 40px 28px;
+        text-align: center;
+    }
 
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
+    .login-header img {
+        height: 48px;
+        margin-bottom: 16px;
+    }
 
-                        <button type="submit" class="btn btn-danger w-100">
-                            Login
-                        </button>
-                    </form>
+    .login-header h5 {
+        color: rgba(255,255,255,0.85);
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+        font-weight: 400;
+    }
 
-                </div>
-            </div>
+    .login-body {
+        padding: 36px 40px 40px;
+    }
+
+    .login-body h4 {
+        color: #0a488b;
+        font-size: 1.4rem;
+        margin-bottom: 6px;
+        font-weight: 700;
+    }
+
+    .login-body p.subtitle {
+        color: #888;
+        font-size: 0.85rem;
+        margin-bottom: 28px;
+    }
+
+    .form-label {
+        color: #444;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        border: 1.5px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 11px 14px;
+        font-size: 0.95rem;
+        color: #333;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control:focus {
+        border-color: #0056b3;
+        box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.12);
+        outline: none;
+    }
+
+    .input-icon-wrapper {
+        position: relative;
+    }
+
+    .input-icon-wrapper .icon {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+        font-size: 0.95rem;
+    }
+
+    .btn-login {
+        background: linear-gradient(135deg, #0056b3, #2a90b8);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 13px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        width: 100%;
+        margin-top: 8px;
+        transition: opacity 0.2s, transform 0.1s;
+        cursor: pointer;
+    }
+
+    .btn-login:hover {
+        opacity: 0.92;
+        transform: translateY(-1px);
+    }
+
+    .btn-login:active {
+        transform: translateY(0);
+    }
+
+    .alert-danger {
+        background: #fff0f0;
+        border: 1px solid #f5c6c6;
+        color: #c0392b;
+        border-radius: 8px;
+        font-size: 0.88rem;
+        padding: 10px 14px;
+        margin-bottom: 20px;
+    }
+
+    .login-footer {
+        text-align: center;
+        padding: 16px;
+        border-top: 1px solid #f0f0f0;
+        color: #aaa;
+        font-size: 0.78rem;
+        letter-spacing: 0.3px;
+    }
+</style>
+
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <div class="login-header">
+            <h5>Elister Med &mdash; Admin Portal</h5>
         </div>
+
+        <div class="login-body">
+            <h4>Welcome Back</h4>
+            <p class="subtitle">Sign in to your admin account to continue</p>
+
+            {% if error %}
+                <div class="alert-danger">{{ error }}</div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Email or Username</label>
+                    <div class="input-icon-wrapper">
+                        <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+                        <span class="icon">&#9993;</span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Password</label>
+                    <div class="input-icon-wrapper">
+                        <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                        <span class="icon">&#128274;</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login">Sign In</button>
+            </form>
+        </div>
+
+        <div class="login-footer">
+            &copy; {% now "Y" %} Elister Med Healthcare. All rights reserved.
+        </div>
+
     </div>
 </div>
+
 {% endblock %}
