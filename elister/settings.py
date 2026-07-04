@@ -33,7 +33,11 @@ load_dotenv(dotenv_path=os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv('ALLOWED_HOSTS', '*').split(',')
+    if host.strip()
+]
 
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
