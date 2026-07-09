@@ -471,10 +471,20 @@ body {
     z-index: 2;
     position: relative;
 }
+.hero-banner-img {
+    object-fit: cover;
+    object-position: center center;
+}
 
 @media (max-width: 767px) {
-    #heroCarousel .carousel-item {
-        background-size: 100% 100% !important;
+    .hero-banner-img {
+        object-position: 70% center;
+    }
+    #heroCarousel h1 {
+        font-size: 1.8rem;
+    }
+    #heroCarousel .lead {
+        font-size: 0.9rem;
     }
 }
 

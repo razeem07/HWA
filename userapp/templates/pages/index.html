@@ -32,33 +32,20 @@
     <div class="carousel-item {% if forloop.first %}active{% endif %} position-relative" style="height:100vh;">
 
         {% if banner.image %}
-            <img src="{{ banner.image.url }}"
-                 alt="{{ banner.image_alt }}"
-                 class="w-100 h-100 position-absolute top-0 start-0"
-                 style="object-fit: cover;">
+        <img src="{{ banner.image.url }}" alt="{{ banner.image_alt }}"
+             class="hero-banner-img w-100 h-100 position-absolute top-0 start-0"
+             style="object-fit:cover;">
         {% endif %}
 
-        <!-- Overlay -->
-        <div class="position-absolute top-0 start-0 w-100 h-100"
-             style="background: rgba(0,0,0,0.2);"></div>
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background:rgba(0,0,0,0.35); z-index:1;"></div>
 
-        <div class="container h-100 position-relative">
+        <div class="container h-100 position-relative" style="z-index:2;">
             <div class="row h-100 align-items-center">
-
-                <div class="col-lg-6 text-white">
-
-                    {% if banner.title %}
-                        <h1 class="fw-bold">{{ banner.title }}</h1>
-                    {% endif %}
-
-                    {% if banner.description %}
-                        <p class="lead my-4">{{ banner.description }}</p>
-                    {% endif %}
-
+                <div class="col-12 col-lg-6 text-white">
+                    {% if banner.title %}<h1 class="fw-bold">{{ banner.title }}</h1>{% endif %}
+                    {% if banner.description %}<p class="lead my-4">{{ banner.description }}</p>{% endif %}
                     <a href="{% url 'booking:book_appointment'%}" class="btn btn-custom">Book Appointment</a>
-
                 </div>
-
             </div>
         </div>
 
