@@ -11,19 +11,21 @@ Elister Med{% endblock %} {% block content %}
         <div class="row g-4 justify-content-center">
 
             {% for ins in insurances %}
-            {% if ins.featured_image %}
             <div class="col-6 col-md-4 col-lg-3">
 
                 <div class="insurance-logo">
 
+                    {% if ins.featured_image %}
                     <img src="{{ ins.featured_image.url }}"
                          alt="{{ ins.featured_image_alt|default:ins.name }}"
                          class="img-fluid">
+                    {% else %}
+                    <span class="fw-bold fs-4 text-blue-dark">{{ ins.name }}</span>
+                    {% endif %}
 
                 </div>
 
             </div>
-            {% endif %}
             {% endfor %}
 
         </div>

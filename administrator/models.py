@@ -1010,6 +1010,7 @@ class SocialLink(models.Model):
     PLATFORM_CHOICES = (
         ('facebook', 'Facebook'),
         ('instagram', 'Instagram'),
+        ('tiktok', 'TikTok'),
         ('youtube', 'YouTube'),
         ('linkedin', 'LinkedIn'),
         ('twitter', 'Twitter'),

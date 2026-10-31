@@ -71,6 +71,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'administrator.middleware.AdminAccessMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -179,6 +180,12 @@ STORAGES = {
 }
 
 MEDIA_URL = f'https://{os.environ.get("AWS_STORAGE_BUCKET_NAME")}.s3.amazonaws.com/uploads/'
+
+# Set USE_S3=False in .env to serve media from the local uploads/ folder.
+if os.getenv('USE_S3', 'True') != 'True':
+    STORAGES["default"] = {"BACKEND": "django.core.files.storage.FileSystemStorage"}
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR
 
 
 

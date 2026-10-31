@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login,logout
 from django.urls import reverse
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from .models import User
 
 # Create your views here.
@@ -47,6 +49,13 @@ def user_register(request):
         if User.objects.filter(email=email).exists():
             return render(request, 'accounts/register.html', {
                 'error': 'Email already exists'
+            })
+
+        try:
+            validate_password(password)
+        except ValidationError as e:
+            return render(request, 'accounts/register.html', {
+                'error': ' '.join(e.messages)
             })
 
         user = User.objects.create_user(

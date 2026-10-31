@@ -32,7 +32,7 @@ Elister Med{% endblock %} {% block content %}
         {% if gallery.media_type == "image" %}
             {% for img in gallery.images.all %}
                 <div class="col-md-3 gallery-item" data-type="image">
-                    <img src="{{ img.image.url }}" class="img-fluid rounded">
+                    {% if img.image %}<img src="{{ img.image.url }}" class="img-fluid rounded">{% endif %}
                 </div>
             {% endfor %}
         {% endif %}

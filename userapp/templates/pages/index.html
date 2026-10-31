@@ -71,11 +71,11 @@
          style="width: 100%; object-fit: cover; object-position: left; z-index: 0; ">
          
           <div class="container">
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
                {% for feature in features %}
                 <div class="col-md-3">
                     <div class="service-card p-5  reveal reveal-left">
-                        <img src="{{ feature.image.url }}"  alt="{{ feature.title }}">
+                        {% if feature.image %}<img src="{{ feature.image.url }}"  alt="{{ feature.title }}">{% endif %}
                         <h5 class="text-blue-dark p-2 ">{{ feature.title }}</h5>
                     </div>
                 </div>
@@ -97,20 +97,20 @@
                 <div class="col-lg-5">
                     <h6 class="text-blue fw-bold reveal reveal-right">{{homepage.about_subtitle}}</h6>
                     <h2 class="display-5 fw-bold mb-4 text-blue-medium  reveal reveal-left">{{homepage.about_title}}</h2>
-                    <img src="{{homepage.about_image1.url}}"
-                        class=" reveal reveal-right img-fluid rounded-corner mb-4" alt="{{homepage.about_image1_alt}}">
+                    {% if homepage.about_image1 %}<img src="{{homepage.about_image1.url}}"
+                        class=" reveal reveal-right img-fluid rounded-corner mb-4" alt="{{homepage.about_image1_alt}}">{% endif %}
                 </div>
                 <div class="col-lg-7">
                     <div class="row g-3 img-grid">
                         <div class="col-lg-6 col-md-12 col-sm-12">
-                            <img class="reveal reveal-right" src="{{homepage.about_image2.url}}"
-                                alt="{{homepage.about_image2_alt}}">
+                            {% if homepage.about_image2 %}<img class="reveal reveal-right" src="{{homepage.about_image2.url}}"
+                                alt="{{homepage.about_image2_alt}}">{% endif %}
                             <p class="text-muted py-4  reveal reveal-left">
                                {{homepage.about_description }}
                             </p>
                         </div>
                         <div class="col-lg-6 col-md-12 col-sm-12  reveal reveal-right">
-                            <img src="{{homepage.about_image3.url}}" alt="{{homepage.about_image3_alt}}">
+                            {% if homepage.about_image3 %}<img src="{{homepage.about_image3.url}}" alt="{{homepage.about_image3_alt}}">{% endif %}
                         </div>
                     </div>
                 </div>
@@ -124,10 +124,10 @@
     <section class="blue-section position-relative overflow-hidden">
 
     <!-- Background Image (replaces CSS background) -->
-    <img src="{{homepage.why_choose_banner.url}}"
+    {% if homepage.why_choose_banner %}<img src="{{homepage.why_choose_banner.url}}"
          alt="{{homepage.why_choose_title}}"
          class="position-absolute top-0 start-0 w-100 h-100"
-         style="object-fit: cover; z-index: 0;">
+         style="object-fit: cover; z-index: 0;">{% endif %}
 
     <!-- Optional Overlay (keeps text readable like before) -->
     <div class="position-absolute top-0 start-0 w-100 h-100"
@@ -150,7 +150,7 @@
                 {% for wch in why_specialization %}
                 <div class="col-md-3 col-6">
                     <div class="feature-icon-box  reveal reveal-left">
-                        <img src="{{wch.image.url}}">
+                        {% if wch.image %}<img src="{{wch.image.url}}">{% endif %}
                         <p>{{wch.title}}</p>
                     </div>
                 </div>
@@ -286,7 +286,7 @@
                         {% for highlight in highlights %}
                         <div class="row align-items-center border-bottom border-light py-4">
                             <div class="col-1">
-                                <img src="{{highlight.image.url}}" style="height: 80px;">
+                                {% if highlight.image %}<img src="{{highlight.image.url}}" style="height: 80px;">{% endif %}
                             </div>
                             <div class="col-4  reveal reveal-left">
                                 <h5 class="mb-1 fw-bold text-start">{{highlight.title}}</h5>
@@ -331,7 +331,7 @@
           <div class="col-md-4">
             <article class="blog-card">
               <div class="blog-card-image">
-                <img src="{{ blog.featured_image.url }}" alt="Family Medicine" />
+                {% if blog.featured_image %}<img src="{{ blog.featured_image.url }}" alt="Family Medicine" />{% endif %}
                 <span class="blog-category">{{ blog.category }}</span>
               </div>
               <div class="blog-card-body">
@@ -371,8 +371,8 @@
 
  <!-- Section 8 -->
     <section style="position: relative; width: 100%; overflow: hidden;">
-        <img src="{{homepage.parallax_banner.url}}" class="img-pop reveal reveal-right"
-            style="width: 100%; height: auto; display: block;">
+        {% if homepage.parallax_banner %}<img src="{{homepage.parallax_banner.url}}" class="img-pop reveal reveal-right"
+            style="width: 100%; height: auto; display: block;">{% endif %}
 
         <div class="img-pop-content">
             <div class="container">
@@ -395,5 +395,27 @@
  
 
 
+
+{% if home_faqs %}
+<section class="section-padding">
+  <div class="container">
+    <h3 class="text-center mb-4 section-title">FAQs</h3>
+    <div class="accordion" id="homeFaqAccordion">
+      {% for faq in home_faqs %}
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#homeFaq{{ forloop.counter }}">
+            {{ faq.question }}
+          </button>
+        </h2>
+        <div id="homeFaq{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#homeFaqAccordion">
+          <div class="accordion-body">{{ faq.answer }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
 
 {% endblock %}

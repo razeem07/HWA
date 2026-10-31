@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home,about,contact,specialization_detail,specialization_list,blog_list,blog_detail,doctor_list,doctor_detail,package_list,insurance_list,articles_detail,articles_list,contact_submit,service_detail,legal_page_detail,package_list_ajax,gallery_page,subscribe_newsletter
+from .views import robots_txt,sitemap_xml,home,about,contact,specialization_detail,specialization_list,blog_list,blog_detail,doctor_list,doctor_detail,package_list,insurance_list,articles_detail,articles_list,contact_submit,service_detail,legal_page_detail,package_list_ajax,gallery_page,subscribe_newsletter
 
 
 
@@ -13,6 +13,8 @@ app_name= 'userapp'
 
 urlpatterns = [
     path('', home, name='home'),
+    path('robots.txt', robots_txt, name='robots'),
+    path('sitemap.xml', sitemap_xml, name='sitemap'),
     path('about/', about, name='about-us'),
     path('contact/', contact, name='contact-us'),
     path('contact/submit/', contact_submit, name='contact-submit'),

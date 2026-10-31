@@ -27,11 +27,27 @@
                     {% if main_menu %}
                      {% for item in main_menu.items.all %}
                       {% if item.is_active and not item.parent %}
+                        {% if item.children.all %}
+                        <li class="nav-item dropdown">
+                           <a href="{{ item.url }}" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              {{ item.title }}
+                           </a>
+                           <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{{ item.url }}">{{ item.title }}</a></li>
+                              {% for child in item.children.all %}
+                              {% if child.is_active %}
+                              <li><a class="dropdown-item" href="{{ child.url }}">{{ child.title }}</a></li>
+                              {% endif %}
+                              {% endfor %}
+                           </ul>
+                        </li>
+                        {% else %}
                         <li class="nav-item">
                            <a href="{{ item.url }}" class="nav-link">
                               {{ item.title }}
                          </a>
                       </li>
+                        {% endif %}
                         {% endif %}
                      {% endfor %}
                     {% endif %}

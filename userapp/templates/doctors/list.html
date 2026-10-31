@@ -82,8 +82,8 @@ Elister Med{% endblock %} {% block content %}
             </h5>
             <p class="text-muted small">{{ doctor.designation }}</p>
             <p class="small">
-              {{ doctor.specialized_in }} • {{ doctor.years_of_experience }}+
-              Years Experience
+              {{ doctor.specialized_in }}{% if doctor.years_of_experience %} • {{ doctor.years_of_experience }}+
+              Years Experience{% endif %}
             </p>
             <a
               href="{% url 'userapp:doctor_detail' doctor.slug %}"

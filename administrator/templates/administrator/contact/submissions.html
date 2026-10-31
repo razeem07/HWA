@@ -39,10 +39,10 @@
 
         <!-- MARK AS READ -->
         {% if not item.is_read %}
-        <a href="{% url 'administrator:contact-read' item.pk %}"
-           class="btn btn-sm btn-info">
-           Mark Read
-        </a>
+        <form method="post" action="{% url 'administrator:contact-read' item.pk %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-info">Mark Read</button>
+        </form>
         {% endif %}
 
         <!-- DELETE -->

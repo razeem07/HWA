@@ -4,15 +4,10 @@ Elister Med{% endblock %} {% block content %}
 <!-- Hero Section -->
 <section
   class="about-hero"
-  {%
-  if
-  service.hero_banner
-  %}
+  {% if service.hero_banner %}
   style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
            url('{{ service.hero_banner.url }}') center/cover;"
-  {%
-  endif
-  %}
+  {% endif %}
 >
   <div class="container">
     <nav aria-label="breadcrumb">
@@ -47,11 +42,11 @@ Elister Med{% endblock %} {% block content %}
       </div>
 
       <div class="col-lg-6">
-        <img
+        {% if service.main_image %}<img
           src="{{service.main_image.url }}"
           class="section-img"
           alt="{{service.hero_banner_alt}}"
-        />
+        />{% endif %}
       </div>
     </div>
   </div>

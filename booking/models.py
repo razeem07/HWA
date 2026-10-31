@@ -52,8 +52,14 @@ class Appointment(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        unique_together = ('doctor', 'date', 'time') 
+        constraints = [
+            models.UniqueConstraint(
+                fields=['doctor', 'date', 'time'],
+                condition=~models.Q(status='cancelled'),
+                name='unique_active_appointment_slot',
+            )
+        ]
 
    
     def __str__(self):
-       return f"{self.user.first_name} - {self.doctor} ({self.date} {self.time})"
+       return f"{self.first_name} - {self.doctor} ({self.date} {self.time})"

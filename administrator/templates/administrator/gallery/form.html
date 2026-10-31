@@ -44,9 +44,9 @@
             <img src="{{ img.image.url }}" width="100" style="border-radius:8px;">
 
 
-            <a href="{% url 'administrator:gallery_image_delete' img.id %}"
+            <button type="submit" formaction="{% url 'administrator:gallery_image_delete' img.id %}" formmethod="post" formnovalidate
    onclick="return confirm('Delete this image?')"
-   style="
+   style="border:0;
         position:absolute;
         top:-8px;
         right:-8px;
@@ -58,7 +58,7 @@
         text-decoration:none;
    ">
     ✕
-</a>
+</button>
 
         </div>
         {% endfor %}

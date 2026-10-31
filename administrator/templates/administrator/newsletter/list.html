@@ -18,9 +18,10 @@
     <td>{{ sub.email }}</td>
     <td>{{ sub.created_at|date:"d M Y" }}</td>
     <td>
-      <a href="{% url 'administrator:delete_subscriber' sub.id %}">
-        Delete
-      </a>
+      <form method="post" action="{% url 'administrator:delete_subscriber' sub.id %}" onsubmit="return confirm('Delete this subscriber?');">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+      </form>
     </td>
   </tr>
   {% endfor %}

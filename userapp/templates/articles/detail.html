@@ -3,7 +3,7 @@ Elister Med{% endblock %} {% block content %}
 
     <!-- Hero Section -->
     <section class="about-hero" 
-     {% if blog.hero_banner %}
+     {% if article.hero_banner %}
         style="background-image: linear-gradient(rgba(0, 143, 179, 0.644), rgba(0, 108, 138, 0.578)),url('{{ article.hero_banner.url}}'); background-size: cover; background-position: center;"
     {% endif %}>
         <div class="container">
@@ -76,7 +76,7 @@ Elister Med{% endblock %} {% block content %}
                 <i class="fab fa-facebook-f"></i>
               </a>
               <a
-                href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ blog.title }}" target="_blank"
+                href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ article.title }}" target="_blank"
                 class="share-btn share-btn-twitter"
                 title="Share on Twitter"
               >
@@ -90,14 +90,14 @@ Elister Med{% endblock %} {% block content %}
                 <i class="fab fa-linkedin-in"></i>
               </a>
               <a
-                href="https://wa.me/?text={{ blog.title }} {{ request.build_absolute_uri }}" target="_blank"
+                href="https://wa.me/?text={{ article.title }} {{ request.build_absolute_uri }}" target="_blank"
                 class="share-btn share-btn-whatsapp"
                 title="Share on WhatsApp"
               >
                 <i class="fab fa-whatsapp"></i>
               </a>
               <a
-                href="mailto:?subject={{ blog.title }}&body={{ request.build_absolute_uri }}"
+                href="mailto:?subject={{ article.title }}&body={{ request.build_absolute_uri }}"
                 class="share-btn share-btn-email"
                 title="Share via Email"
               >
@@ -111,7 +111,7 @@ Elister Med{% endblock %} {% block content %}
           <div class="blog-nav">
 
   {% if previous_blog %}
-  <a href="{% url 'userapp:blog-detail' previous_blog.slug %}" 
+  <a href="{% url 'userapp:articles_detail' previous_blog.slug %}" 
      class="blog-nav-link blog-nav-link-prev">
     <i class="fas fa-chevron-left"></i>
     <span>{{ previous_blog.title|truncatewords:3 }}</span>
@@ -119,7 +119,7 @@ Elister Med{% endblock %} {% block content %}
   {% endif %}
 
   {% if next_blog %}
-  <a href="{% url 'userapp:blog-detail' next_blog.slug %}" 
+  <a href="{% url 'userapp:articles_detail' next_blog.slug %}" 
      class="blog-nav-link blog-nav-link-next">
     <span>{{ next_blog.title|truncatewords:3 }}</span>
     <i class="fas fa-chevron-right"></i>

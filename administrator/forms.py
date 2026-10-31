@@ -328,6 +328,9 @@ class DoctorForm(forms.ModelForm):
            else:
              field.widget.attrs["class"] = "form-control"
 
+        for name in ("last_name", "email", "phone_number"):
+            self.fields[name].required = False
+
         # Default: no specialization
         self.fields["specialization"].queryset = Specialization.objects.none()
 
@@ -350,6 +353,18 @@ class DoctorForm(forms.ModelForm):
 
             except (ValueError, TypeError):
                 pass
+
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+        users = User.objects.filter(username=username)
+
+        if self.instance and self.instance.pk:
+            users = users.exclude(pk=self.instance.user_id)
+
+        if users.exists():
+            raise forms.ValidationError("This username is already taken.")
+
+        return username
 
     class Meta:
         model = Doctor
@@ -851,12 +866,12 @@ class DoctorScheduleForm(forms.ModelForm):
 class DoctorScheduleTimeForm(forms.ModelForm):
 
     start_time = forms.ChoiceField(
-        choices=TIME_CHOICES,
+        choices=[("", "Select")] + list(TIME_CHOICES),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     end_time = forms.ChoiceField(
-        choices=TIME_CHOICES,
+        choices=[("", "Select")] + list(TIME_CHOICES),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
@@ -893,6 +908,12 @@ class DoctorScheduleTimeForm(forms.ModelForm):
     def clean_end_time(self):
         value = self.cleaned_data['end_time']
         return datetime.strptime(value, "%H:%M").time()
+
+    def clean_slot_duration(self):
+        value = self.cleaned_data['slot_duration']
+        if value < 5:
+            raise forms.ValidationError("Slot duration must be at least 5 minutes")
+        return value
 
     # 🔥 STEP 2 → Validation
     def clean(self):

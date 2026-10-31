@@ -118,6 +118,13 @@
     </div>
 
 
+{% if form.errors %}
+<div class="alert alert-danger">
+    {% for e in form.non_field_errors %}<div>{{ e }}</div>{% endfor %}
+    {% for field in form %}{% for e in field.errors %}<div>{{ field.label }}: {{ e }}</div>{% endfor %}{% endfor %}
+</div>
+{% endif %}
+
 {% if success %}
 <div class="alert alert-success">
     Appointment booked successfully! Our team will contact you soon.

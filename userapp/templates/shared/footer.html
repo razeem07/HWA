@@ -30,7 +30,7 @@
                             <i class="rock-item fa-solid fa-envelope me-3"
                                style="color:#00bcd4;"></i>
 
-                            <a href="mailto:elister@gmail.com"
+                            <a href="mailto:{{ global_settings.email_primary }}"
                                class="text-decoration-none text-muted">
 
                                   {{ global_settings.email_primary }}
@@ -39,19 +39,31 @@
 
                         </p>
 
-                        <p class="mb-0 d-flex align-items-center">
+                        <p class="{% if global_settings.phone_secondary %}mb-3{% else %}mb-0{% endif %} d-flex align-items-center">
 
-                            <i class="rock-item fa-solid fa-phone me-3"
-                               style="color:#00bcd4;"></i>
+                            <i class="rock-item fa-solid fa-mobile-screen-button me-3"
+                               style="color:#00bcd4;" title="Mobile"></i>
 
-                            <a href="tel:+918338335244"
+                            <a href="tel:{{ global_settings.phone_primary|cut:' ' }}"
                                class="text-decoration-none text-muted">
-
                                {{ global_settings.phone_primary }}
-
                             </a>
 
                         </p>
+
+                        {% if global_settings.phone_secondary %}
+                        <p class="mb-0 d-flex align-items-center">
+
+                            <i class="rock-item fa-solid fa-phone me-3"
+                               style="color:#00bcd4;" title="Landline"></i>
+
+                            <a href="tel:{{ global_settings.phone_secondary|cut:' ' }}"
+                               class="text-decoration-none text-muted">
+                               {{ global_settings.phone_secondary }}
+                            </a>
+
+                        </p>
+                        {% endif %}
 
                     </div>
                 </div>

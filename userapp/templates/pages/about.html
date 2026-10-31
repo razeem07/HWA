@@ -69,7 +69,7 @@ Elister Med{% endblock %} {% block content %}
         <h6>Why Choose Elister Med</h6>
         <h2 class="section-heading">Committed to Your Health and Wellness</h2>
         <p class="mb-4">
-          At Elister Hospital, we believe that quality healthcare goes beyond
+          At Elister Med, we believe that quality healthcare goes beyond
           treatment. It is about trust, comfort, and consistent support. Our
           hospital is designed to provide a safe and welcoming environment for
           all our patients.
@@ -105,19 +105,6 @@ Elister Med{% endblock %} {% block content %}
 
         <div class="feature-box">
           <div class="feature-icon">
-            <i class="fas fa-clock"></i>
-          </div>
-          <div class="feature-text">
-            <h5>24/7 Emergency Care</h5>
-            <p>
-              Round-the-clock emergency services with experienced doctors and
-              nurses ready to handle any medical emergency.
-            </p>
-          </div>
-        </div>
-
-        <div class="feature-box">
-          <div class="feature-icon">
             <i class="fas fa-hand-holding-medical"></i>
           </div>
           <div class="feature-text">
@@ -130,11 +117,11 @@ Elister Med{% endblock %} {% block content %}
         </div>
       </div>
       <div class="col-lg-6">
-        <img
+        {% if about.image_two %}<img
           src="{{ about.image_two.url }}"
           alt="Medical Care"
           class="about-image"
-        />
+        />{% endif %}
       </div>
     </div>
   </div>
@@ -146,11 +133,11 @@ Elister Med{% endblock %} {% block content %}
     <div class="row align-items-center mission-content">
     
       <div class="col-lg-6">
-        <img
+        {% if about.chairman_profile %}<img
           src="{{ about.chairman_profile.url }}" style="width: 300px;"
           alt=""
           class="about-image"
-        />
+        />{% endif %}
       </div>
 
         <div class="col-lg-6 mb-4 mb-lg-0">

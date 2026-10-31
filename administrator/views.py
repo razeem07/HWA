@@ -10,6 +10,8 @@ from userapp.models import ContactSubmission
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.db import IntegrityError
 from booking.models import Appointment
 from datetime import date
 from utils.sendmessage import send_whatsapp_message
@@ -406,7 +408,7 @@ class DoctorCreateView(CreateView):
             first_name=form.cleaned_data["first_name"],
             last_name=form.cleaned_data["last_name"],
             phone_number=form.cleaned_data["phone_number"],
-            password="doctor123"
+            password=None
         )
 
         user.is_doctor = True
@@ -539,8 +541,16 @@ class DoctorUpdateView(UpdateView):
 class DoctorDeleteView(DeleteView):
 
     model = Doctor
-    template_name = "administrator/doctor/confirm_delete.html"
+    template_name = "administrator/shared/delete.html"
     success_url = reverse_lazy("administrator:doctor-list")
+
+    def form_valid(self, form):
+        user = self.object.user
+        response = super().form_valid(form)
+        # Free the username so the doctor can be added again later.
+        if not (user.is_superuser or user.is_admin):
+            user.delete()
+        return response
 
 
 
@@ -769,6 +779,7 @@ class TestimonialUpdateView(UpdateView):
 
 class TestimonialDeleteView(DeleteView):
     model = Testimonial
+    template_name = "administrator/shared/delete.html"
     success_url = reverse_lazy("administrator:testimonial-list")
 
     def delete(self, request, *args, **kwargs):
@@ -811,6 +822,7 @@ class TeamUpdateView(UpdateView):
 @method_decorator(admin_required, name='dispatch')
 class TeamDeleteView(DeleteView):
     model = TeamMember
+    template_name = "administrator/shared/delete.html"
     success_url = reverse_lazy("administrator:team-list")
 
     def delete(self, request, *args, **kwargs):
@@ -854,6 +866,7 @@ class ContactSubmissionListView(ListView):
     context_object_name = "submissions"
     ordering = ["-created_at"]
 
+@require_POST
 def mark_submission_read(request, pk):
 
     submission = get_object_or_404(ContactSubmission, pk=pk)
@@ -864,6 +877,7 @@ def mark_submission_read(request, pk):
 
 class ContactSubmissionDeleteView(DeleteView):
     model = ContactSubmission
+    template_name = "administrator/shared/delete.html"
     success_url = reverse_lazy("administrator:contact-submissions")
 
     def delete(self, request, *args, **kwargs):
@@ -1000,6 +1014,7 @@ class InsuranceListView(ListView):
 @method_decorator(admin_required, name='dispatch')
 class InsuranceDeleteView(DeleteView):
     model = Insurance
+    template_name = "administrator/shared/delete.html"
     success_url = reverse_lazy("administrator:insurance-list")
 
     def delete(self, request, *args, **kwargs):
@@ -1033,6 +1048,7 @@ class LegalPageUpdateView(UpdateView):
 @method_decorator(admin_required, name='dispatch')
 class LegalPageDeleteView(DeleteView):
     model = LegalPage
+    template_name = "administrator/shared/delete.html"
     success_url = reverse_lazy("administrator:legal-list")
 
     def delete(self, request, *args, **kwargs):
@@ -1107,6 +1123,7 @@ class SocialLinkUpdateView(UpdateView):
     
 class SocialLinkDeleteView(DeleteView):
     model = SocialLink
+    template_name = "administrator/shared/delete.html"
     success_url = reverse_lazy("administrator:social-list")
 
     def delete(self, request, *args, **kwargs):
@@ -1205,7 +1222,7 @@ class MenuGroupUpdateView(UpdateView):
 # -----------------------
 class MenuGroupDeleteView(DeleteView):
     model = MenuGroup
-    template_name = "administrator/menu/manage.html"
+    template_name = "administrator/shared/delete.html"
     success_url = reverse_lazy("administrator:menu-list")
 
 
@@ -1372,7 +1389,9 @@ def load_doctors_by_specialization(request):
     spec_id = request.GET.get("specialization")
 
     doctors = Doctor.objects.filter(
-        specialization_id=spec_id
+        specialization_id=spec_id,
+        is_active=True,
+        is_deleted=False
     ).select_related("user")
 
     data = [
@@ -1493,6 +1512,13 @@ class DoctorLeaveDeleteView(DeleteView):
 
 
 
+def valid_date(value):
+    try:
+        return bool(value) and date.fromisoformat(value) is not None
+    except ValueError:
+        return False
+
+
 def booking_list(request):
 
     today = date.today()
@@ -1520,10 +1546,10 @@ def booking_list(request):
         pass  # no filter
 
        # ================= DATE FILTER =================
-    if from_date:
+    if valid_date(from_date):
         bookings = bookings.filter(date__gte=from_date)
 
-    if to_date:
+    if valid_date(to_date):
         bookings = bookings.filter(date__lte=to_date)
 
     # ================= STATUS FILTER =================
@@ -1560,11 +1586,16 @@ def update_booking_status(request, pk):
 
     if request.method == "POST":
 
-        booking = Appointment.objects.get(id=pk)
+        booking = get_object_or_404(Appointment, id=pk)
         new_status = request.POST.get("status")
 
-        booking.status = new_status
-        booking.save()
+        if new_status in dict(Appointment.STATUS_CHOICES):
+            booking.status = new_status
+            try:
+                with transaction.atomic():
+                    booking.save()
+            except IntegrityError:
+                messages.error(request, "That slot has since been booked by another patient.")
 
     return redirect("administrator:booking_list")
 
@@ -1625,9 +1656,10 @@ def update_booking_status(request, pk):
 #     return redirect("administrator:booking_list")
 
 
+@require_POST
 def delete_booking(request, pk):
 
-    booking = Appointment.objects.get(id=pk)
+    booking = get_object_or_404(Appointment, id=pk)
     booking.delete()
 
     return redirect("administrator:booking_list")
@@ -1683,6 +1715,7 @@ class GalleryDeleteView(DeleteView):
 
 
 
+@require_POST
 def gallery_image_delete(request, pk):
 
     image = get_object_or_404(GalleryImage, pk=pk)
@@ -1701,6 +1734,7 @@ def newsletter_list(request):
     })
 
 
+@require_POST
 def delete_subscriber(request, id):
     subscriber = get_object_or_404(NewsletterSubscriber, id=id)
     subscriber.delete()

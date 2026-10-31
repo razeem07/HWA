@@ -4,14 +4,9 @@ Elister Med{% endblock %} {% block content %}
 <!-- Hero Section -->
 <section
   class="about-hero"
-  {%
-  if
-  specialization.hero_banner
-  %}
+  {% if specialization.hero_banner %}
   style="background-image: linear-gradient(rgba(0, 143, 179, 0.644), rgba(0, 108, 138, 0.578)),url('{{ specialization.hero_banner.url}}'); background-size: cover; background-position: center;"
-  {%
-  endif
-  %}
+  {% endif %}
 >
   <div class="container">
     <nav aria-label="breadcrumb">
@@ -46,11 +41,11 @@ Elister Med{% endblock %} {% block content %}
       </div>
 
       <div class="col-lg-6">
-        <img
+        {% if specialization.main_image %}<img
           src="{{specialization.main_image.url }}"
           class="section-img"
           alt="{{specialization.hero_banner_alt}}"
-        />
+        />{% endif %}
       </div>
     </div>
   </div>
@@ -100,11 +95,11 @@ Elister Med{% endblock %} {% block content %}
   <div class="container">
     <div class="row align-items-center g-4">
       <div class="col-lg-6">
-        <img
+        {% if specialization.secondary_image %}<img
           src="{{specialization.secondary_image.url}}"
           class="section-img"
           alt="{{specialization.secondary_image_alt}}"
-        />
+        />{% endif %}
       </div>
 
       <div class="col-lg-6">
@@ -159,8 +154,8 @@ Elister Med{% endblock %} {% block content %}
             </h5>
             <p class="text-muted small">{{ doctor.designation }}</p>
             <p class="small">
-              {{ doctor.specialized_in }} • {{ doctor.years_of_experience }}+
-              Years Experience
+              {{ doctor.specialized_in }}{% if doctor.years_of_experience %} • {{ doctor.years_of_experience }}+
+              Years Experience{% endif %}
             </p>
             <a
               href="{% url 'userapp:doctor_detail' doctor.slug %}"

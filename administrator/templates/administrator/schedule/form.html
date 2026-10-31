@@ -12,6 +12,19 @@
 <form method="post">
     {% csrf_token %}
 
+    {% if form.errors or formset.errors or formset.non_form_errors %}
+    <div class="alert alert-danger">
+        Please correct the errors below.
+        {{ form.non_field_errors }}
+        {{ form.doctor.errors }}
+        {% for row in formset %}
+            {{ row.non_field_errors }}
+            {% for field in row %}{% for e in field.errors %}<div>{{ field.label }}: {{ e }}</div>{% endfor %}{% endfor %}
+        {% endfor %}
+        {{ formset.non_form_errors }}
+    </div>
+    {% endif %}
+
     <!-- HEADER -->
     <div class="row mb-3">
         
@@ -100,6 +113,8 @@ document.addEventListener("DOMContentLoaded", function(){
     const specialization = document.getElementById("id_specialization");
     const doctor = document.getElementById("id_doctor");
 
+    if(!specialization) return;
+
     // ================= LOAD DOCTORS FUNCTION =================
     function loadDoctors(specId, selectedDoctor=null){
 
@@ -177,12 +192,16 @@ document.addEventListener("DOMContentLoaded", function(){
             }
 
             if(el.type === "checkbox"){
-                el.checked = false;
+                el.checked = el.name.endsWith("-is_active");
+            } else if(el.name.endsWith("-slot_duration")){
+                el.value = "30";
             } else {
                 el.value = "";
             }
 
         });
+
+        newRow.style.display = "";
 
         tbody.appendChild(newRow);
 
@@ -197,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
             let row = e.target.closest("tr");
 
-            let deleteInput = row.querySelector("input[type='checkbox']");
+            let deleteInput = row.querySelector("input[name$='-DELETE']");
 
             if(deleteInput){
                 deleteInput.checked = true;

@@ -6,7 +6,7 @@ Elister Med{% endblock %} {% block content %}
   <div class="container">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb breadcrumb-custom">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'userapp:home' %}">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">
           {{page.title}}
         </li>

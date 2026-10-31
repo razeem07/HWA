@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404,redirect,redirect
 from administrator.models import Specialization,Redirect,Doctor,Content,AboutPage,TeamMember,Testimonial,ContactPage,Tag,Service,HomePage,LegalPage,Packages,Insurance,Gallery
 from .models import ContactSubmission
 from django.http import JsonResponse
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.utils.http import url_has_allowed_host_and_scheme
 from utils.schema import specialization_schema,doctor_schema
 from django.http import Http404
 from django.urls import reverse
@@ -47,6 +50,8 @@ def home(request):
         request,
         "pages/index.html",
         {  "homepage": homepage,
+         "seo": homepage,
+         "home_faqs": homepage.homefaqs.all().order_by('order') if homepage else [],
          "banners": banners, 
          "features": features,
          "why_specialization": why_specialization,
@@ -79,7 +84,7 @@ def about(request):
          "team_members": team_members,
         "testimonials": testimonials,
           "page": page,
-          "seo":page,
+          "seo": about if about and about.meta_title else page,
           "page_title": page.banner_title if about else "About Us",
           "page_description": page.banner_description,
           "banner_image": page.banner_image if about else None,
@@ -103,6 +108,7 @@ def contact(request):
         {
             "contact": contact,
             "page": page,
+            "seo": page,
             "page_title": page.banner_title if about else "About Us",
           "page_description": page.banner_description,
           "banner_image": page.banner_image if about else None,
@@ -127,6 +133,14 @@ def contact_submit(request):
             return JsonResponse({
                 "status": "error",
                 "message": "Please fill all required fields"
+            })
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            return JsonResponse({
+                "status": "error",
+                "message": "Please enter a valid email"
             })
 
         # 🔥 SAVE TO DB
@@ -166,11 +180,11 @@ def blog_list(request):
 
     
     # 📂 CATEGORY FILTER
-    if category:
+    if category and category.isdigit():
         blogs = blogs.filter(category_id=category)
 
 # 🏷 TAG FILTER
-    if tag:
+    if tag and tag.isdigit():
           blogs = blogs.filter(tags__id=tag)
     
       # 🔥 Dynamic categories with count
@@ -216,6 +230,7 @@ def blog_list(request):
         request,
         "blog/list.html",
         {"blogs": blogs,
+           "seo": page,
            "categories": categories,
              "tags": tags,
               "recent_posts": recent_posts,
@@ -232,8 +247,28 @@ def blog_list(request):
           }
     )
 
+def content_redirect(slug, content_type, url_name):
+    """Permanent redirect when a blog/article slug has been changed."""
+    if Content.objects.filter(slug=slug, content_type=content_type, is_active=True).exists():
+        return None
+
+    redirect_obj = Redirect.objects.filter(
+        model_name="content",
+        old_slug=slug
+    ).order_by("-created_at").first()
+
+    if redirect_obj:
+        return redirect(url_name, slug=redirect_obj.new_slug, permanent=True)
+
+    return None
+
+
 def blog_detail(request,slug):
-  
+
+    moved = content_redirect(slug, "blog", "userapp:blog-detail")
+    if moved:
+        return moved
+
     blog = get_object_or_404(
         Content,
         slug=slug,
@@ -322,6 +357,7 @@ def blog_detail(request,slug):
         request,
         "blog/detail.html",
         {"blog": blog,
+        "seo": blog,
         "related_blogs": related_blogs,
          "categories": categories,
          "breadcrumbs": breadcrumbs,
@@ -377,7 +413,7 @@ def specialization_detail(request, slug):
         specialization = Specialization.objects.prefetch_related(
            
             "faqs"
-        ).get(slug=slug)
+        ).get(slug=slug, is_active=True, is_deleted=False)
 
     except Specialization.DoesNotExist:
 
@@ -393,7 +429,7 @@ def specialization_detail(request, slug):
                 permanent=True
             )
 
-        raise
+        raise Http404
 
     services = specialization.featured_services.filter(
         is_active=True,
@@ -445,7 +481,7 @@ def service_detail(request, slug):
             "specialization"
         ).prefetch_related(
             "faqs"
-        ).get(slug=slug)
+        ).get(slug=slug, is_active=True, is_deleted=False)
 
         testimonials = Testimonial.objects.filter(
         is_active=True
@@ -465,7 +501,7 @@ def service_detail(request, slug):
                 permanent=True
             )
 
-        raise
+        raise Http404
 
     page = get_listing_page("services")
   
@@ -490,7 +526,7 @@ def doctor_detail(request, slug):
                  "educations",
                  "certifications",
                  "expertise",
-                 "memberships").get(slug=slug)
+                 "memberships").get(slug=slug, is_active=True, is_deleted=False)
 
     except Doctor.DoesNotExist:
 
@@ -506,7 +542,7 @@ def doctor_detail(request, slug):
                 permanent=True
             )
 
-        raise
+        raise Http404
     page = get_listing_page("doctors")
     
     breadcrumbs = [
@@ -556,7 +592,7 @@ def doctor_list(request):
         Q(specialization__name__icontains=query)
     )
     # 📂 SPECIALIZATION FILTER
-    if specialization:
+    if specialization and specialization.isdigit():
         doctors = doctors.filter(specialization_id=specialization)
 
     
@@ -568,6 +604,7 @@ def doctor_list(request):
         request,
         "doctors/list.html",
         {"doctors": doctors,
+          "seo": page,
           "page_title": page.banner_title if about else "Specializations",
           "page_description": page.banner_description,
            "banner_image": page.banner_image if about else None,
@@ -576,7 +613,7 @@ def doctor_list(request):
             "page_cta" :page.page_cta,
           "breadcrumbs": breadcrumbs,
             "specialization": specialization,
-        "specializations": Specialization.objects.all(),
+        "specializations": Specialization.objects.filter(is_active=True, is_deleted=False),
           "query":query,
           
           }
@@ -610,17 +647,18 @@ def package_list(request):
 
     category_id = request.GET.get('category')
 
-    categories = Specialization.objects.all()
+    categories = Specialization.objects.filter(is_active=True, is_deleted=False)
 
     packages = Packages.objects.filter(is_active=True)
 
-    if category_id:
+    if category_id and category_id.isdigit():
         packages = packages.filter(Specialization_id=category_id)
     
     packages_with_palette = get_packages_with_palette(packages)
 
     return render(request, "packages/list.html", {
         "packages": packages,
+        "seo": page,
         "categories": categories,
         "selected_category": category_id,
         "packages_with_palette": packages_with_palette,
@@ -640,7 +678,7 @@ def package_list_ajax(request):
 
     packages = Packages.objects.filter(is_active=True)
 
-    if specialization_id:
+    if specialization_id and specialization_id.isdigit():
         packages = packages.filter(Specialization_id=specialization_id)
 
     packages_with_palette = get_packages_with_palette(packages)
@@ -673,6 +711,7 @@ def insurance_list(request):
 
     return render(request, "insurance/list.html", {
         "insurances": insurances,
+        "seo": page,
         "page_title": page.banner_title if about else "Specializations",
           "page_description": page.banner_description,
            "banner_image": page.banner_image if about else None,
@@ -687,6 +726,10 @@ def insurance_list(request):
 
 
 def articles_detail(request,slug):
+
+    moved = content_redirect(slug, "article", "userapp:articles_detail")
+    if moved:
+        return moved
 
     article = get_object_or_404(
         Content,
@@ -747,7 +790,7 @@ def articles_detail(request,slug):
 
 # Next blog (newer)
     next_blog = Content.objects.filter(
-    content_type='blog',
+    content_type='article',
     is_active=True,
     published_at__gt=article.published_at
      ).order_by('published_at').first()
@@ -756,6 +799,7 @@ def articles_detail(request,slug):
         request,
         "articles/detail.html",
         {"article": article,
+        "seo": article,
         "related_blogs": related_blogs,
          "categories": categories,
          "breadcrumbs" :breadcrumbs,
@@ -829,6 +873,7 @@ def articles_list(request):
         request,
         "articles/list.html",
         {"articles": articles,
+           "seo": get_listing_page("articles"),
            "categories": categories,
              "tags": tags,
               "recent_posts": recent_posts,
@@ -865,12 +910,18 @@ def gallery_page(request):
 
 
 def subscribe_newsletter(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
+    back = request.META.get("HTTP_REFERER")
+    if not url_has_allowed_host_and_scheme(back, allowed_hosts={request.get_host()}):
+        back = "/"
 
-        if not email:
-            messages.error(request, "Please enter an email")
-            return redirect(request.META.get("HTTP_REFERER"))
+    if request.method == "POST":
+        email = (request.POST.get("email") or "").strip()
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, "Please enter a valid email")
+            return redirect(back)
 
         if NewsletterSubscriber.objects.filter(email=email).exists():
             messages.warning(request, "Already subscribed")
@@ -878,4 +929,31 @@ def subscribe_newsletter(request):
             NewsletterSubscriber.objects.create(email=email)
             messages.success(request, "Subscribed successfully!")
 
-    return redirect(request.META.get("HTTP_REFERER"))
+    return redirect(back)
+
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Disallow: /administrator/",
+        "Disallow: /admin/",
+        "Disallow: /accounts/",
+        "Disallow: /ckeditor/",
+        f"Sitemap: {request.build_absolute_uri('/sitemap.xml')}",
+    ]
+    return HttpResponse("\n".join(lines) + "\n", content_type="text/plain")
+
+
+def sitemap_xml(request):
+    paths = ["/", "/about/", "/contact/", "/doctors/", "/specializations/", "/packages/", "/insurance/", "/blogs/", "/articles/", "/gallery/"]
+    paths += [f"/specializations/{s}/" for s in Specialization.objects.filter(is_active=True, is_deleted=False).values_list("slug", flat=True)]
+    paths += [f"/service/{s}/" for s in Service.objects.filter(is_active=True, is_deleted=False).values_list("slug", flat=True)]
+    paths += [f"/doctors/{s}/" for s in Doctor.objects.filter(is_active=True, is_deleted=False).values_list("slug", flat=True)]
+    paths += [f"/blogs/{s}/" for s in Content.objects.filter(content_type="blog", is_active=True).values_list("slug", flat=True)]
+    paths += [f"/articles/{s}/" for s in Content.objects.filter(content_type="article", is_active=True).values_list("slug", flat=True)]
+    paths += [f"/legal/{s}/" for s in LegalPage.objects.filter(is_active=True).values_list("slug", flat=True)]
+    urls = "".join(f"<url><loc>{request.build_absolute_uri(p)}</loc></url>" for p in paths)
+    return HttpResponse(
+        f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>',
+        content_type="application/xml",
+    )

@@ -8,6 +8,10 @@ from administrator.models import Doctor,DoctorScheduleTime
 from administrator.models import DoctorLeave
 from utils.sendmessage import send_whatsapp_message
 from django.conf import settings
+from django.db import IntegrityError, transaction
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 User = get_user_model()
@@ -39,21 +43,32 @@ def book_appointment(request):
                 form.add_error("date", "Past date not allowed")
 
             else:
-                try:
-                    # 🔥 CREATE APPOINTMENT
-                    appointment=Appointment.objects.create(
-                        first_name=form.cleaned_data["first_name"],
-                        last_name=form.cleaned_data["last_name"],
-                        phone=form.cleaned_data["phone"],
-                        email=form.cleaned_data["email"],
-                        specialization=form.cleaned_data["specialization"],
-                        doctor=form.cleaned_data["doctor"],
-                        date=form.cleaned_data["date"],
-                        time=form.cleaned_data["time"],
-                    )
+                doctor = form.cleaned_data["doctor"]
 
-                      # ================= 🔥 SEND WHATSAPP HERE =================
-                    message = f"""
+                if form.cleaned_data["time"] not in get_available_slots(doctor.pk, selected_date):
+                    form.add_error("time", "This time is not available. Please choose another slot.")
+
+                else:
+                    try:
+                        # 🔥 CREATE APPOINTMENT
+                        with transaction.atomic():
+                            appointment=Appointment.objects.create(
+                                first_name=form.cleaned_data["first_name"],
+                                last_name=form.cleaned_data["last_name"],
+                                phone=form.cleaned_data["phone"],
+                                email=form.cleaned_data["email"],
+                                specialization=form.cleaned_data["specialization"],
+                                doctor=doctor,
+                                date=selected_date,
+                                time=form.cleaned_data["time"],
+                            )
+
+                    except IntegrityError:
+                        form.add_error(None, "This slot is already booked")
+
+                    else:
+                        # ================= 🔥 SEND WHATSAPP HERE =================
+                        message = f"""
                               New Appointment Booking
 
                               Patient: {appointment.first_name}
@@ -61,16 +76,17 @@ def book_appointment(request):
                               Date: {appointment.date}
                               Time: {appointment.time}
                              """
-                    
-                    send_whatsapp_message(settings.ADMIN_WHATSAPP_NUMBER,message)
 
-                    # =========================================================
+                        # The booking is saved; a failed alert must not fail it.
+                        try:
+                            send_whatsapp_message(settings.ADMIN_WHATSAPP_NUMBER,message)
+                        except Exception:
+                            logger.exception("WhatsApp alert failed for appointment %s", appointment.pk)
 
-                    form = AppointmentForm()
-                    success = True
+                        # =========================================================
 
-                except Exception:
-                    form.add_error(None, "This slot is already booked")
+                        form = AppointmentForm()
+                        success = True
 
     return render(request, "booking/book.html", {
         "form": form,
@@ -81,8 +97,13 @@ def load_doctors(request):
 
     specialization_id = request.GET.get("specialization")
 
+    if not str(specialization_id).isdigit():
+        return JsonResponse([], safe=False)
+
     doctors = Doctor.objects.filter(
-        specialization_id=specialization_id
+        specialization_id=specialization_id,
+        is_active=True,
+        is_deleted=False
     ).values("id", "user__first_name")
 
     data = list(doctors)
@@ -91,16 +112,8 @@ def load_doctors(request):
 
 
 
-def load_slots(request):
-
-    doctor_id = request.GET.get("doctor")
-    selected_date = request.GET.get("date")
-
-    if not doctor_id or not selected_date:
-        return JsonResponse([], safe=False)
-
-    # 🔥 Convert to date object
-    selected_date_obj = datetime.strptime(selected_date, "%Y-%m-%d").date()
+def get_available_slots(doctor_id, selected_date_obj):
+    """Bookable times ("HH:MM") for a doctor on a date."""
 
     # ================= 🔥 STEP 1: CHECK LEAVE =================
     leaves = DoctorLeave.objects.filter(
@@ -110,7 +123,7 @@ def load_slots(request):
 
     # ❌ FULL DAY LEAVE
     if leaves.filter(is_full_day=True).exists():
-        return JsonResponse([], safe=False)
+        return []
 
     # 🔥 Get day of week
     day_of_week = selected_date_obj.weekday()
@@ -126,6 +139,9 @@ def load_slots(request):
     all_slots = []
 
     for sch in schedules:
+
+        if sch.slot_duration <= 0:
+            continue
 
         start = datetime.combine(selected_date_obj, sch.start_time)
         end = datetime.combine(selected_date_obj, sch.end_time)
@@ -145,7 +161,7 @@ def load_slots(request):
     booked = Appointment.objects.filter(
         doctor_id=doctor_id,
         date=selected_date_obj
-    ).values_list("time", flat=True)
+    ).exclude(status="cancelled").values_list("time", flat=True)
 
     booked_slots = [t.strftime("%H:%M") for t in booked]
 
@@ -186,6 +202,25 @@ def load_slots(request):
                     filtered_slots.append(slot)
 
             available_slots = filtered_slots
+
+    return available_slots
+
+
+def load_slots(request):
+
+    doctor_id = request.GET.get("doctor")
+    selected_date = request.GET.get("date")
+
+    if not str(doctor_id).isdigit() or not selected_date:
+        return JsonResponse([], safe=False)
+
+    # 🔥 Convert to date object
+    try:
+        selected_date_obj = datetime.strptime(selected_date, "%Y-%m-%d").date()
+    except ValueError:
+        return JsonResponse([], safe=False)
+
+    available_slots = get_available_slots(doctor_id, selected_date_obj)
 
     formatted_slots = []
 

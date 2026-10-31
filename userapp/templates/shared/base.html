@@ -15,6 +15,10 @@
       content="{% if seo.meta_description %}{{ seo.meta_description }}{% else %}Best healthcare services{% endif %}"
     />
 
+    {% if seo.primary_keywords or seo.secondary_keywords %}
+    <meta name="keywords" content="{{ seo.primary_keywords }}{% if seo.primary_keywords and seo.secondary_keywords %}, {% endif %}{{ seo.secondary_keywords }}" />
+    {% endif %}
+
     {% if seo.canonical_url %}
     <link rel="canonical" href="{{ seo.canonical_url }}" />
     {% else %}

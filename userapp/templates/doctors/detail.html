@@ -34,8 +34,10 @@ Elister Med{% endblock %} {% block content %}
         <div class="container">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-5">
+                    {% if doctor.profile_image %}
                     <img src="{{ doctor.profile_image.url }}"
                         alt="{{ doctor.profile_image_alt }}" class="doctor-hero-image">
+                    {% endif %}
                 </div> 
                 <div class="col-lg-7">
                     <div class="doctor-hero-content">
@@ -44,10 +46,12 @@ Elister Med{% endblock %} {% block content %}
                         <div class="doctor-specialty">{{ doctor.designation}}</div>
 
                         <div class="info-badges">
+                            {% if doctor.years_of_experience %}
                             <div class="info-badge">
                                 <i class="bi bi-calendar3"></i>
                                 <span>{{ doctor.years_of_experience}} Years Experience</span>
                             </div>
+                            {% endif %}
                             <div class="info-badge">
                                 <i class="bi bi-globe"></i>
                                 <span>{{ doctor.languages}}</span>
@@ -108,22 +112,28 @@ Elister Med{% endblock %} {% block content %}
 
                 <div class="col-lg-4">
                     <div class="stats-grid">
+                        {% if doctor.procedures %}
                         <div class="stat-card">
                             <div class="stat-number"> {{doctor.procedures}}</div>
                             <div class="stat-label">Successful Procedures</div>
                         </div>
+                        {% endif %}
+                        {% if doctor.success_rate %}
                         <div class="stat-card">
                             <div class="stat-number"> {{doctor.success_rate }}</div>
                             <div class="stat-label">Success Rate</div>
                         </div>
+                        {% endif %}
                         <!-- <div class="stat-card">
                             <div class="stat-number">22</div>
                             <div class="stat-label">Years Experience</div>
                         </div> -->
+                        {% if doctor.patients_treated %}
                         <div class="stat-card">
                             <div class="stat-number">{{doctor.patients_treated  }}</div>
                             <div class="stat-label">Patients Treated</div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -131,6 +141,7 @@ Elister Med{% endblock %} {% block content %}
     </section>
 
     <!-- EDUCATION & QUALIFICATIONS -->
+    {% if doctor.educations.all or doctor.certifications.all %}
     <section class="content-section section-bg-gradient">
         <div class="container">
             <h2 class="section-title">Education & Qualifications</h2>
@@ -161,6 +172,7 @@ Elister Med{% endblock %} {% block content %}
                 
 
                 <!-- Compact Certifications -->
+                {% if doctor.certifications.all %}
                 <div class="col-lg-5">
                     <div
                         style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); height: 100%;">
@@ -180,9 +192,11 @@ Elister Med{% endblock %} {% block content %}
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- EXPERTISE & SPECIALIZATIONS -->
     <section class="content-section section-bg-light">
@@ -212,6 +226,7 @@ Elister Med{% endblock %} {% block content %}
                     </div>-->
                 </div>
 
+                {% if doctor.memberships.all %}
                 <div class="col-lg-4">
                     <div
                         style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
@@ -228,6 +243,7 @@ Elister Med{% endblock %} {% block content %}
                         </ul>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </section>

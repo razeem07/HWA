@@ -19,7 +19,7 @@ class AppointmentForm(forms.Form):
     max_date = today + timedelta(days=7)
    # STEP 1
     specialization = forms.ModelChoiceField(
-        queryset=Specialization.objects.all(),
+        queryset=Specialization.objects.filter(is_active=True, is_deleted=False),
         widget=forms.Select(attrs={"class": "form-select mb-4","id": "id_specialization"})
     )
 
@@ -66,7 +66,9 @@ class AppointmentForm(forms.Form):
             try:
                 spec_id = int(self.data.get("specialization"))
                 self.fields["doctor"].queryset = Doctor.objects.filter(
-                    specialization_id=spec_id
+                    specialization_id=spec_id,
+                    is_active=True,
+                    is_deleted=False
                 )
             except:
                 pass

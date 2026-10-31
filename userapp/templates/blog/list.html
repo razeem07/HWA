@@ -27,7 +27,7 @@ Elister Med{% endblock %} {% block content %}
           <div class="col-md-6">
             <article class="blog-card">
               <div class="blog-card-image">
-                <img src="{{ blog.featured_image.url }}" alt="Family Medicine" />
+                {% if blog.featured_image %}<img src="{{ blog.featured_image.url }}" alt="Family Medicine" />{% endif %}
                 <span class="blog-category">{{ blog.category }}</span>
               </div>
               <div class="blog-card-body">
