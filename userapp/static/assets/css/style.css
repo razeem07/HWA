@@ -58,23 +58,46 @@
  }
 
 
- /* Styling for the carousel items to ensure flex behavior */
- #heroCarousel .carousel-item {
-     min-height: 90vh;
+ .banner-slide,
+ .banner-slide.active {
      position: relative;
+     height: 100vh;
+     min-height: 500px;
+     background-size: cover;
+     background-position: center center;
+     background-repeat: no-repeat;
+     display: flex !important;
+     align-items: center;
+     padding-top: 80px;
  }
 
- /* Added a slight overlay directly in the inline style (the linear-gradient) 
-   to make sure the white text pops against bright images. */
- #heroCarousel .carousel-item .container {
-     z-index: 2;
+ .banner-overlay {
+     position: absolute;
+     inset: 0;
+     background: rgba(0, 0, 0, 0.4);
+     z-index: 1;
+ }
+
+ .banner-content {
      position: relative;
+     z-index: 2;
+     width: 100%;
  }
 
  @media (max-width: 767px) {
-     #heroCarousel .carousel-item {
-         /* 'contain' ensures the full width and height are visible */
-         background-size: 100% 100% !important;
+     .banner-slide,
+     .banner-slide.active {
+         height: 100svh;
+         background-position: 70% center;
+         padding-top: 70px;
+     }
+
+     #heroCarousel h1 {
+         font-size: 1.8rem;
+     }
+
+     #heroCarousel .lead {
+         font-size: 0.9rem;
      }
  }
 
