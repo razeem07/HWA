@@ -38,8 +38,9 @@ def home(request):
     highlights =homepage.highlight_items.all().order_by('order') if homepage else[]
 
     doctors = Doctor.objects.filter(
-        is_active=True
-    ).order_by("-created_at")[:4]
+        is_active=True,
+        is_deleted=False
+    ).order_by("-created_at")
 
     blogs = Content.objects.filter(
         content_type='blog',
