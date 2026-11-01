@@ -26,6 +26,7 @@ Elister Med{% endblock %} {% block content %}
 <!-- Stats Section -->
 
  <!-- Mission Vision Values -->
+{% if about.section_two %}
     <section class="section-padding">
         <div class="container">
             <div class="text-center mb-5 mission-content">
@@ -59,6 +60,7 @@ Elister Med{% endblock %} {% block content %}
             </div>
         </div>
     </section>
+{% endif %}
 
 
 <!-- Why Choose Us -->
@@ -128,6 +130,7 @@ Elister Med{% endblock %} {% block content %}
 </section>
 
 <!-- Why Choose Us -->
+{% if about.chairman_msg or about.chairman_description %}
 <section class="section-padding" style="background-color: var(--light-bg)">
   <div class="container">
     <div class="row align-items-center mission-content">
@@ -151,6 +154,7 @@ Elister Med{% endblock %} {% block content %}
     </div>
   </div>
 </section>
+{% endif %}
 
 <!-- Timeline Section -->
 <!-- <section class="timeline-section section-padding">
@@ -203,6 +207,7 @@ Elister Med{% endblock %} {% block content %}
 </section> -->
 
 <!-- Leadership Team -->
+{% if team_members %}
 <section class="section-padding">
   <div class="container">
     <div class="text-center mb-5">
@@ -232,6 +237,7 @@ Elister Med{% endblock %} {% block content %}
     </div>
   </div>
 </section>
+{% endif %}
 
 <!-- <section class="testimonial-section py-5 bg-light">
     <div class="container">

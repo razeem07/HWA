@@ -65,8 +65,7 @@ class AppointmentForm(forms.Form):
         if "specialization" in self.data:
             try:
                 spec_id = int(self.data.get("specialization"))
-                self.fields["doctor"].queryset = Doctor.objects.filter(
-                    specialization_id=spec_id,
+                self.fields["doctor"].queryset = Doctor.in_department(spec_id).filter(
                     is_active=True,
                     is_deleted=False
                 )

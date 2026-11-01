@@ -390,6 +390,13 @@ class Doctor(SEOModel):
         related_name="doctors"
     )
 
+    additional_specializations = models.ManyToManyField(
+        Specialization,
+        blank=True,
+        related_name="additional_doctors",
+        help_text="Other departments this doctor also works in"
+    )
+
     hero_title=models.CharField(max_length=255, blank=True)
     hero_description=models.TextField(max_length=255, blank=True)
     doctor_hero_banner = models.ImageField(upload_to='uploads/doctors/', blank=True, null=True)
@@ -466,6 +473,14 @@ class Doctor(SEOModel):
     updated_at = models.DateTimeField(
         auto_now=True
     )
+
+    @classmethod
+    def in_department(cls, specialization_id):
+        """Doctors whose main or additional department matches."""
+        return cls.objects.filter(
+            models.Q(specialization_id=specialization_id) |
+            models.Q(additional_specializations=specialization_id)
+        ).distinct()
 
     def generate_slug(self):
         return self.designation

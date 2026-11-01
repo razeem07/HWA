@@ -6,6 +6,7 @@
 {% block content %}
 
 <!-- SECTION 1 HERO -->
+{% if banners %}
 <section id="heroCarousel" class="carousel slide" data-bs-touch="true" data-bs-interval="4500"
         data-bs-ride="carousel" data-bs-pause="false">
 
@@ -57,11 +58,13 @@
     
 
 </section>
+{% endif %}
 
 
 <!-- SECTION 2 SERVICES -->
 
 
+{% if features %}
 <section class="py-5 mobile-hide-bg position-relative" >
 
     <!-- LEFT SIDE BACKGROUND IMAGE -->
@@ -85,6 +88,7 @@
         </div>
 
 </section>
+{% endif %}
 
  
 
@@ -121,6 +125,7 @@
      <!-- Section 4 -->
     <!-- linear-gradient(rgba(0, 60, 120, 0.6), rgba(0, 60, 120, 0.6)),  -->
  
+{% if why_specialization %}
     <section class="blue-section position-relative overflow-hidden">
 
     <!-- Background Image (replaces CSS background) -->
@@ -169,8 +174,10 @@
         </div>
 
 </section>
+{% endif %}
 
        <!-- Section 5 -->
+{% if doctors %}
     <section class="py-5" style="background-color: #f8f9fa;">
         <div class="container text-center mb-5">
             <h6 class="text-blue mb-2 fw-bold  reveal reveal-left">{{homepage.staff_subtitle}}</h6>
@@ -261,8 +268,10 @@
                     <a href="{% url 'userapp:doctor_list'%}" class="btn btn-view-more  mobile-hide-element">View All &rsaquo;</a>
                 </div>
     </section>
+{% endif %}
 
       <!-- Section 6 -->
+{% if highlights %}
     <section class="why-choose-section py-5"
         style="background: #00bcd4; color: white; position: relative; overflow: hidden;">
         <div class="bg-shape-overlay"></div>
@@ -309,8 +318,10 @@
             </div>
         </div>
     </section>
+{% endif %}
 
  <!-- Section 7 -->
+{% if blogs %}
      <section class="py-5" style="background-color: #ffffff;">
         <div class="container">
             <div class="row align-items-end mb-5">
@@ -368,6 +379,7 @@
             </div>
         </div>
     </section>
+{% endif %}
 
  <!-- Section 8 -->
     <section style="position: relative; width: 100%; overflow: hidden;">

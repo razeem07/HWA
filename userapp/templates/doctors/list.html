@@ -96,6 +96,8 @@ Elister Med{% endblock %} {% block content %}
         </div>
       </div>
 
+      {% empty %}
+      <p class="text-center text-muted py-5">No doctors found.</p>
       {% endfor %}
     </div>
 

@@ -331,6 +331,12 @@ class DoctorForm(forms.ModelForm):
         for name in ("last_name", "email", "phone_number"):
             self.fields[name].required = False
 
+        self.fields["additional_specializations"].widget = forms.CheckboxSelectMultiple()
+        self.fields["additional_specializations"].queryset = Specialization.objects.filter(
+            is_active=True,
+            is_deleted=False
+        ).order_by("name")
+
         # Default: no specialization
         self.fields["specialization"].queryset = Specialization.objects.none()
 
@@ -365,6 +371,23 @@ class DoctorForm(forms.ModelForm):
             raise forms.ValidationError("This username is already taken.")
 
         return username
+
+    def clean(self):
+        cleaned_data = super().clean()
+        additional = cleaned_data.get("additional_specializations")
+        branch = cleaned_data.get("branch")
+        main = cleaned_data.get("specialization")
+
+        if additional is not None:
+            if branch and additional.exclude(branch=branch).exists():
+                self.add_error(
+                    "additional_specializations",
+                    "Additional departments must belong to the selected branch."
+                )
+            if main:
+                cleaned_data["additional_specializations"] = additional.exclude(pk=main.pk)
+
+        return cleaned_data
 
     class Meta:
         model = Doctor

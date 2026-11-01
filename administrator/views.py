@@ -1388,8 +1388,7 @@ def load_doctors_by_specialization(request):
 
     spec_id = request.GET.get("specialization")
 
-    doctors = Doctor.objects.filter(
-        specialization_id=spec_id,
+    doctors = Doctor.in_department(spec_id).filter(
         is_active=True,
         is_deleted=False
     ).select_related("user")

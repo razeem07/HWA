@@ -100,8 +100,7 @@ def load_doctors(request):
     if not str(specialization_id).isdigit():
         return JsonResponse([], safe=False)
 
-    doctors = Doctor.objects.filter(
-        specialization_id=specialization_id,
+    doctors = Doctor.in_department(specialization_id).filter(
         is_active=True,
         is_deleted=False
     ).values("id", "user__first_name")

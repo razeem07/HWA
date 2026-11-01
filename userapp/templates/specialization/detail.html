@@ -31,6 +31,7 @@ Elister Med{% endblock %} {% block content %}
   </div>
 </section>
 
+{% if specialization.main_title or specialization.main_description %}
 <section class="py-5 about-section">
   <div class="container">
     <div class="row align-items-center">
@@ -50,9 +51,11 @@ Elister Med{% endblock %} {% block content %}
     </div>
   </div>
 </section>
+{% endif %}
 
 <!-- SERVICES -->
 
+{% if services %}
 <section class="services-section">
   <div class="container">
     <!-- Heading -->
@@ -89,8 +92,10 @@ Elister Med{% endblock %} {% block content %}
     </div>
   </div>
 </section>
+{% endif %}
 
 <!-- WHEN TO VISIT -->
+{% if specialization.secondary_title or specialization.long_description_primary %}
 <section class="py-5">
   <div class="container">
     <div class="row align-items-center g-4">
@@ -113,8 +118,10 @@ Elister Med{% endblock %} {% block content %}
     </div>
   </div>
 </section>
+{% endif %}
 
 <!-- WHEN TO VISIT -->
+{% if specialization.long_description_secondary %}
 <section class="py-5">
   <div class="container">
     <div class="row align-items-center g-4">
@@ -132,8 +139,10 @@ Elister Med{% endblock %} {% block content %}
     </div>
   </div>
 </section>
+{% endif %}
 
 <!-- DOCTORS -->
+{% if doctors %}
 <section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center section-title">
@@ -172,7 +181,9 @@ Elister Med{% endblock %} {% block content %}
     </div>
   </div>
 </section>
+{% endif %}
 
+{% if specialization.faqs.all %}
 <section class="py-5 bg-light">
   <div class="container">
     <h3 class="text-center mb-4 section-title">FAQs</h3>
@@ -204,6 +215,7 @@ Elister Med{% endblock %} {% block content %}
     </div>
   </div>
 </section>
+{% endif %}
 
 
 {% include "partials/cta.html" with footer_title=footer_title footer_description=footer_description page_cta=page_cta %}

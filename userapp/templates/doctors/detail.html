@@ -199,6 +199,7 @@ Elister Med{% endblock %} {% block content %}
     {% endif %}
 
     <!-- EXPERTISE & SPECIALIZATIONS -->
+{% if doctor.expertise.all or doctor.memberships.all %}
     <section class="content-section section-bg-light">
         <div class="container">
             <h2 class="section-title">Areas of Expertise</h2>
@@ -247,6 +248,7 @@ Elister Med{% endblock %} {% block content %}
             </div>
         </div>
     </section>
+{% endif %}
 
 
   

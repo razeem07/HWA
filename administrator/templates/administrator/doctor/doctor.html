@@ -91,6 +91,13 @@ Doctor Information
 {{ form.specialization }}
 </div>
 
+<div class="col-md-12">
+<label class="form-label">Additional Departments</label>
+{{ form.additional_specializations }}
+<small class="text-muted">Tick any other departments this doctor also works in. They will appear under those departments on the website and in appointment booking.</small>
+{{ form.additional_specializations.errors }}
+</div>
+
 <div class="col-md-6">
 <label class="form-label">Designation *</label>
 {{ form.designation }}

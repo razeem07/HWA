@@ -438,7 +438,7 @@ def specialization_detail(request, slug):
 
     
     # ✅ FILTER ACTIVE DOCTORS
-    doctors = specialization.doctors.filter(
+    doctors = Doctor.in_department(specialization.pk).filter(
         is_active=True,
         is_deleted=False
     )
@@ -589,11 +589,15 @@ def doctor_list(request):
         Q(user__first_name__icontains=query) |
         Q(user__last_name__icontains=query) |
         Q(full_name__icontains=query) |   # 🔥 THIS FIXES IT
-        Q(specialization__name__icontains=query)
-    )
+        Q(specialization__name__icontains=query) |
+        Q(additional_specializations__name__icontains=query)
+    ).distinct()
     # 📂 SPECIALIZATION FILTER
     if specialization and specialization.isdigit():
-        doctors = doctors.filter(specialization_id=specialization)
+        doctors = doctors.filter(
+            Q(specialization_id=specialization) |
+            Q(additional_specializations=specialization)
+        ).distinct()
 
     
 
